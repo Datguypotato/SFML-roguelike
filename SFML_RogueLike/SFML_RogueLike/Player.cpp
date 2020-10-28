@@ -1,15 +1,38 @@
 #include "Player.h"
 
-Player::Player(std::map<std::string, Animation> animations, int imageCount, float switchTime, float speed, float jumpHeight)
-	:	AC(animations)
+//Player::Player(std::map<std::string, Animation> animations, int imageCount, float switchTime, float speed, float jumpHeight)
+//	:	AC(animations)
+//{
+//	this->speed = speed;
+//	this->jumpHeight = jumpHeight;
+//	faceRight = true;
+//	canJump = true;
+//
+//	body.setSize(sf::Vector2f(50, 80));
+//	body.setOrigin(body.getSize() / 2.0f);
+//}
+
+Player::Player()
+	:	anim(),
+		canJump(false),
+		faceRight(true),
+		jumpHeight(),
+		speed()
+{
+
+}
+
+Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight)
+	:	anim(texture, imageCount, switchTime)
 {
 	this->speed = speed;
 	this->jumpHeight = jumpHeight;
 	faceRight = true;
 	canJump = true;
 
-	body.setSize(sf::Vector2f(50, 80));
+	body.setSize(sf::Vector2f(100, 160));
 	body.setOrigin(body.getSize() / 2.0f);
+	body.setTexture(texture);
 }
 
 Player::~Player()
@@ -38,11 +61,11 @@ void Player::Update(float deltaTime)
 
 	if (velocity.x == 0.0f)
 	{
-		AC.Play("Default");
+		//AC.Play("Default");
 	}
 	else
 	{
-		AC.Play("Walk");
+		//AC.Play("Walk");
 
 		if (velocity.x > 0.0f)
 			faceRight = true;
@@ -51,8 +74,10 @@ void Player::Update(float deltaTime)
 	}
 
 	//AC.UpdateAnimation(deltaTime, faceRight);
-	AC.GetActiveAnimation().Update(deltaTime, faceRight);
-	body.setTextureRect(AC.GetActiveAnimation().uvRect);
+	//AC.GetActiveAnimation().Update(deltaTime, faceRight);
+	anim.Update(0, deltaTime, faceRight);
+	body.setTextureRect(anim.uvRect);
+	//body.setTextureRect(AC.GetActiveAnimation().uvRect);
 	body.move(velocity * deltaTime);
 }
 
@@ -61,7 +86,7 @@ void Player::OnCollision(sf::Vector2f direction)
 	if (direction.x < 0.0f)
 	{
 		// collision on the left
-		velocity.x < 0.0f;
+		velocity.x = 0.0f;
 	}
 	else if (direction.x > 0.0f)
 	{

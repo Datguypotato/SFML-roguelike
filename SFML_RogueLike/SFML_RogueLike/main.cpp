@@ -33,17 +33,13 @@ int main()
 	playerDefault.loadFromFile("Art/PlayerDefault.png");
 	playerWalk.loadFromFile("Art/PlayerWalk.png");
 
-	//Animation playerDefaultAnim(&playerDefault, 7, 0.1f);
+	//playerAnimations.insert(std::pair<std::string, Animation>("Default", Animation(&playerDefault, 7, 0.5f, "PlayerDefaultAnimation")));
+	//playerAnimations.insert(std::pair<std::string, Animation>("Walk", Animation(&playerWalk, 12, 0.05f, "PlayerWalkAnimation")));
 
-	playerAnimations.insert(std::pair<std::string, Animation>("Default", Animation(&playerDefault, 7, 0.1f, "PlayerDefaultAnimation")));
-	playerAnimations.insert(std::pair<std::string, Animation>("Walk", Animation(&playerWalk, 12, 0.05f, "PlayerWalkAnimation")));
-
-	// create Animation
-	
 	sf::Sprite Ground;
 	Ground.setTexture(groundtexture);
 
-	Player player(playerAnimations, 12, 0.08f, 100.0f, 200.0f);
+	Player* player = new Player(&playerWalk, sf::Vector2u(12, 0), 0.08f, 100.0f, 200.0f);
 
 	std::vector<Platform> platforms;
 
@@ -73,20 +69,21 @@ int main()
 				ResizeView(window, view);
 			}
 		}
+		
 
-		player.Update(deltaTime);
-		Collider playerCollider = player.GetCollider();
+		player->Update(deltaTime);
+		Collider playerCollider = player->GetCollider();
 
 		sf::Vector2f direction;
 
 		for (Platform& platform : platforms)
 			if (platform.GetCollider().CheckCollision(playerCollider, 1.0f, direction))
-				player.OnCollision(direction);
+				player->OnCollision(direction);
 
-		view.setCenter(player.GetPosition());
+		view.setCenter(player->GetPosition());
 
 		window.clear();
-		player.Draw(window);
+		player->Draw(window);
 		window.setView(view);
 		for (Platform& platform : platforms)
 			platform.Draw(window);

@@ -26,5 +26,5 @@ void AnimatorController::Play(std::string animationName)
 
 void AnimatorController::UpdateAnimation(float deltaTime, bool faceRight)
 {
-	activeAnimation.Update(deltaTime, faceRight);
+	activeAnimation.Update(0, deltaTime, faceRight);
 }

@@ -6,9 +6,8 @@
 class Player
 {
 public:
-	Player(std::map<std::string, Animation> animations, int imageCount, float switchTime, float speed, float jumpHeight);
-	//Player(std::map<std::string, Animation> animations, int imageCount, float switchTime, float speed, float jumpHeight);
-	
+	Player();
+	Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight);
 	~Player();
 
 	void Update(float deltaTime);
@@ -22,8 +21,8 @@ public:
 
 private:
 	sf::RectangleShape body;
-	sf::Sprite sprite;
-	AnimatorController AC;
+	//AnimatorController AC;
+	Animation anim;
 	float speed;
 	bool faceRight;
 
