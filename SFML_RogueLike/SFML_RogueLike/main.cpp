@@ -39,7 +39,7 @@ int main()
 	sf::Sprite Ground;
 	Ground.setTexture(groundtexture);
 
-	Player* player = new Player(&playerWalk, sf::Vector2u(12, 0), 0.08f, 100.0f, 200.0f);
+	Player* player = new Player(&playerDefault, sf::Vector2u(7, 1), 0.08f, 100.0f, 200.0f);
 
 	std::vector<Platform> platforms;
 

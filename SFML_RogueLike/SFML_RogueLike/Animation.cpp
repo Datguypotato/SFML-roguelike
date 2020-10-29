@@ -33,22 +33,23 @@ void Animation::Update(int row, float deltaTime, bool faceRight)
 {
 	totalTime += deltaTime;
 	currentImage.y;
-
+	
 	if (totalTime >= switchTime)
 	{
 		totalTime -= switchTime;
 		currentImage.x++;
+		std::cout << "current image = " << currentImage.x << std::endl;
 
 		if (currentImage.x >= imageCount.x)
 		{
 			currentImage.x = 0;
 		}
 
-		uvRect.top = uvRect.height;
+		uvRect.top = 0;//currentImage.y * uvRect.height;
 
 		if (faceRight)
 		{
-			uvRect.left = currentImage.y * uvRect.width;
+			uvRect.left = currentImage.x * uvRect.width;
 			uvRect.width = abs(uvRect.width);
 		}
 		else

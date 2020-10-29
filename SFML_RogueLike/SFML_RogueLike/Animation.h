@@ -2,13 +2,14 @@
 #include <SFML/Graphics.hpp>
 
 #include <string>
+#include <iostream>
 
 class Animation
 {
 public:
 	Animation();
 	Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
-	//Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName);
+	Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName);
 	~Animation();
 
 
