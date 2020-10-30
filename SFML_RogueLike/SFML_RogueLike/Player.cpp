@@ -1,38 +1,15 @@
 #include "Player.h"
 
-//Player::Player(std::map<std::string, Animation> animations, int imageCount, float switchTime, float speed, float jumpHeight)
-//	:	AC(animations)
-//{
-//	this->speed = speed;
-//	this->jumpHeight = jumpHeight;
-//	faceRight = true;
-//	canJump = true;
-//
-//	body.setSize(sf::Vector2f(50, 80));
-//	body.setOrigin(body.getSize() / 2.0f);
-//}
-
-Player::Player()
-	:	anim(),
-		canJump(false),
-		faceRight(true),
-		jumpHeight(),
-		speed()
-{
-
-}
-
-Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight)
-	:	anim(texture, imageCount, switchTime)
+Player::Player(std::map<std::string, Animation*> animations, int imageCount, float switchTime, float speed, float jumpHeight)
+	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70)),
+		AC(animations)
 {
 	this->speed = speed;
 	this->jumpHeight = jumpHeight;
 	faceRight = true;
 	canJump = true;
 
-	body.setSize(sf::Vector2f(100, 160));
-	body.setOrigin(body.getSize() / 2.0f);
-	body.setTexture(texture);
+	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
 }
 
 Player::~Player()
@@ -41,12 +18,17 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
+	Entity::Update(deltaTime);
+	std::string playName;
 	velocity.x *= 0.1f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		velocity.x -= speed;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		velocity.x += speed;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+		AC.PlayNoInterupt("Attack", faceRight);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
 	{
@@ -57,58 +39,36 @@ void Player::Update(float deltaTime)
 		velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
 	}
 
-	velocity.y += 981.0f * deltaTime;
-
-	if (velocity.x == 0.0f)
+	if (velocity.x != 0.0f)
 	{
-		//AC.Play("Default");
+		playName = "Walk";
 	}
 	else
 	{
-		//AC.Play("Walk");
-
-		if (velocity.x > 0.0f)
-			faceRight = true;
-		else
-			faceRight = false;
+		playName = "Default";
 	}
 
-	//AC.UpdateAnimation(deltaTime, faceRight);
-	//AC.GetActiveAnimation().Update(deltaTime, faceRight);
-	anim.Update(0, deltaTime, faceRight);
-	body.setTextureRect(anim.uvRect);
-	//body.setTextureRect(AC.GetActiveAnimation().uvRect);
+	if (abs(velocity.y) > 10.0f)
+		playName = "Jump";
+
+	if (TextureBody.getTexture() != AC.GetActiveAnimation()->GetTexture())
+		TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
+
+	if(TextureBody.getTextureRect() != AC.GetActiveAnimation()->uvRect)
+		TextureBody.setTextureRect(AC.GetActiveAnimation()->uvRect);
+	
+	AC.Play(playName, faceRight);
+	AC.UpdateAnimation(deltaTime, faceRight);
 	body.move(velocity * deltaTime);
+	TextureBody.setPosition(body.getPosition());
 }
 
 void Player::OnCollision(sf::Vector2f direction)
 {
-	if (direction.x < 0.0f)
-	{
-		// collision on the left
-		velocity.x = 0.0f;
-	}
-	else if (direction.x > 0.0f)
-	{
-		// collision on the right
-		velocity.x = 0.0f;
-	}
-
+	Entity::OnCollision(direction);
 	if (direction.y < 0.0f)
 	{
 		// collision down
-		velocity.y = 0.0f;
 		canJump = true;
 	}
-	else if(direction.y < 0.0f)
-	{
-		// collision up
-		velocity.y = 0.0f;
-	}
-
-}
-
-void Player::Draw(sf::RenderWindow& window)
-{
-	window.draw(body);
 }

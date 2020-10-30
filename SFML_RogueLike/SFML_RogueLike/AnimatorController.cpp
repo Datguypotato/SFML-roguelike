@@ -2,29 +2,46 @@
 #include <iostream>
 
 // TODO: fill methods
-AnimatorController::AnimatorController(std::map<std::string, Animation> animations)
+AnimatorController::AnimatorController(std::map<std::string, Animation*> animations)
 {
 	// assign animations
 	this->animations = animations;
+	activeAnimation = animations.begin()->second;
 }
 AnimatorController::~AnimatorController()
 {
 }
 
-void AnimatorController::Play(std::string animationName)
+void AnimatorController::Play(std::string animationName, bool faceRight)
 {
-	// play animation based on animation name
-	for (auto const& anim : animations)
+	if (!uninterruptibleIsPlaying)
 	{
-		if (anim.first == animationName)
+		// play animation based on animation name
+		for (auto const& anim : animations)
 		{
-			activeAnimation = anim.second;
-			//std::cout << "Current animation playing: " << activeAnimation.GetAnimationName() << std::endl;
+			if (anim.first == animationName)
+			{
+				if (activeAnimation->GetName() != animationName)
+				{
+					activeAnimation = anim.second;
+					activeAnimation->UpdateFaceingDirection(faceRight);
+				}
+
+			}
 		}
 	}
 }
 
+void AnimatorController::PlayNoInterupt(std::string animationName, bool faceRight)
+{
+	Play(animationName, faceRight);
+	uninterruptibleIsPlaying = true;
+}
+
 void AnimatorController::UpdateAnimation(float deltaTime, bool faceRight)
 {
-	activeAnimation.Update(0, deltaTime, faceRight);
+	activeAnimation->Update(deltaTime, faceRight);
+
+	if (activeAnimation->GetLoopedOnce())
+		uninterruptibleIsPlaying = false;
 }

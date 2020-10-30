@@ -26,25 +26,31 @@ int main()
 	groundtexture.loadFromFile("Art/GrassGround.png");
 
 	// load player textures
-	std::map<std::string, Animation> playerAnimations;
+	std::map<std::string, Animation*> playerAnimations;
 	sf::Texture playerDefault;
 	sf::Texture playerWalk;
+	sf::Texture playerJump;
+	sf::Texture playerAttack;
 
 	playerDefault.loadFromFile("Art/PlayerDefault.png");
 	playerWalk.loadFromFile("Art/PlayerWalk.png");
+	playerJump.loadFromFile("Art/PlayerJump.png");
+	playerAttack.loadFromFile("Art/PlayerAttack.png");
 
-	//playerAnimations.insert(std::pair<std::string, Animation>("Default", Animation(&playerDefault, 7, 0.5f, "PlayerDefaultAnimation")));
-	//playerAnimations.insert(std::pair<std::string, Animation>("Walk", Animation(&playerWalk, 12, 0.05f, "PlayerWalkAnimation")));
+	playerAnimations.insert(std::pair<std::string, Animation*>("Default", &Animation(&playerDefault, 7, 0.25f)));
+	playerAnimations.insert(std::pair<std::string, Animation*>("Walk", &Animation(&playerWalk, 12, 0.12f)));
+	playerAnimations.insert(std::pair<std::string, Animation*>("Jump", &Animation(&playerJump, 4, 0.2f)));
+	playerAnimations.insert(std::pair<std::string, Animation*>("Attack", &Animation(&playerAttack, 9, 0.035f)));
 
 	sf::Sprite Ground;
 	Ground.setTexture(groundtexture);
 
-	Player* player = new Player(&playerDefault, sf::Vector2u(7, 1), 0.08f, 100.0f, 200.0f);
+	Player* player = new Player(playerAnimations, 7, 0.08f, 250.0f, 200.0f);
 
 	std::vector<Platform> platforms;
 
-	platforms.push_back(Platform(&groundtexture, sf::Vector2f(400, 200), sf::Vector2f(500, 200)));
 	platforms.push_back(Platform(&groundtexture, sf::Vector2f(400, 200), sf::Vector2f(500, 0)));
+	platforms.push_back(Platform(&groundtexture, sf::Vector2f(400, 200), sf::Vector2f(500, 200)));
 	platforms.push_back(Platform(Ground, sf::Vector2f(1280.0f, 128.0f), sf::Vector2f(0.0f, 500.0f)));
 
 	float deltaTime = 0.0f;

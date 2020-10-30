@@ -2,31 +2,26 @@
 #include <SFML/Graphics.hpp>
 #include "AnimatorController.h"
 #include "Collider.h"
+#include "Entity.h"
 
-class Player
+class Player: public Entity
 {
 public:
-	Player();
-	Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight);
+	//Player(sf::Texture* texture, int imageCount, float switchTime, float speed, float jumpHeight);
+	Player(std::map<std::string, Animation*> animations, int imageCount, float switchTime, float speed, float jumpHeight);
 	~Player();
 
 	void Update(float deltaTime);
-	void Draw(sf::RenderWindow& window);
 	void OnCollision(sf::Vector2f direction);
 
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	Collider GetCollider() { return Collider(body); }
 
-	//Animation GetAnimation() { return animation; }
 
 private:
-	sf::RectangleShape body;
-	//AnimatorController AC;
-	Animation anim;
+	AnimatorController AC;
 	float speed;
-	bool faceRight;
 
-	sf::Vector2f velocity;
 	bool canJump;
 	float jumpHeight;
 };

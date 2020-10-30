@@ -1,61 +1,57 @@
 #include "Animation.h"
-Animation::Animation()
-	:	switchTime(),
-		totalTime(),
-		currentImage(),
-		imageCount()
-{
 
-}
-Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime)
+Animation::Animation(sf::Texture* texture, int imageCount, float switchTime)
+	:loopedOnce(false)
 {
+	this->texture = texture;
 	this->imageCount = imageCount;
 	this->switchTime = switchTime;
 	totalTime = 0.0f;
-	currentImage.x = 0;
+	currentImage = 0;
 
-	uvRect.width = texture->getSize().x / float(imageCount.x);
-	uvRect.height = texture->getSize().y / float(imageCount.y);
+	uvRect.width = texture->getSize().x / float(imageCount);
+	uvRect.height = texture->getSize().y;
 }
 
-//Animation::Animation(sf::Texture* texture, sf:: imageCount, float switchTime, std::string animationName)
-//	:Animation::Animation(texture, imageCount, switchTime)
-//{
-//	this->animationName = animationName;
-//}
+Animation::Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName)
+	:Animation::Animation(texture, imageCount, switchTime)
+{
+	this->animationName = animationName;
+}
 
 Animation::~Animation()
 {
 }
 
-// TODO: remove row
-void Animation::Update(int row, float deltaTime, bool faceRight)
+void Animation::Update(float deltaTime, bool faceRight)
 {
 	totalTime += deltaTime;
-	currentImage.y;
-	
 	if (totalTime >= switchTime)
 	{
 		totalTime -= switchTime;
-		currentImage.x++;
-		std::cout << "current image = " << currentImage.x << std::endl;
+		currentImage++;
 
-		if (currentImage.x >= imageCount.x)
+		if (currentImage >= imageCount)
 		{
-			currentImage.x = 0;
+			currentImage = 0;
+			loopedOnce = true;
 		}
 
 		uvRect.top = 0;//currentImage.y * uvRect.height;
 
-		if (faceRight)
-		{
-			uvRect.left = currentImage.x * uvRect.width;
-			uvRect.width = abs(uvRect.width);
-		}
-		else
-		{
-			uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
-			uvRect.width = -abs(uvRect.width);
-		}
+		UpdateFaceingDirection(faceRight);
+	}
+}
+void Animation::UpdateFaceingDirection(bool faceRight)
+{
+	if (faceRight)
+	{
+		uvRect.left = currentImage * uvRect.width;
+		uvRect.width = abs(uvRect.width);
+	}
+	else
+	{
+		uvRect.left = (currentImage + 1) * abs(uvRect.width);
+		uvRect.width = -abs(uvRect.width);
 	}
 }

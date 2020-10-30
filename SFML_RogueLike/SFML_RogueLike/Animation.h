@@ -7,24 +7,30 @@
 class Animation
 {
 public:
-	Animation();
-	Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
+	Animation(sf::Texture* texture, int imageCount, float switchTime);
 	Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName);
 	~Animation();
 
 
-	void Update(int row, float deltaTime, bool faceRight);
-	std::string GetAnimationName() { return animationName; }
+	void Update(float deltaTime, bool faceRight);
+	std::string GetName() { return animationName; }
 
 	sf::IntRect uvRect;
+	sf::Texture* GetTexture() { return texture; }
 
+	bool GetLoopedOnce() { return loopedOnce; }
+
+	void UpdateFaceingDirection(bool faceRight);
 private:
-	sf::Vector2u imageCount;
-	sf::Vector2u currentImage;
+	sf::Texture* texture;
+
+	int imageCount;
+	int currentImage;
 
 	float totalTime;
 	float switchTime;
 
 	std::string animationName;
+	bool loopedOnce;
 };
 
