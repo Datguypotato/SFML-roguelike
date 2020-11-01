@@ -14,6 +14,7 @@ public:
 
 	void Update(float deltaTime, bool faceRight);
 	std::string GetName() { return animationName; }
+	void SetName(std::string newName) { animationName = newName; }
 
 	sf::IntRect uvRect;
 	sf::Texture* GetTexture() { return texture; }

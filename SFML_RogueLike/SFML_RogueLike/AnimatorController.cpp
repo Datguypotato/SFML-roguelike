@@ -23,6 +23,7 @@ void AnimatorController::Play(std::string animationName, bool faceRight)
 			{
 				if (activeAnimation->GetName() != animationName)
 				{
+					activeAnimation->SetName(animationName);
 					activeAnimation = anim.second;
 					activeAnimation->UpdateFaceingDirection(faceRight);
 				}

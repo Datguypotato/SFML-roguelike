@@ -26,6 +26,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Slime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Slime.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

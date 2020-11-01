@@ -4,6 +4,7 @@
 #include <Player.h>
 #include <Platform.h>
 #include <Collider.h>
+#include <Slime.h>
 
 static const float VIEW_HEIGHT = 720.0f;
 
@@ -18,7 +19,7 @@ void ResizeView(const sf::RenderWindow& window, sf::View& view)
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Hello world", sf::Style::Close | sf::Style::Resize);
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
 
 	sf::Texture groundtexture;
@@ -42,10 +43,30 @@ int main()
 	playerAnimations.insert(std::pair<std::string, Animation*>("Jump", &Animation(&playerJump, 4, 0.2f)));
 	playerAnimations.insert(std::pair<std::string, Animation*>("Attack", &Animation(&playerAttack, 9, 0.035f)));
 
+	// load slime textures
+	std::map<std::string, Animation*> slimeAnimations;
+	sf::Texture slimeDefault;
+	sf::Texture slimeJump;
+	sf::Texture slimeHit;
+
+	slimeDefault.loadFromFile("Art/SlimeDefault.png");
+	slimeJump.loadFromFile("Art/SlimeJump.png");
+	slimeHit.loadFromFile("Art/SlimeHit.png");
+
+	slimeAnimations.insert(std::pair<std::string, Animation*>("Default", &Animation(&slimeDefault, 8, 0.05f, "Default")));
+	slimeAnimations.insert(std::pair<std::string, Animation*>("Jump", &Animation(&slimeJump, 4, 0.2f, "Jump")));
+	slimeAnimations.insert(std::pair<std::string, Animation*>("Hit", &Animation(&slimeHit, 6, 0.2f, "Hit")));
+
 	sf::Sprite Ground;
 	Ground.setTexture(groundtexture);
 
-	Player* player = new Player(playerAnimations, 7, 0.08f, 250.0f, 200.0f);
+	Player* player = new Player(playerAnimations, 250.0f, 200.0f);
+	Slime* slime = new Slime(slimeAnimations, sf::Vector2f(200, 50));
+
+	std::vector<Entity*> entities;
+	
+	entities.push_back(slime);
+	entities.push_back(player);
 
 	std::vector<Platform> platforms;
 
@@ -75,25 +96,35 @@ int main()
 				ResizeView(window, view);
 			}
 		}
-		
-
-		player->Update(deltaTime);
-		Collider playerCollider = player->GetCollider();
 
 		sf::Vector2f direction;
 
 		for (Platform& platform : platforms)
-			if (platform.GetCollider().CheckCollision(playerCollider, 1.0f, direction))
-				player->OnCollision(direction);
+		{
+			for (Entity* entity : entities)
+			{
+				Collider entityCollider = entity->GetCollider();
+
+				if (platform.GetCollider().CheckCollision(entityCollider, 1.0f, direction))
+					entity->OnCollision(direction);
+
+			}
+
+		}
+
 
 		view.setCenter(player->GetPosition());
 
 		window.clear();
-		player->Draw(window);
+
+		for (Entity* entity : entities)
+		{
+			entity->Draw(window);
+			entity->Update(deltaTime);
+		}
 		window.setView(view);
 		for (Platform& platform : platforms)
 			platform.Draw(window);
-		//window.draw(testGround);
 		window.display();
 	}
 

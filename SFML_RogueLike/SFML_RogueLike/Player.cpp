@@ -1,15 +1,13 @@
 #include "Player.h"
 
-Player::Player(std::map<std::string, Animation*> animations, int imageCount, float switchTime, float speed, float jumpHeight)
-	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70)),
-		AC(animations)
+Player::Player(std::map<std::string, Animation*> animations, float speed, float jumpHeight)
+	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations)
 {
 	this->speed = speed;
 	this->jumpHeight = jumpHeight;
-	faceRight = true;
-	canJump = true;
 
-	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
+
+	canJump = true;
 }
 
 Player::~Player()
@@ -19,8 +17,8 @@ Player::~Player()
 void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
+	
 	std::string playName;
-	velocity.x *= 0.1f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		velocity.x -= speed;
@@ -40,22 +38,13 @@ void Player::Update(float deltaTime)
 	}
 
 	if (velocity.x != 0.0f)
-	{
 		playName = "Walk";
-	}
 	else
-	{
 		playName = "Default";
-	}
+
 
 	if (abs(velocity.y) > 10.0f)
 		playName = "Jump";
-
-	if (TextureBody.getTexture() != AC.GetActiveAnimation()->GetTexture())
-		TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
-
-	if(TextureBody.getTextureRect() != AC.GetActiveAnimation()->uvRect)
-		TextureBody.setTextureRect(AC.GetActiveAnimation()->uvRect);
 	
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
