@@ -17,7 +17,8 @@ Player::~Player()
 void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
-	
+	velocity.x *= 0.1f;
+
 	std::string playName;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))

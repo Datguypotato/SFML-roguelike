@@ -22,6 +22,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimatorController.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Platform.cpp" />
@@ -32,6 +33,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimatorController.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />

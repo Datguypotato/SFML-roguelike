@@ -23,7 +23,6 @@ Entity::~Entity()
 void Entity::Update(float deltaTime)
 {
 	velocity.y += 981.0f * deltaTime;
-	velocity.x *= 0.1f;
 
 	if (velocity.x != 0.0f)
 	{
@@ -32,6 +31,7 @@ void Entity::Update(float deltaTime)
 		else
 			faceRight = false;
 	}
+
 
 	if (TextureBody.getTexture() != AC.GetActiveAnimation()->GetTexture())
 		TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());

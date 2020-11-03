@@ -1,7 +1,7 @@
 #include "Slime.h"
 
-Slime::Slime(std::map<std::string, Animation*> animations, sf::Vector2f spawnPosition)
-	:	Entity(sf::Vector2f(59, 51), sf::Vector2f(60, 51), 10, animations)
+Slime::Slime(std::map<std::string, Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody)
+	:	Enemy(sf::Vector2f(59, 51), sf::Vector2f(60, 51), 10, animations, playerbody)
 {
 	body.setPosition(spawnPosition);
 
@@ -20,13 +20,23 @@ void Slime::Update(float deltaTime)
 	Entity::Update(deltaTime);
 	std::string playName;
 
-	jumpCooldown -= deltaTime;
+
+
+	if (onGround)
+	{
+		jumpCooldown -= deltaTime;
+		velocity.x *= 0.1f;
+	}
+		
 
 	if (jumpCooldown <= 0.0f)
 	{
 		jumpCooldown = jumpCoolDownMax;
 		onGround = false;
 		velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
+		velocity.x = jumpRange * GetPlayerDir().x;
+
+		LookAtPlayer();
 	}
 
 	if (onGround)
@@ -34,9 +44,8 @@ void Slime::Update(float deltaTime)
 	else
 		playName = "Jump";
 
-	std::cout << "Active animation currently playing " << AC.GetActiveAnimation()->GetName() << std::endl;
 
-	AC.Play(playName, true);
+	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
 	body.move(velocity * deltaTime);
 	TextureBody.setPosition(body.getPosition());

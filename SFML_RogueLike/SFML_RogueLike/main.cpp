@@ -61,7 +61,7 @@ int main()
 	Ground.setTexture(groundtexture);
 
 	Player* player = new Player(playerAnimations, 250.0f, 200.0f);
-	Slime* slime = new Slime(slimeAnimations, sf::Vector2f(200, 50));
+	Slime* slime = new Slime(slimeAnimations, sf::Vector2f(200, 50), &player->GetCollider().GetBody());
 
 	std::vector<Entity*> entities;
 	

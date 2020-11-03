@@ -1,11 +1,11 @@
 #pragma once
-#include "Entity.h"
+#include "Enemy.h"
 #include <iostream>
 
-class Slime : public Entity
+class Slime : public Enemy
 {
 public:
-	Slime(std::map<std::string, Animation*> animations, sf::Vector2f spawnPosition);
+	Slime(std::map<std::string, Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerBody);
 	~Slime();
 
 	void Update(float deltaTime) override;
@@ -17,4 +17,5 @@ private:
 	float jumpRange;
 	float jumpCooldown;
 	float jumpCoolDownMax;
+
 };
