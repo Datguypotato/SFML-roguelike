@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include "tileson.h"
 #include <Player.h>
 #include <Platform.h>
 #include <Collider.h>

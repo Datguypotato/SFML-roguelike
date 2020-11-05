@@ -20,8 +20,6 @@ void Slime::Update(float deltaTime)
 	Entity::Update(deltaTime);
 	std::string playName;
 
-
-
 	if (onGround)
 	{
 		jumpCooldown -= deltaTime;
