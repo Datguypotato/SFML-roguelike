@@ -14,7 +14,6 @@ public:
 	void OnCollision(sf::Vector2f direction);
 
 private:
-	float speed;
 
 	bool canJump;
 	float jumpHeight;

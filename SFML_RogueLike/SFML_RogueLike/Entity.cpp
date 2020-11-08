@@ -1,9 +1,8 @@
 #include "Entity.h"
 
-Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations)
+Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations, float speed)
 	:	faceRight(true),
 		isAlive(true),
-		onGround(false),
 		AC(animations)
 {
 	TextureBody.setSize(textureSize);
@@ -13,6 +12,7 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	body.setOrigin(body.getSize() / 2.0f);
 
 	this->health = health;
+	this->speed = speed;
 	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
 }
 
@@ -22,7 +22,8 @@ Entity::~Entity()
 
 void Entity::Update(float deltaTime)
 {
-	//velocity.y += 981.0f * deltaTime;
+	velocity.x *= 0.1f;
+	velocity.y *= 0.1f;
 
 	if (velocity.x != 0.0f)
 	{
@@ -61,7 +62,6 @@ void Entity::OnCollision(sf::Vector2f direction)
 	if (direction.y < 0.0f)
 	{
 		// collision down
-		onGround = true;
 		velocity.y = 0.0f;
 	}
 	else if (direction.y < 0.0f)

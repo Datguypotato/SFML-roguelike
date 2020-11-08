@@ -13,9 +13,13 @@ public:
 
 private:
 
+	sf::Vector2f jumpDir;
+	sf::Vector2f textureOffset;
+
 	float jumpHeight;
 	float jumpRange;
 	float jumpCooldown;
 	float jumpCoolDownMax;
 
+	bool isJumping;
 };

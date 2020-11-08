@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="2" nextobjectid="1">
+ <editorsettings>
+  <export target="../SFML_RogueLike/Art/World/Test.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="GroudTileSet" tilewidth="128" tileheight="128" tilecount="2" columns="2">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassTopDown.png"/>
+  </tile>
+  <tile id="1">
+   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassGround.png"/>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+</map>

@@ -1,9 +1,8 @@
 #include "Player.h"
 
 Player::Player(std::map<std::string, Animation*> animations, float speed, float jumpHeight)
-	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations)
+	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed)
 {
-	this->speed = speed;
 	this->jumpHeight = jumpHeight;
 
 
@@ -17,8 +16,6 @@ Player::~Player()
 void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
-	velocity.x *= 0.1f;
-	velocity.y *= 0.1f;
 
 	std::string playName;
 
@@ -47,10 +44,6 @@ void Player::Update(float deltaTime)
 		playName = "Walk";
 	else
 		playName = "Default";
-
-
-	if (abs(velocity.y) > 10.0f)
-		playName = "Jump";
 	
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);

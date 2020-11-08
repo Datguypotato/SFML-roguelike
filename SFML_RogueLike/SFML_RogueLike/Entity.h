@@ -6,7 +6,7 @@
 class Entity
 {
 public:
-	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations);
+	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations, float speed);
 	~Entity();
 
 	virtual void Update(float deltaTime);
@@ -22,12 +22,13 @@ protected:
 	sf::RectangleShape TextureBody;
 	sf::RectangleShape body;
 
+
 	AnimatorController AC;
 	bool faceRight;
 
+	float speed;
 	bool isAlive;
 	int health;
 
 	sf::Vector2f velocity;
-	bool onGround;
 };

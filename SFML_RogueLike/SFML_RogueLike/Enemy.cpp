@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations, sf::RectangleShape* playerBody)
-	:	Entity(sf::Vector2f(59, 51), sf::Vector2f(60, 51), 10, animations)
+Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations, sf::RectangleShape* playerBody, float speed)
+	:	Entity(sf::Vector2f(59, 51), sf::Vector2f(60, 51), 10, animations, speed)
 {
 	this->playerBody = playerBody;
 }
@@ -12,6 +12,14 @@ Enemy::~Enemy()
 
 void Enemy::LookAtPlayer()
 {
+	if (GetPlayerDir().x > body.getPosition().x)
+	{
+		faceRight = true;
+	}
+	else
+	{
+		faceRight = false;
+	}
 }
 
 sf::Vector2f Enemy::GetPlayerDir()
