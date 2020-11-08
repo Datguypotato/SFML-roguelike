@@ -22,7 +22,7 @@ Entity::~Entity()
 
 void Entity::Update(float deltaTime)
 {
-	velocity.y += 981.0f * deltaTime;
+	//velocity.y += 981.0f * deltaTime;
 
 	if (velocity.x != 0.0f)
 	{

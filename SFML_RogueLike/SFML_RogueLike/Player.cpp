@@ -18,6 +18,7 @@ void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
 	velocity.x *= 0.1f;
+	velocity.y *= 0.1f;
 
 	std::string playName;
 
@@ -25,6 +26,10 @@ void Player::Update(float deltaTime)
 		velocity.x -= speed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		velocity.x += speed;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		velocity.y += speed;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		velocity.y -= speed;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 		AC.PlayNoInterupt("Attack", faceRight);

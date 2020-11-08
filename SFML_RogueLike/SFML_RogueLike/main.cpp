@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-#include "tileson.h"
+#include "tileson.hpp"
 #include <Player.h>
 #include <Platform.h>
 #include <Collider.h>
@@ -25,7 +25,7 @@ int main()
 
 	sf::Texture groundtexture;
 	groundtexture.setRepeated((true));
-	groundtexture.loadFromFile("Art/GrassGround.png");
+	groundtexture.loadFromFile("Art/World/GrassGround.png");
 
 	// load player textures
 	std::map<std::string, Animation*> playerAnimations;
@@ -73,11 +73,27 @@ int main()
 
 	platforms.push_back(Platform(&groundtexture, sf::Vector2f(400, 200), sf::Vector2f(500, 0)));
 	platforms.push_back(Platform(&groundtexture, sf::Vector2f(400, 200), sf::Vector2f(500, 200)));
-	platforms.push_back(Platform(Ground, sf::Vector2f(1280.0f, 128.0f), sf::Vector2f(0.0f, 500.0f)));
+	//platforms.push_back(Platform(Ground, sf::Vector2f(1280.0f, 128.0f), sf::Vector2f(0.0f, 500.0f)));
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
+	tson::Tileson t;
+	std::unique_ptr<tson::Map> map = t.parse(fs::path("./SFML_RogueLike/Art/World/Test.json"));
+
+	//if (map->getStatus() == tson::ParseStatus::OK)
+	{
+		for (auto& layer : map->getLayers())
+		{
+			for (auto& obj : layer.getObjects())
+			{
+				sf::Vector2f groundPos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
+				sf::Vector2f groundSize = sf::Vector2f(obj.getSize().x, obj.getSize().y);
+
+				platforms.push_back(Platform(&groundtexture, groundSize, groundPos));
+			}
+		}
+	}
 
 	while (window.isOpen())
 	{
