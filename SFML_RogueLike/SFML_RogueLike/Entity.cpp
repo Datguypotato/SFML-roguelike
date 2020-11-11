@@ -14,10 +14,18 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	this->health = health;
 	this->speed = speed;
 	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
+
+	sound = sf::Sound();
+	sound.setVolume(50.0f);
 }
 
 Entity::~Entity()
 {
+}
+
+Entity::Entity(const Entity& rhs)
+{
+
 }
 
 void Entity::Update(float deltaTime)

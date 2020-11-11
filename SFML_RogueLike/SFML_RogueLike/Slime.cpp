@@ -5,17 +5,26 @@ Slime::Slime(std::map<std::string, Animation*> animations, sf::Vector2f spawnPos
 {
 	body.setPosition(spawnPosition);
 
+	isAlive = true;
 	jumpCoolDownMax = 0.5f;
 	jumpCooldown = jumpCoolDownMax;
-	jumpHeight = 100.0f;
-	jumpRange = 200.0f;
 	isJumping = false;
 	jumpDir = sf::Vector2f();
-	textureOffset = sf::Vector2f();
+
+	jumpBuffer.loadFromFile("Audio/sfx_sound_neutral6.wav");
+	sound.setBuffer(jumpBuffer);
 }
 
 Slime::~Slime()
 {
+}
+
+Slime::Slime(const Slime& rhs)
+{
+	jumpCoolDownMax = rhs.jumpCoolDownMax;
+	jumpCooldown = jumpCoolDownMax;
+	isJumping = rhs.isJumping;
+	jumpDir = rhs.jumpDir;
 }
 
 void Slime::Update(float deltaTime)
@@ -32,8 +41,10 @@ void Slime::Update(float deltaTime)
 		jumpCooldown = jumpCoolDownMax;
 
 		if (isJumping)
+		{
 			jumpDir = GetPlayerDir();
-
+			sound.play();
+		}
 		AC.PlayNoInterupt("Jump", faceRight);
 	}
 
@@ -50,7 +61,7 @@ void Slime::Update(float deltaTime)
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
 	body.move(velocity * deltaTime);
-	TextureBody.setPosition(body.getPosition() + textureOffset);
+	TextureBody.setPosition(body.getPosition());
 }
 
 void Slime::OnCollision(sf::Vector2f direction)

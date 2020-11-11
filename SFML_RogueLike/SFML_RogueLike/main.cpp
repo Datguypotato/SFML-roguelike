@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <vector>
 #include "tileson.hpp"
 #include <Player.h>
 #include <Platform.h>
@@ -8,6 +7,7 @@
 #include <Slime.h>
 
 static const float VIEW_HEIGHT = 720.0f;
+static const float SLIME_SPAWN_TIMERMAX = 3.0f;
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 
@@ -63,24 +63,14 @@ int main()
 	sf::Sprite Ground;
 	Ground.setTexture(groundtexture);
 
-	Player* player = new Player(playerAnimations, 250.0f, 200.0f);
-	Slime* slime = new Slime(slimeAnimations, sf::Vector2f(200, 50), &player->GetCollider().GetBody());
+	Player* player = new Player(playerAnimations, 250.0f);
 
 	std::vector<Entity*> entities;
+
 	
-	entities.push_back(slime);
 	entities.push_back(player);
 
 	std::vector<Platform> platforms;
-
-	//for (int x = 0; x < 16; x++)
-	//{
-	//	for (int y = 0; y < 16; y++)
-	//	{
-	//		platforms.push_back(Platform(&groundtexture, sf::Vector2f(128, 128), sf::Vector2f(x * 128, y * 128)));
-	//	}
-	//}
-
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -110,6 +100,19 @@ int main()
 		std::cout << map->getStatusMessage() << std::endl;
 	}
 
+	int slimeTimer = 0.0f;
+	if (slimeTimer <= 0.0f)
+	{
+		slimeTimer = SLIME_SPAWN_TIMERMAX;
+		float randomX = 1 + (rand() % 200);
+		float randomY = 1 + (rand() % 200);
+		Slime* slime = new Slime(slimeAnimations, sf::Vector2f(randomX, randomY), &player->GetCollider().GetBody());
+
+		entities.push_back(slime);
+	}
+	else
+		slimeTimer -= deltaTime;
+
 	while (window.isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();
@@ -130,21 +133,6 @@ int main()
 		}
 
 		sf::Vector2f direction;
-
-		//for (Platform& platform : platforms)
-		//{
-		//	for (Entity* entity : entities)
-		//	{
-		//		Collider entityCollider = entity->GetCollider();
-
-		//		if (platform.GetCollider().CheckCollision(entityCollider, 1.0f, direction))
-		//			entity->OnCollision(direction);
-
-		//	}
-
-		//}
-
-		//std::cout << "x " << player->GetPosition().x << " y " << player->GetPosition().y << std::endl;
 
 		view.setCenter(player->GetPosition());
 

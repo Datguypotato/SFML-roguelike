@@ -12,6 +12,12 @@ AnimatorController::~AnimatorController()
 {
 }
 
+AnimatorController::AnimatorController(const AnimatorController& rhs)
+{
+	animations = rhs.animations;
+	activeAnimation = animations.begin()->second;
+}
+
 void AnimatorController::Play(std::string animationName, bool faceRight)
 {
 	if (!uninterruptibleIsPlaying)
