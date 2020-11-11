@@ -8,6 +8,7 @@ class AnimatorController
 public:
 	AnimatorController(std::map<std::string, Animation*> animations);
 	~AnimatorController();
+	AnimatorController(const AnimatorController& rhs);
 
 	void Play(std::string animationName, bool faceRight);
 	void PlayNoInterupt(std::string animationName, bool faceRight);
