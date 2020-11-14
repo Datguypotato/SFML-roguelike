@@ -10,6 +10,17 @@ Player::~Player()
 {
 }
 
+Player::Player(const Player& rhs)
+	:	Entity(rhs)
+{
+	
+}
+
+Player* Player::Clone() const
+{
+	return new Player(*this);
+}
+
 void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);

@@ -9,9 +9,10 @@ class Animation
 public:
 	Animation(sf::Texture* texture, int imageCount, float switchTime);
 	Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName);
+	Animation(const Animation& rhs);
 	~Animation();
 
-
+	Animation* Clone() const;
 	void Update(float deltaTime, bool faceRight);
 	std::string GetName() { return animationName; }
 	void SetName(std::string newName) { animationName = newName; }

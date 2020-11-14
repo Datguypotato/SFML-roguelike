@@ -2,17 +2,19 @@
 #include <vector>
 
 #include "Enemy.h"
+#include "Slime.h"
 
 class EnemiesManager
 {
 public:
-	EnemiesManager(std::vector<Enemy> enemies);
+	EnemiesManager(Enemy* enemy, std::vector<Entity*>* entities);
 	~EnemiesManager();
 
 	void Update(float deltaTime);
 
 private:
-	std::vector<Enemy> enemies;
+	std::vector<Entity*>* entities;
+	Enemy* enemy;
 
 	float currTimer;
 	float maxTimer;
