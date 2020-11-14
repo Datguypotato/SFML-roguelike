@@ -6,8 +6,19 @@ Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::m
 	this->playerBody = playerBody;
 }
 
+Enemy::Enemy(const Enemy& rhs)
+	:	Entity(rhs)
+{
+	playerBody = rhs.playerBody;
+}
+
 Enemy::~Enemy()
 {
+}
+
+Entity* Enemy::Clone() const
+{
+	return new Enemy(*this);
 }
 
 void Enemy::LookAtPlayer()

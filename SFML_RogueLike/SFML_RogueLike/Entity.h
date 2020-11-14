@@ -8,17 +8,22 @@ class Entity
 {
 public:
 	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations, float speed);
-	~Entity();
+	virtual ~Entity();
 	Entity(const Entity& rhs);
+	virtual Entity* Clone() const = 0;
 
 	virtual void Update(float deltaTime);
 	void Draw(sf::RenderWindow& window);
 
 	virtual void OnCollision(sf::Vector2f direction);
+	Collider GetCollider() { return Collider(body); }
+
 	void OnHit(int damage);
 
 	sf::Vector2f GetPosition() { return body.getPosition(); }
-	Collider GetCollider() { return Collider(body); }
+	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
+
+	AnimatorController GetAC() { return AC; }
 
 protected:
 	sf::RectangleShape TextureBody;

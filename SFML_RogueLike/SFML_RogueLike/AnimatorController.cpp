@@ -16,6 +16,13 @@ AnimatorController::AnimatorController(const AnimatorController& rhs)
 {
 	animations = rhs.animations;
 	activeAnimation = animations.begin()->second;
+
+	uninterruptibleIsPlaying = rhs.uninterruptibleIsPlaying;
+}
+
+AnimatorController* AnimatorController::Clone() const
+{
+	return new AnimatorController(*this);
 }
 
 void AnimatorController::Play(std::string animationName, bool faceRight)

@@ -24,8 +24,17 @@ Entity::~Entity()
 }
 
 Entity::Entity(const Entity& rhs)
+	:	isAlive(rhs.isAlive),
+		faceRight(rhs.faceRight),
+		AC(*rhs.AC.Clone())
 {
+	TextureBody = rhs.TextureBody;
+	body = sf::RectangleShape();
+	health = rhs.health;
+	speed = rhs.speed;
+	sound = rhs.sound;
 
+	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
 }
 
 void Entity::Update(float deltaTime)

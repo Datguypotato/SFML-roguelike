@@ -5,6 +5,7 @@
 #include <Platform.h>
 #include <Collider.h>
 #include <Slime.h>
+#include <EnemiesManager.h>
 
 static const float VIEW_HEIGHT = 720.0f;
 static const float SLIME_SPAWN_TIMERMAX = 3.0f;
@@ -64,17 +65,24 @@ int main()
 	Ground.setTexture(groundtexture);
 
 	Player* player = new Player(playerAnimations, 250.0f);
+	Slime* slime = new Slime(slimeAnimations, sf::Vector2f(), &player->GetCollider().GetBody());
+	slime->SetPosition(sf::Vector2f(100, 100));
+	//Slime* slime2 = slime->Clone();
+	//slime2->SetPosition(sf::Vector2f(300, 100));
 
 	std::vector<Entity*> entities;
 
 	
 	entities.push_back(player);
+	//entities.push_back(slime);
+	//entities.push_back(slime2);
 
 	std::vector<Platform> platforms;
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
+#pragma region  Level gen
 	tson::Tileson t;
 	std::unique_ptr<tson::Map> map = t.parse(fs::path("../SFML_RogueLike/Art/World/Test.json"));
 
@@ -99,19 +107,9 @@ int main()
 	{
 		std::cout << map->getStatusMessage() << std::endl;
 	}
+#pragma endregion
 
-	int slimeTimer = 0.0f;
-	if (slimeTimer <= 0.0f)
-	{
-		slimeTimer = SLIME_SPAWN_TIMERMAX;
-		float randomX = 1 + (rand() % 200);
-		float randomY = 1 + (rand() % 200);
-		Slime* slime = new Slime(slimeAnimations, sf::Vector2f(randomX, randomY), &player->GetCollider().GetBody());
-
-		entities.push_back(slime);
-	}
-	else
-		slimeTimer -= deltaTime;
+	EnemiesManager em = EnemiesManager(slime, &entities);
 
 	while (window.isOpen())
 	{
@@ -145,6 +143,7 @@ int main()
 			entity->Draw(window);
 			entity->Update(deltaTime);
 		}
+		em.Update(deltaTime);
 		window.setView(view);
 
 		window.display();

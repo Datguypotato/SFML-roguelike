@@ -23,6 +23,23 @@ Animation::~Animation()
 {
 }
 
+Animation* Animation::Clone() const
+{
+	return new Animation(*this);
+}
+
+Animation::Animation(const Animation& rhs)
+{
+	texture = rhs.texture;
+	imageCount = rhs.imageCount;
+	switchTime = rhs.switchTime;
+	totalTime = rhs.totalTime;
+	currentImage = rhs.currentImage;
+	uvRect = sf::IntRect();
+	loopedOnce = rhs.loopedOnce;
+
+}
+
 void Animation::Update(float deltaTime, bool faceRight)
 {
 	totalTime += deltaTime;

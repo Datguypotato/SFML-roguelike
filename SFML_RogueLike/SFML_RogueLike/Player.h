@@ -8,7 +8,10 @@ class Player: public Entity
 {
 public:
 	Player(std::map<std::string, Animation*> animations, float speed);
+	Player(const Player& rhs);
 	~Player();
+
+	Player* Clone() const;
 
 	void Update(float deltaTime) override;
 

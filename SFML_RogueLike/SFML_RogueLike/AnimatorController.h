@@ -10,6 +10,8 @@ public:
 	~AnimatorController();
 	AnimatorController(const AnimatorController& rhs);
 
+	AnimatorController* Clone() const;
+
 	void Play(std::string animationName, bool faceRight);
 	void PlayNoInterupt(std::string animationName, bool faceRight);
 	void UpdateAnimation(float deltaTime, bool faceRight);

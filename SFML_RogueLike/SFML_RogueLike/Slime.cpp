@@ -20,11 +20,17 @@ Slime::~Slime()
 }
 
 Slime::Slime(const Slime& rhs)
+	:	Enemy(rhs)
 {
 	jumpCoolDownMax = rhs.jumpCoolDownMax;
 	jumpCooldown = jumpCoolDownMax;
 	isJumping = rhs.isJumping;
 	jumpDir = rhs.jumpDir;
+}
+
+Slime* Slime::Clone() const
+{
+	return new Slime(*this);
 }
 
 void Slime::Update(float deltaTime)
