@@ -5,7 +5,7 @@
 class Slime : public Enemy
 {
 public:
-	Slime(std::map<std::string, Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerBody);
+	Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerBody);
 	~Slime();
 	Slime(const Slime& rhs);
 

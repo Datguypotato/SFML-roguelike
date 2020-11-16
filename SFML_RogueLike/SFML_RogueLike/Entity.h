@@ -7,7 +7,7 @@
 class Entity
 {
 public:
-	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations, float speed);
+	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed);
 	virtual ~Entity();
 	Entity(const Entity& rhs);
 	virtual Entity* Clone() const = 0;

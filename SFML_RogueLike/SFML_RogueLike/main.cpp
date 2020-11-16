@@ -29,7 +29,7 @@ int main()
 	groundtexture.loadFromFile("Art/World/GrassTopDown.png");
 
 	// load player textures
-	std::map<std::string, Animation*> playerAnimations;
+	std::vector<Animation*> playerAnimations;
 	sf::Texture playerDefault;
 	sf::Texture playerWalk;
 	sf::Texture playerJump;
@@ -39,13 +39,13 @@ int main()
 	playerWalk.loadFromFile("Art/PlayerWalk.png");
 	playerAttack.loadFromFile("Art/PlayerAttack.png");
 
-	playerAnimations.insert(std::pair<std::string, Animation*>("Default", &Animation(&playerDefault, 7, 0.25f)));
-	playerAnimations.insert(std::pair<std::string, Animation*>("Walk", &Animation(&playerWalk, 12, 0.12f)));
-	playerAnimations.insert(std::pair<std::string, Animation*>("Jump", &Animation(&playerJump, 4, 0.2f)));
-	playerAnimations.insert(std::pair<std::string, Animation*>("Attack", &Animation(&playerAttack, 9, 0.035f)));
+	playerAnimations.push_back(&Animation(&playerDefault, 7, 0.25f));
+	playerAnimations.push_back(&Animation(&playerWalk, 12, 0.12f));
+	playerAnimations.push_back(&Animation(&playerJump, 4, 0.2f));
+	playerAnimations.push_back(&Animation(&playerAttack, 9, 0.035f));
 
 	// load slime textures
-	std::map<std::string, Animation*> slimeAnimations;
+	std::vector<Animation*> slimeAnimations;
 	sf::Texture slimeDefault;
 	sf::Texture slimeJump;
 	sf::Texture slimeAir;
@@ -56,10 +56,10 @@ int main()
 	slimeAir.loadFromFile("Art/SlimeInAir.png");
 	slimeHit.loadFromFile("Art/SlimeHit.png");
 
-	slimeAnimations.insert(std::pair<std::string, Animation*>("Default", &Animation(&slimeDefault, 8, 0.05f, "Default")));
-	slimeAnimations.insert(std::pair<std::string, Animation*>("Jump", &Animation(&slimeJump, 3, 0.2f, "Jump")));
-	slimeAnimations.insert(std::pair<std::string, Animation*>("Air", &Animation(&slimeAir, 1, 0.2f, "Air")));
-	slimeAnimations.insert(std::pair<std::string, Animation*>("Hit", &Animation(&slimeHit, 6, 0.2f, "Hit")));
+	slimeAnimations.push_back(&Animation(&slimeDefault, 8, 0.05f, "Default"));
+	slimeAnimations.push_back(&Animation(&slimeJump, 3, 0.2f, "Jump"));
+	slimeAnimations.push_back(&Animation(&slimeAir, 1, 0.2f, "Air"));
+	slimeAnimations.push_back(&Animation(&slimeHit, 6, 0.2f, "Hit"));
 
 	sf::Sprite Ground;
 	Ground.setTexture(groundtexture);

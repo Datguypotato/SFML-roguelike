@@ -2,11 +2,11 @@
 #include <iostream>
 
 // TODO: fill methods
-AnimatorController::AnimatorController(std::map<std::string, Animation*> animations)
+AnimatorController::AnimatorController(std::vector<Animation*> animations)
 {
 	// assign animations
 	this->animations = animations;
-	activeAnimation = animations.begin()->second;
+	activeAnimation = animations[0];
 }
 AnimatorController::~AnimatorController()
 {
@@ -15,7 +15,7 @@ AnimatorController::~AnimatorController()
 AnimatorController::AnimatorController(const AnimatorController& rhs)
 {
 	animations = rhs.animations;
-	activeAnimation = animations.begin()->second;
+	activeAnimation = animations[0];
 
 	uninterruptibleIsPlaying = rhs.uninterruptibleIsPlaying;
 }
@@ -32,12 +32,11 @@ void AnimatorController::Play(std::string animationName, bool faceRight)
 		// play animation based on animation name
 		for (auto const& anim : animations)
 		{
-			if (anim.first == animationName)
+			if (anim->GetName() == animationName)
 			{
 				if (activeAnimation->GetName() != animationName)
 				{
-					activeAnimation->SetName(animationName);
-					activeAnimation = anim.second;
+					activeAnimation = anim;
 					activeAnimation->UpdateFaceingDirection(faceRight);
 				}
 

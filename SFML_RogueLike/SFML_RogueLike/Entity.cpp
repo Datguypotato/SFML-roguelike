@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::map<std::string, Animation*> animations, float speed)
+Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed)
 	:	faceRight(true),
 		isAlive(true),
 		AC(animations)

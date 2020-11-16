@@ -6,7 +6,7 @@
 class AnimatorController
 {
 public:
-	AnimatorController(std::map<std::string, Animation*> animations);
+	AnimatorController(std::vector<Animation*> animations);
 	~AnimatorController();
 	AnimatorController(const AnimatorController& rhs);
 
@@ -20,7 +20,7 @@ public:
 	std::string GetCurrentAnimationName() { return activeAnimation->GetName(); }
 
 private:
-	std::map<std::string, Animation*> animations;
+	std::vector<Animation*> animations;
 	Animation* activeAnimation;
 
 	bool uninterruptibleIsPlaying;

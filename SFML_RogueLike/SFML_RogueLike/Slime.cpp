@@ -1,6 +1,6 @@
 #include "Slime.h"
 
-Slime::Slime(std::map<std::string, Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody)
+Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody)
 	:	Enemy(sf::Vector2f(59, 59), sf::Vector2f(60, 51), 10, animations, playerbody, 100)
 {
 	body.setPosition(spawnPosition);

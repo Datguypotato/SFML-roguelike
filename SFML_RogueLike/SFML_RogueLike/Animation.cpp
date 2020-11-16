@@ -3,6 +3,12 @@
 Animation::Animation(sf::Texture* texture, int imageCount, float switchTime)
 	:loopedOnce(false)
 {
+
+}
+
+Animation::Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName)
+	:	loopedOnce(false)
+{
 	this->texture = texture;
 	this->imageCount = imageCount;
 	this->switchTime = switchTime;
@@ -11,11 +17,6 @@ Animation::Animation(sf::Texture* texture, int imageCount, float switchTime)
 
 	uvRect.width = texture->getSize().x / float(imageCount);
 	uvRect.height = texture->getSize().y;
-}
-
-Animation::Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName)
-	:Animation::Animation(texture, imageCount, switchTime)
-{
 	this->animationName = animationName;
 }
 

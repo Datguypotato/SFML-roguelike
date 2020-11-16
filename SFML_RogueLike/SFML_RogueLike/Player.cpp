@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(std::map<std::string, Animation*> animations, float speed)
+Player::Player(std::vector<Animation*> animations, float speed)
 	: Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed)
 {
 	body.setPosition(sf::Vector2f(0, 0));
