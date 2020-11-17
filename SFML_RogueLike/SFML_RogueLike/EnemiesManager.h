@@ -7,14 +7,15 @@
 class EnemiesManager
 {
 public:
-	EnemiesManager(Enemy* enemy, std::vector<Entity*>* entities);
+	EnemiesManager(sf::RectangleShape* playerBody, std::vector<Entity*>* entities);
 	~EnemiesManager();
 
 	void Update(float deltaTime);
+	Slime* BuildSlime(sf::Vector2f spawnPos);
 
 private:
 	std::vector<Entity*>* entities;
-	Enemy* enemy;
+	sf::RectangleShape* playerBody;
 
 	float currTimer;
 	float maxTimer;

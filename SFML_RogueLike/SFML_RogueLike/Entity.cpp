@@ -16,7 +16,7 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
 
 	sound = sf::Sound();
-	sound.setVolume(50.0f);
+	sound.setVolume(05.0f);
 }
 
 Entity::~Entity()
@@ -26,7 +26,7 @@ Entity::~Entity()
 Entity::Entity(const Entity& rhs)
 	:	isAlive(rhs.isAlive),
 		faceRight(rhs.faceRight),
-		AC(*rhs.AC.Clone())
+		AC(rhs.AC)
 {
 	TextureBody = rhs.TextureBody;
 	body = sf::RectangleShape();

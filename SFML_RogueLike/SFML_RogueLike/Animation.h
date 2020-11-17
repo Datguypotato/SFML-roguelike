@@ -7,9 +7,8 @@
 class Animation
 {
 public:
-	Animation(sf::Texture* texture, int imageCount, float switchTime);
 	Animation(sf::Texture* texture, int imageCount, float switchTime, std::string animationName);
-	Animation(const Animation& rhs);
+	//Animation(const Animation& rhs);
 	~Animation();
 
 	Animation* Clone() const;

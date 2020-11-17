@@ -39,43 +39,19 @@ int main()
 	playerWalk.loadFromFile("Art/PlayerWalk.png");
 	playerAttack.loadFromFile("Art/PlayerAttack.png");
 
-	playerAnimations.push_back(&Animation(&playerDefault, 7, 0.25f));
-	playerAnimations.push_back(&Animation(&playerWalk, 12, 0.12f));
-	playerAnimations.push_back(&Animation(&playerJump, 4, 0.2f));
-	playerAnimations.push_back(&Animation(&playerAttack, 9, 0.035f));
+	playerAnimations.push_back(new Animation(&playerDefault, 7, 0.25f, "Default"));
+	playerAnimations.push_back(new Animation(&playerWalk, 12, 0.12f, "Walking"));
+	playerAnimations.push_back(new Animation(&playerAttack, 9, 0.035f, "Attack"));
 
-	// load slime textures
-	std::vector<Animation*> slimeAnimations;
-	sf::Texture slimeDefault;
-	sf::Texture slimeJump;
-	sf::Texture slimeAir;
-	sf::Texture slimeHit;
-
-	slimeDefault.loadFromFile("Art/SlimeDefault.png");
-	slimeJump.loadFromFile("Art/SlimeJump.png");
-	slimeAir.loadFromFile("Art/SlimeInAir.png");
-	slimeHit.loadFromFile("Art/SlimeHit.png");
-
-	slimeAnimations.push_back(&Animation(&slimeDefault, 8, 0.05f, "Default"));
-	slimeAnimations.push_back(&Animation(&slimeJump, 3, 0.2f, "Jump"));
-	slimeAnimations.push_back(&Animation(&slimeAir, 1, 0.2f, "Air"));
-	slimeAnimations.push_back(&Animation(&slimeHit, 6, 0.2f, "Hit"));
 
 	sf::Sprite Ground;
 	Ground.setTexture(groundtexture);
 
 	Player* player = new Player(playerAnimations, 250.0f);
-	Slime* slime = new Slime(slimeAnimations, sf::Vector2f(), &player->GetCollider().GetBody());
-	slime->SetPosition(sf::Vector2f(100, 100));
-	//Slime* slime2 = slime->Clone();
-	//slime2->SetPosition(sf::Vector2f(300, 100));
 
 	std::vector<Entity*> entities;
 
-	
 	entities.push_back(player);
-	//entities.push_back(slime);
-	//entities.push_back(slime2);
 
 	std::vector<Platform> platforms;
 
@@ -109,7 +85,7 @@ int main()
 	}
 #pragma endregion
 
-	EnemiesManager em = EnemiesManager(slime, &entities);
+	EnemiesManager em = EnemiesManager(&player->GetCollider().GetBody(), &entities);
 
 	while (window.isOpen())
 	{
