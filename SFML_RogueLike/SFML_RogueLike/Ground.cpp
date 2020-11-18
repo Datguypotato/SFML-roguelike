@@ -1,6 +1,6 @@
-#include "Platform.h"
+#include "Ground.h"
 
-Platform::Platform(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position)
+Ground::Ground(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position)
 {
 	body.setSize(size);
 	body.setOrigin(size / 2.0f);
@@ -8,7 +8,7 @@ Platform::Platform(sf::Texture* texture, sf::Vector2f size, sf::Vector2f positio
 	body.setPosition(position);
 }
 
-Platform::Platform(sf::Sprite sprite, sf::Vector2f size, sf::Vector2f position)
+Ground::Ground(sf::Sprite sprite, sf::Vector2f size, sf::Vector2f position)
 {
 	body.setSize(size);
 	body.setOrigin(size / 2.0f);
@@ -20,11 +20,11 @@ Platform::Platform(sf::Sprite sprite, sf::Vector2f size, sf::Vector2f position)
 	this->sprite = sprite;
 }
 
-Platform::~Platform()
+Ground::~Ground()
 {
 }
 
-void Platform::Draw(sf::RenderWindow& window)
+void Ground::Draw(sf::RenderWindow& window)
 {
 	if(body.getTexture() != NULL)
 		window.draw(body);

@@ -2,12 +2,12 @@
 #include <SFML/Graphics.hpp>
 #include "Collider.h"
 
-class Platform
+class Ground
 {
 public:
-	Platform(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position);
-	Platform(sf::Sprite sprite, sf::Vector2f size, sf::Vector2f position);
-	~Platform();
+	Ground(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position);
+	Ground(sf::Sprite sprite, sf::Vector2f size, sf::Vector2f position);
+	~Ground();
 
 	void Draw(sf::RenderWindow& window);
 	Collider GetCollider() { return Collider(body); }

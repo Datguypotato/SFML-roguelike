@@ -2,7 +2,7 @@
 #include <iostream>
 #include "tileson.hpp"
 #include <Player.h>
-#include <Platform.h>
+#include <Ground.h>
 #include <Collider.h>
 #include <Slime.h>
 #include <EnemiesManager.h>
@@ -43,9 +43,8 @@ int main()
 	playerAnimations.push_back(new Animation(&playerWalk, 12, 0.12f, "Walking"));
 	playerAnimations.push_back(new Animation(&playerAttack, 9, 0.035f, "Attack"));
 
-
-	sf::Sprite Ground;
-	Ground.setTexture(groundtexture);
+	//sf::Sprite testSprite;
+	//testSprite.setTexture(groundtexture);
 
 	Player* player = new Player(playerAnimations, 250.0f);
 
@@ -53,7 +52,7 @@ int main()
 
 	entities.push_back(player);
 
-	std::vector<Platform> platforms;
+	std::vector<Ground> Floor;
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -73,7 +72,7 @@ int main()
 					sf::Vector2f groundPos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
 					sf::Vector2f groundSize = sf::Vector2f(obj.getTile()->getTileSize().x, obj.getTile()->getTileSize().y);
 
-					platforms.push_back(Platform(&groundtexture, groundSize, groundPos));
+					Floor.push_back(Ground(&groundtexture, groundSize, groundPos));
 				}
 			}
 
@@ -111,7 +110,7 @@ int main()
 		view.setCenter(player->GetPosition());
 
 		window.clear();
-		for (Platform& platform : platforms)
+		for (Ground& platform : Floor)
 			platform.Draw(window);
 
 		for (Entity* entity : entities)
