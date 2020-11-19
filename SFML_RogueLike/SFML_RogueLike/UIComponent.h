@@ -11,7 +11,7 @@ public:
 	~UIComponent();
 
 	bool CursorIsInBox(sf::Vector2f mousePos);
-	void SetPosition(sf::Vector2f pos) { box.setPosition(pos + (box.getSize() / 2.0f)); }
+	void SetPosition(sf::Vector2f pos) { box.setPosition(pos); }
 
 	void Draw(sf::RenderWindow& window);
 

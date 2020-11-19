@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(sf::Vector2f size, sf::Vector2f pos, std::function<void()> callBack)
+Button::Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::RectangleShape box)> callBack)
 	:	UIComponent(size)
 {
 	callbacks = callBack;
@@ -20,5 +20,5 @@ void Button::SetPosition(sf::Vector2f pos)
 void Button::OnClick()
 {
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		callbacks();
+		callbacks(box);
 }

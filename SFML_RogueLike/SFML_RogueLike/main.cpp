@@ -12,7 +12,7 @@
 static const float VIEW_HEIGHT = 720.0f;
 static const float SLIME_SPAWN_TIMERMAX = 3.0f;
 
-void ButtonClicked();
+void ButtonClicked(sf::RectangleShape box);
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view)
@@ -22,9 +22,10 @@ void ResizeView(const sf::RenderWindow& window, sf::View& view)
 	view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
 }
 
-void ButtonClicked()
+void ButtonClicked(sf::RectangleShape box)
 {
-	std::cout << "Button has been clicked\n";
+	box.setFillColor(sf::Color::Blue);
+	std::cout << "Button has been clicked\n";	
 }
 
 int main()
@@ -38,7 +39,7 @@ int main()
 	testingText = sf::Text("button", font, 10);
 	testingText.setFillColor(sf::Color::Blue);
 
-	Button button = Button(sf::Vector2f(200, 100), window.mapPixelToCoords(sf::Vector2i(0, 0)), std::function(ButtonClicked), testingText, &window);
+	Button button = Button(sf::Vector2f(200, 100), window.mapPixelToCoords(sf::Vector2i(0, 0)), std::function(ButtonClicked));
 
 	sf::Texture groundtexture;
 	groundtexture.setRepeated((true));
@@ -122,7 +123,7 @@ int main()
 
 		float aspectRatio = float(window.getSize().x / float(window.getSize().y));
 		//testingText.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
-		button.SetPosition(window.mapPixelToCoords(sf::Vector2i(0, 0)));
+		button.SetPosition(sf::Vector2f(0, 100) + player->GetPosition());
 
 		sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 		if (button.CursorIsInBox(mousepos))
@@ -138,7 +139,6 @@ int main()
 			entity->Draw(window);
 			entity->Update(deltaTime);
 		}
-		//window.draw(testingText);
 		button.Draw(window);
 
 		em.Update(deltaTime);
