@@ -1,15 +1,18 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "tileson.hpp"
+
+#include <EnemiesManager.h>
 #include <Player.h>
+#include <Slime.h>
 #include <Ground.h>
 #include <Collider.h>
-#include <Slime.h>
-#include <EnemiesManager.h>
+#include <Button.h>
 
 static const float VIEW_HEIGHT = 720.0f;
 static const float SLIME_SPAWN_TIMERMAX = 3.0f;
 
+void ButtonClicked();
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view)
@@ -19,10 +22,23 @@ void ResizeView(const sf::RenderWindow& window, sf::View& view)
 	view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
 }
 
+void ButtonClicked()
+{
+	std::cout << "Button has been clicked\n";
+}
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
+
+	sf::Font font;
+	font.loadFromFile("Fonts/04B_30.TTF");
+	sf::Text testingText;
+	testingText = sf::Text("button", font, 10);
+	testingText.setFillColor(sf::Color::Blue);
+
+	Button button = Button(sf::Vector2f(200, 100), window.mapPixelToCoords(sf::Vector2i(0, 0)), std::function(ButtonClicked), testingText, &window);
 
 	sf::Texture groundtexture;
 	groundtexture.setRepeated((true));
@@ -40,18 +56,13 @@ int main()
 	playerAttack.loadFromFile("Art/PlayerAttack.png");
 
 	playerAnimations.push_back(new Animation(&playerDefault, 7, 0.25f, "Default"));
-	playerAnimations.push_back(new Animation(&playerWalk, 12, 0.12f, "Walking"));
+	playerAnimations.push_back(new Animation(&playerWalk, 12, 0.12f, "Walk"));
 	playerAnimations.push_back(new Animation(&playerAttack, 9, 0.035f, "Attack"));
-
-	//sf::Sprite testSprite;
-	//testSprite.setTexture(groundtexture);
 
 	Player* player = new Player(playerAnimations, 250.0f);
 
 	std::vector<Entity*> entities;
-
 	entities.push_back(player);
-
 	std::vector<Ground> Floor;
 
 	float deltaTime = 0.0f;
@@ -109,6 +120,15 @@ int main()
 
 		view.setCenter(player->GetPosition());
 
+		float aspectRatio = float(window.getSize().x / float(window.getSize().y));
+		//testingText.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
+		button.SetPosition(window.mapPixelToCoords(sf::Vector2i(0, 0)));
+
+		sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+		if (button.CursorIsInBox(mousepos))
+			button.OnClick();
+
+
 		window.clear();
 		for (Ground& platform : Floor)
 			platform.Draw(window);
@@ -118,6 +138,9 @@ int main()
 			entity->Draw(window);
 			entity->Update(deltaTime);
 		}
+		//window.draw(testingText);
+		button.Draw(window);
+
 		em.Update(deltaTime);
 		window.setView(view);
 
