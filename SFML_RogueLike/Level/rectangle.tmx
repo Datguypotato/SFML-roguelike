@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="2" nextobjectid="1">
- <tileset firstgid="1" source="GroudTileSet.tsx"/>
+ <tileset firstgid="1" name="GroudTileSet" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassTopDown.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="2" source="GroudTileSet.tsx"/>
  <layer id="1" name="Tile Layer 1" width="15" height="10">
   <data encoding="csv">
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,
+2,2,2,2,2,2,2,4,4,4,4,2,4,2,2,
+2,2,2,2,2,4,4,2,2,4,2,2,2,2,4,
+2,2,2,4,2,4,2,2,2,2,2,2,2,2,4,
+4,2,2,2,2,2,2,4,2,4,2,2,4,2,4,
+2,2,2,2,2,2,2,2,2,2,2,2,0,2,4,
+4,2,2,2,2,2,2,4,4,2,2,2,2,2,2,
+4,2,2,2,2,2,4,0,2,2,2,0,2,4,2,
+4,2,2,2,2,2,2,2,2,2,2,2,0,4,2,
+4,4,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
 </map>

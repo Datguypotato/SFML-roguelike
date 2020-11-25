@@ -88,39 +88,6 @@ int main()
 
 	testLevel.Load();
 
-	//tson::Tileson t;
-	//std::unique_ptr<tson::Map> map = t.parse(fs::path("../SFML_RogueLike/Art/World/Test.json"));
-
-	//if (map->getStatus() == tson::ParseStatus::OK)
-	//{
-	//	for (auto& layer : map->getLayers())
-	//	{
-	//		if (layer.getType() == tson::LayerType::TileLayer)
-	//		{	
-	//			// [id, obj]
-	//			for (const auto& tileObject : layer.getTileObjects())
-	//			{					
-	//				tson::TileObject obj = tileObject.second;
-	//				sf::Vector2f groundPos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
-	//				sf::Vector2f groundSize = sf::Vector2f(obj.getTile()->getTileSize().x, obj.getTile()->getTileSize().y);
-	//				
-
-	//				int blockID = tileObject.second.getTile()->getId() - 1;		// so that it start counting at 0 instead of 1
-	//				if (blockID == 1)
-	//					wall.push_back(Wall(tileSet[blockID], groundSize, groundPos));
-	//				else
-	//					Floor.push_back(Ground(tileSet[blockID], groundSize, groundPos));
-
-	//				
-	//			}
-	//		}
-
-	//	}
-	//}
-	//else
-	//{
-	//	std::cout << map->getStatusMessage() << std::endl;
-	//}
 #pragma endregion
 
 	EnemiesManager em = EnemiesManager(&player->GetCollider().GetBody(), &entities);
@@ -159,16 +126,7 @@ int main()
 		window.clear();
 
 
-		//for (Ground& platform : Floor)
-		//	platform.Draw(window);
-
 		Collider pcoll = player->GetCollider();
-		//for (Wall& walls : wall)
-		//{
-		//	walls.Draw(window);
-		//	walls.GetCollider().CheckCollision(pcoll, 1);
-		//}
-
 		testLevel.CheckCollision(pcoll);
 		testLevel.CheckTrigger(pcoll);
 		testLevel.Draw(window);
@@ -178,10 +136,10 @@ int main()
 			entity->Draw(window);
 			entity->Update(deltaTime);
 		}
-
 		em.Update(deltaTime);
-		window.setView(view);
 
+
+		window.setView(view);
 		window.display();
 	}
 
