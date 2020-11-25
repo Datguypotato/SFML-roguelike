@@ -20,8 +20,8 @@ void EnemiesManager::Update(float deltaTime)
 	{
 		currTimer = maxTimer - currTimer;
 
-		float randomX = 1 + (rand() % 1000);
-		float randomY = 1 + (rand() % 1000);
+		float randomX = 100 + (rand() % 1000);
+		float randomY = 100 + (rand() % 1000);
 
 		entities->push_back(BuildSlime(sf::Vector2f(randomX, randomY)));
 	}

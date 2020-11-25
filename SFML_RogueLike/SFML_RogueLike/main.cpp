@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "tileson.hpp"
+#include <string.h>
 
 #include <EnemiesManager.h>
 #include <Player.h>
@@ -8,6 +9,8 @@
 #include <Ground.h>
 #include <Collider.h>
 #include <Button.h>
+#include <Wall.h>
+#include <Level.h>
 
 static const float VIEW_HEIGHT = 720.0f;
 static const float SLIME_SPAWN_TIMERMAX = 3.0f;
@@ -33,6 +36,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
 
+#pragma region UI
 	sf::Font font;
 	font.loadFromFile("Fonts/04B_30.TTF");
 	sf::Text testingText;
@@ -40,10 +44,7 @@ int main()
 	testingText.setFillColor(sf::Color::Blue);
 
 	Button button = Button(sf::Vector2f(200, 100), window.mapPixelToCoords(sf::Vector2i(0, 0)), std::function(ButtonClicked));
-
-	sf::Texture groundtexture;
-	groundtexture.setRepeated((true));
-	groundtexture.loadFromFile("Art/World/GrassTopDown.png");
+#pragma endregion
 
 	// load player textures
 	std::vector<Animation*> playerAnimations;
@@ -64,36 +65,62 @@ int main()
 
 	std::vector<Entity*> entities;
 	entities.push_back(player);
-	std::vector<Ground> Floor;
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
 #pragma region  Level gen
-	tson::Tileson t;
-	std::unique_ptr<tson::Map> map = t.parse(fs::path("../SFML_RogueLike/Art/World/Test.json"));
+	std::map<int, sf::Texture*> tileSet;
+	sf::Texture groundtexture;
+	sf::Texture oldGround;
+	sf::Texture door;
+	groundtexture.loadFromFile("Art/World/GrassTopDown.png");
+	oldGround.loadFromFile("Art/World/GrassGround.png");
+	door.loadFromFile("Art/World/door.png");
+	tileSet.insert(std::pair(0, &groundtexture));
+	tileSet.insert(std::pair(1, &oldGround));
+	tileSet.insert(std::pair(2, &door));
 
-	if (map->getStatus() == tson::ParseStatus::OK)
-	{
-		for (auto& layer : map->getLayers())
-		{
-			if (layer.getType() == tson::LayerType::TileLayer)
-			{
-				for (const auto& [id, obj] : layer.getTileObjects())
-				{
-					sf::Vector2f groundPos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
-					sf::Vector2f groundSize = sf::Vector2f(obj.getTile()->getTileSize().x, obj.getTile()->getTileSize().y);
+	std::vector<Ground> Floor;
+	std::vector<Wall> wall;
 
-					Floor.push_back(Ground(&groundtexture, groundSize, groundPos));
-				}
-			}
+	Level testLevel = Level(tileSet, fs::path("../SFML_RogueLike/Art/World/Test.json"));
 
-		}
-	}
-	else
-	{
-		std::cout << map->getStatusMessage() << std::endl;
-	}
+	testLevel.Load();
+
+	//tson::Tileson t;
+	//std::unique_ptr<tson::Map> map = t.parse(fs::path("../SFML_RogueLike/Art/World/Test.json"));
+
+	//if (map->getStatus() == tson::ParseStatus::OK)
+	//{
+	//	for (auto& layer : map->getLayers())
+	//	{
+	//		if (layer.getType() == tson::LayerType::TileLayer)
+	//		{	
+	//			// [id, obj]
+	//			for (const auto& tileObject : layer.getTileObjects())
+	//			{					
+	//				tson::TileObject obj = tileObject.second;
+	//				sf::Vector2f groundPos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
+	//				sf::Vector2f groundSize = sf::Vector2f(obj.getTile()->getTileSize().x, obj.getTile()->getTileSize().y);
+	//				
+
+	//				int blockID = tileObject.second.getTile()->getId() - 1;		// so that it start counting at 0 instead of 1
+	//				if (blockID == 1)
+	//					wall.push_back(Wall(tileSet[blockID], groundSize, groundPos));
+	//				else
+	//					Floor.push_back(Ground(tileSet[blockID], groundSize, groundPos));
+
+	//				
+	//			}
+	//		}
+
+	//	}
+	//}
+	//else
+	//{
+	//	std::cout << map->getStatusMessage() << std::endl;
+	//}
 #pragma endregion
 
 	EnemiesManager em = EnemiesManager(&player->GetCollider().GetBody(), &entities);
@@ -122,7 +149,6 @@ int main()
 		view.setCenter(player->GetPosition());
 
 		float aspectRatio = float(window.getSize().x / float(window.getSize().y));
-		//testingText.setPosition(window.mapPixelToCoords(sf::Vector2i(0,0)));
 		button.SetPosition(sf::Vector2f(0, 100) + player->GetPosition());
 
 		sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
@@ -131,15 +157,27 @@ int main()
 
 
 		window.clear();
-		for (Ground& platform : Floor)
-			platform.Draw(window);
+
+
+		//for (Ground& platform : Floor)
+		//	platform.Draw(window);
+
+		Collider pcoll = player->GetCollider();
+		//for (Wall& walls : wall)
+		//{
+		//	walls.Draw(window);
+		//	walls.GetCollider().CheckCollision(pcoll, 1);
+		//}
+
+		testLevel.CheckCollision(pcoll);
+		testLevel.CheckTrigger(pcoll);
+		testLevel.Draw(window);
 
 		for (Entity* entity : entities)
 		{
 			entity->Draw(window);
 			entity->Update(deltaTime);
 		}
-		button.Draw(window);
 
 		em.Update(deltaTime);
 		window.setView(view);

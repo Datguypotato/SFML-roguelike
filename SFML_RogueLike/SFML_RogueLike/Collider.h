@@ -10,12 +10,13 @@ public:
 
 	void Move(float dx, float dy) { body.move(dx, dy); }
 
-	bool CheckCollision(Collider& other, float push, sf::Vector2f& direction);
+	bool CheckCollision(Collider& other, float push);
+	bool CheckTrigger(Collider& other);
 	sf::RectangleShape& GetBody() { return body; }
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	sf::Vector2f GetHalfSize() { return body.getSize() / 2.0f; }
 
-private:
+protected:
 	sf::RectangleShape& body;
 };
 

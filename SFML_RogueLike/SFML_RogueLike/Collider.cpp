@@ -10,7 +10,7 @@ Collider::~Collider()
 {
 }
 
-bool Collider::CheckCollision(Collider& other, float push, sf::Vector2f& direction)
+bool Collider::CheckCollision(Collider& other, float push)
 {
 	sf::Vector2f otherPosition = other.GetPosition();
 	sf::Vector2f otherhalfSize = other.GetHalfSize();
@@ -35,16 +35,16 @@ bool Collider::CheckCollision(Collider& other, float push, sf::Vector2f& directi
 				Move(intersectX * (1.0f - push), 0.0f);
 				other.Move(-intersectX * push, 0.0f);
 
-				direction.x = 1.0f;
-				direction.y = 0.0f;
+				//direction.x = 1.0f;
+				//direction.y = 0.0f;
 			}
 			else
 			{
 				Move(-intersectX * (1.0f - push), 0.0f);
 				other.Move(intersectX * push, 0.0f);
 
-				direction.x = -1.0f;
-				direction.y = 0.0f;
+				/*direction.x = -1.0f;
+				direction.y = 0.0f;*/
 			}
 		}
 		else
@@ -54,16 +54,16 @@ bool Collider::CheckCollision(Collider& other, float push, sf::Vector2f& directi
 				Move(0.0f, intersectY * (1.0f - push));
 				other.Move(0.0f, -intersectY * push);
 
-				direction.x = 0.0f;
-				direction.y = 1.0f;
+			/*	direction.x = 0.0f;
+				direction.y = 1.0f;*/
 			}
 			else
 			{
 				Move(0.0f, -intersectY * (1.0f - push));
 				other.Move(0.0f, intersectY * push);
 
-				direction.x = 0.0f;
-				direction.y = -1.0f;
+				//direction.x = 0.0f;
+				//direction.y = -1.0f;
 			}
 		}
 
@@ -71,4 +71,25 @@ bool Collider::CheckCollision(Collider& other, float push, sf::Vector2f& directi
 	}
 
 	return false;
+}
+
+bool Collider::CheckTrigger(Collider& other)
+{
+	sf::Vector2f otherPosition = other.GetPosition();
+	sf::Vector2f otherhalfSize = other.GetHalfSize();
+
+	sf::Vector2f thisPosition = GetPosition();
+	sf::Vector2f thishalfSize = GetHalfSize();
+
+	float deltaX = otherPosition.x - thisPosition.x;
+	float deltaY = otherPosition.y - thisPosition.y;
+
+	float intersectX = abs(deltaX) - (otherhalfSize.x + thishalfSize.x);
+	float intersectY = abs(deltaY) - (otherhalfSize.y + thishalfSize.y);
+
+	if (intersectX < 0.0f && intersectY < 0.0f)
+		return true;
+	else
+		return false;
+
 }
