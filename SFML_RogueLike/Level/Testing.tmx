@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="left-up" width="10" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="left-up" width="10" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="3" nextobjectid="3">
  <editorsettings>
   <export target="../SFML_RogueLike/Art/World/Test.json" format="json"/>
  </editorsettings>
@@ -24,7 +24,11 @@
    <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassTopDown.png"/>
   </tile>
  </tileset>
- <objectgroup id="2" name="SpawnPosition"/>
+ <objectgroup id="2" name="SpawnPosition">
+  <object id="2" name="PlayerSpawn" x="640" y="1090">
+   <point/>
+  </object>
+ </objectgroup>
  <layer id="1" name="Tile Layer" width="10" height="10">
   <data encoding="csv">
 2,2,2,2,1,1,2,2,2,2,

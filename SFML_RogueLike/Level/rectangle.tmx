@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="3" nextobjectid="2">
  <editorsettings>
   <export target="../SFML_RogueLike/Art/World/Test2.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="GroudTileSet" tilewidth="128" tileheight="128" tilecount="3" columns="1">
+ <tileset firstgid="1" name="ForrestTileset" tilewidth="128" tileheight="128" tilecount="3" columns="3" objectalignment="topleft">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <properties>
-    <property name="Order" type="int" value="0"/>
-   </properties>
-   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassTopDown.png"/>
-  </tile>
-  <tile id="2">
-   <properties>
-    <property name="Order" type="int" value="1"/>
-   </properties>
-   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassGround.png"/>
-  </tile>
-  <tile id="5">
    <properties>
     <property name="Order" type="int" value="2"/>
    </properties>
    <image width="128" height="128" source="../SFML_RogueLike/Art/World/door.png"/>
   </tile>
+  <tile id="1">
+   <properties>
+    <property name="Order" type="int" value="1"/>
+   </properties>
+   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassGround.png"/>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Order" type="int" value="0"/>
+   </properties>
+   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassTopDown.png"/>
+  </tile>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="15" height="10">
   <data encoding="csv">
-3,3,3,3,3,3,3,3,3,3,3,3,3,6,1,
-1,1,1,1,1,1,1,3,3,3,3,1,3,1,1,
-1,1,1,1,1,3,3,1,1,3,1,1,1,1,3,
-1,1,1,3,1,3,1,1,1,1,1,1,1,1,3,
-3,1,1,1,1,1,1,3,1,3,1,1,3,1,3,
-1,1,1,1,1,1,1,1,1,1,1,1,3,1,3,
-3,1,3,1,3,1,1,3,3,1,1,1,1,1,1,
-3,1,1,1,1,1,3,1,1,3,3,1,1,3,3,
-3,1,1,1,1,1,1,1,3,3,1,1,1,3,3,
-3,3,1,1,1,1,1,3,3,1,1,1,1,3,3
+2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,
+2,2,3,3,3,3,3,3,3,3,3,3,3,2,2,
+2,2,3,2,3,2,3,2,3,2,3,2,3,2,2,
+2,2,3,2,3,2,3,2,3,2,3,2,3,2,2,
+2,2,3,2,3,2,3,2,3,2,3,2,3,2,2,
+2,2,3,2,3,2,3,2,3,2,3,3,3,2,2,
+2,2,3,2,3,2,3,2,3,2,3,3,3,2,2,
+2,2,3,2,3,2,3,2,3,2,3,3,3,2,2,
+2,2,2,2,2,2,3,2,3,2,3,3,3,2,2,
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
+ <objectgroup id="2" name="SpawnPoints">
+  <object id="1" name="PlayerSpawn" x="1500" y="1000">
+   <point/>
+  </object>
+ </objectgroup>
 </map>

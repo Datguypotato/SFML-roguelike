@@ -89,9 +89,9 @@ int main()
 	paths.push_back("../SFML_RogueLike/Art/World/Test.json");
 	paths.push_back("../SFML_RogueLike/Art/World/Test2.json");
 
-	levelManager = new LevelManager(tileSet, paths, NextLevel);
+	levelManager = new LevelManager(tileSet, paths, NextLevel, player);
 
-	levelManager->GetCurrentLevel()->Load();
+	levelManager->GetCurrentLevel()->Load(player);
 
 #pragma endregion
 

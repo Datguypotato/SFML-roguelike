@@ -16,7 +16,7 @@ Level::~Level()
 {
 }
 
-void Level::Load()
+void Level::Load(Player* p)
 {
 	tson::Tileson t;
 	map = t.parse(levelPath);
@@ -56,6 +56,16 @@ void Level::Load()
 						break;
 					default:
 						break;
+					}
+				}
+			}
+			else if (layer.getType() == tson::LayerType::ObjectGroup)
+			{
+				for (const auto& points : layer.getObjects())
+				{
+					if (points.isPoint() && points.getName() == "PlayerSpawn")
+					{
+						p->SetPosition(sf::Vector2f(points.getPosition().x, points.getPosition().y));
 					}
 				}
 			}

@@ -1,10 +1,11 @@
 #pragma once
-#include "tileson.hpp"
+#include <tileson.hpp>
 #include <SFML/Graphics.hpp>
 
-#include <Ground.h>
-#include <Wall.h>
-#include <LevelSwitcher.h>
+#include "Ground.h"
+#include "Wall.h"
+#include "LevelSwitcher.h"
+#include "Player.h"
 
 class Level
 {
@@ -13,7 +14,7 @@ public:
 	Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath, std::function<void()> Changelevel);
 	~Level();
 
-	void Load();
+	void Load(Player* p);
 	void Unload();
 	void Draw(sf::RenderWindow& window);
 

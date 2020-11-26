@@ -14,7 +14,19 @@
          "draworder":"topdown",
          "id":2,
          "name":"SpawnPosition",
-         "objects":[],
+         "objects":[
+                {
+                 "height":0,
+                 "id":2,
+                 "name":"PlayerSpawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":640,
+                 "y":1090
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -34,7 +46,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":1,
+ "nextobjectid":3,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.4.2",

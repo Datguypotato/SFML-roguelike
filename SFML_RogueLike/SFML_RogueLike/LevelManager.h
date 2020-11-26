@@ -1,12 +1,12 @@
 #pragma once
-#include "functional"
+#include <functional>
 
 #include "Level.h"
 
 class LevelManager
 {
 public:
-	LevelManager(std::map<int, sf::Texture*> tilset, std::vector<fs::path> paths, std::function<void()> Changelevel);
+	LevelManager(std::map<int, sf::Texture*> tilset, std::vector<fs::path> paths, std::function<void()> Changelevel, Player* p);
 	~LevelManager();
 
 	void NextLevel();
@@ -17,5 +17,6 @@ public:
 private:
 	std::vector<Level*> levels;
 	int activeLevelIndex;
+	Player* p;
 };
 
