@@ -3,31 +3,40 @@
  <editorsettings>
   <export target="../SFML_RogueLike/Art/World/Test.json" format="json"/>
  </editorsettings>
- <tileset firstgid="1" name="GroudTileSet" tilewidth="300" tileheight="300" tilecount="3" columns="2">
+ <tileset firstgid="1" name="ForrestTileset" tilewidth="128" tileheight="128" tilecount="3" columns="3" objectalignment="topleft">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassTopDown.png"/>
+   <properties>
+    <property name="Order" type="int" value="2"/>
+   </properties>
+   <image width="128" height="128" source="../SFML_RogueLike/Art/World/door.png"/>
   </tile>
   <tile id="1">
+   <properties>
+    <property name="Order" type="int" value="1"/>
+   </properties>
    <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassGround.png"/>
   </tile>
   <tile id="2">
-   <image width="300" height="300" source="C:/Users/Gordon Cheung/Pictures/door Block.png"/>
+   <properties>
+    <property name="Order" type="int" value="0"/>
+   </properties>
+   <image width="128" height="128" source="../SFML_RogueLike/Art/World/GrassTopDown.png"/>
   </tile>
  </tileset>
+ <objectgroup id="2" name="SpawnPosition"/>
  <layer id="1" name="Tile Layer" width="10" height="10">
   <data encoding="csv">
-2,2,2,2,3,2,2,2,2,2,
-2,1,1,1,1,1,1,1,1,2,
-2,1,1,1,1,1,1,1,1,2,
-2,1,1,1,1,1,1,1,1,2,
-2,1,1,1,1,1,1,1,1,2,
-2,1,1,1,1,1,1,1,1,2,
-2,1,1,1,1,1,1,1,1,2,
-2,1,1,1,1,1,1,1,1,2,
-2,1,1,1,1,1,1,1,1,2,
+2,2,2,2,1,1,2,2,2,2,
+2,3,3,3,3,3,3,3,3,2,
+2,3,3,3,3,3,3,3,3,2,
+2,3,3,3,3,3,3,3,3,2,
+2,3,3,3,3,3,3,3,3,2,
+2,3,3,3,3,3,3,3,3,2,
+2,3,3,3,3,3,3,3,3,2,
+2,3,3,3,3,3,3,3,3,2,
+2,3,3,3,3,3,3,3,3,2,
 2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
- <objectgroup id="2" name="SpawnPosition"/>
 </map>

@@ -1,5 +1,6 @@
 #pragma once
 #include "Ground.h"
+#include <functional>
 class LevelSwitcher :
     public Ground
 {

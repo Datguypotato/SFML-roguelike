@@ -6,6 +6,12 @@ Level::Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath)
 	this->levelPath = levelPath;
 }
 
+Level::Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath, std::function<void()> Changelevel)
+	:	Level::Level(tileSet, levelPath)
+{
+	this->Changelevel = Changelevel;
+}
+
 Level::~Level()
 {
 }
@@ -26,18 +32,31 @@ void Level::Load()
 				for (const auto& tileObject : layer.getTileObjects())
 				{
 					tson::TileObject obj = tileObject.second;
+					int blockID = (int)obj.getTile()->get<int>("Order");
+
+					if (blockID == 2)
+					{
+						std::cout << "ä";
+					}
+
 					sf::Vector2f Pos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
 					sf::Vector2f size = sf::Vector2f(obj.getTile()->getTileSize().x, obj.getTile()->getTileSize().y);
 
-					int blockID = tileObject.second.getTile()->getId() - 1;		// so that it start counting at 0 instead of 1
-
-					if (blockID == 1)
+					// TODO: doors don't position themself always get (0, 0) for some reason
+					switch (blockID)
+					{
+					case(0):
+						floors.push_back(Ground(tileSet[blockID], size, Pos));
+						break;
+					case(1):
 						walls.push_back(Wall(tileSet[blockID], size, Pos));
-					else if (blockID == 2)
+						break;
+					case(2):
 						doors.push_back(LevelSwitcher(tileSet[blockID], size, Pos));
-					else
-						floor.push_back(Ground(tileSet[blockID], size, Pos));
-
+						break;
+					default:
+						break;
+					}
 				}
 			}
 
@@ -49,6 +68,18 @@ void Level::Load()
 	}
 }
 
+void Level::Unload()
+{
+	for (auto floor : floors)
+		floor.~Ground();
+
+	for (auto wall : walls)
+		wall.~Wall();
+
+	for (auto door : doors)
+		door.~LevelSwitcher();
+}
+
 void Level::CheckCollision(Collider playerCollider)
 {
 	for (auto wall : walls)
@@ -58,14 +89,14 @@ void Level::CheckCollision(Collider playerCollider)
 void Level::CheckTrigger(Collider playerCollider)
 {
 	for (auto door : doors)
-		if (door.GetCollider().CheckTrigger(playerCollider))
-			std::cout << "Player in door\n";
+		if (door.GetCollider().CheckTrigger(playerCollider) && Changelevel != nullptr)
+			Changelevel();
 }
 
 
 void Level::Draw(sf::RenderWindow& window)
 {
-	for (auto Floor : floor)
+	for (auto Floor : floors)
 		Floor.Draw(window);
 
 	for (auto wall : walls)

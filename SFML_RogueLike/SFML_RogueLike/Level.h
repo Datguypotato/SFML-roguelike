@@ -10,9 +10,11 @@ class Level
 {
 public:
 	Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath);
+	Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath, std::function<void()> Changelevel);
 	~Level();
 
 	void Load();
+	void Unload();
 	void Draw(sf::RenderWindow& window);
 
 	void CheckCollision(Collider playerCollider);
@@ -23,8 +25,10 @@ private:
 	std::map<int, sf::Texture*> tileSet;
 	fs::path levelPath;
 
-	std::vector<Ground> floor;
+	std::vector<Ground> floors;
 	std::vector<Wall> walls;
 	std::vector<LevelSwitcher> doors;
+
+	std::function<void()> Changelevel;
 };
 

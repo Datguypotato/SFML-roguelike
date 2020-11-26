@@ -1,7 +1,7 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "SFML/Graphics.hpp"
+#include "iostream"
 #include "tileson.hpp"
-#include <string.h>
+#include "string.h"
 
 #include <EnemiesManager.h>
 #include <Player.h>
@@ -11,10 +11,14 @@
 #include <Button.h>
 #include <Wall.h>
 #include <Level.h>
+#include <LevelManager.h>
 
 static const float VIEW_HEIGHT = 720.0f;
 static const float SLIME_SPAWN_TIMERMAX = 3.0f;
 
+LevelManager* levelManager;
+
+void NextLevel();
 void ButtonClicked(sf::RectangleShape box);
 void ResizeView(const sf::RenderWindow& window, sf::View& view);
 
@@ -81,12 +85,13 @@ int main()
 	tileSet.insert(std::pair(1, &oldGround));
 	tileSet.insert(std::pair(2, &door));
 
-	std::vector<Ground> Floor;
-	std::vector<Wall> wall;
+	std::vector<fs::path> paths;
+	paths.push_back("../SFML_RogueLike/Art/World/Test.json");
+	paths.push_back("../SFML_RogueLike/Art/World/Test2.json");
 
-	Level testLevel = Level(tileSet, fs::path("../SFML_RogueLike/Art/World/Test.json"));
+	levelManager = new LevelManager(tileSet, paths, NextLevel);
 
-	testLevel.Load();
+	levelManager->GetCurrentLevel()->Load();
 
 #pragma endregion
 
@@ -111,8 +116,6 @@ int main()
 			}
 		}
 
-		sf::Vector2f direction;
-
 		view.setCenter(player->GetPosition());
 
 		float aspectRatio = float(window.getSize().x / float(window.getSize().y));
@@ -127,9 +130,9 @@ int main()
 
 
 		Collider pcoll = player->GetCollider();
-		testLevel.CheckCollision(pcoll);
-		testLevel.CheckTrigger(pcoll);
-		testLevel.Draw(window);
+		levelManager->GetCurrentLevel()->CheckCollision(pcoll);
+		levelManager->GetCurrentLevel()->CheckTrigger(pcoll);
+		levelManager->GetCurrentLevel()->Draw(window);
 
 		for (Entity* entity : entities)
 		{
@@ -144,4 +147,10 @@ int main()
 	}
 
 	return 0;
+}
+
+void NextLevel()
+{
+	levelManager->NextLevel();
+	std::cout << "Player in doo\n";
 }
