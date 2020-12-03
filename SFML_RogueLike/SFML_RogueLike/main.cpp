@@ -80,9 +80,13 @@ int main()
 
 	std::vector<Animation*> ghostAnimations;
 	sf::Texture ghostDefault;
+	sf::Texture ghostAttack;
 
 	ghostDefault.loadFromFile("Art/GhostDefault.png");
+	ghostAttack.loadFromFile("Art/GhostAttack.png");
+
 	ghostAnimations.push_back(new Animation(&ghostDefault, 9, 0.2f, "Default"));
+	ghostAnimations.push_back(new Animation(&ghostAttack, 40, 0.1f, "Attack"));
 	Ghost* g = new Ghost(ghostAnimations, sf::Vector2f(1000, 1000), player->GetBody());
 
 	std::vector<Entity*> entities;
@@ -158,6 +162,14 @@ int main()
 		{
 			entity->Draw(window);
 			entity->Update(deltaTime);
+			if (entity != player)
+			{
+				if (entity->GetCollider().CheckCollision(pcoll, 0.8f))
+				{
+					player->OnHit(100);
+				}
+			}
+				
 		}
 		//em.Update(deltaTime);
 		levelManager->Draw(window);

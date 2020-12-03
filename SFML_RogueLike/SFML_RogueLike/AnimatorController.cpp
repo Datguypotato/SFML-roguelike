@@ -1,7 +1,6 @@
 #include "AnimatorController.h"
 #include <iostream>
 
-// TODO: fill methods
 AnimatorController::AnimatorController(std::vector<Animation*> animations)
 {
 	// assign animations

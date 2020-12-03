@@ -22,21 +22,25 @@ Ghost::~Ghost()
 void Ghost::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
-	std::string playName = "Default";
+	std::string playName;
 
+	attackCooldown -= deltaTime;
+	//TODO: the timming is rubbish either split the animation in 2 or time it better
 	if (!isDashing)
 	{
-		if (GetVectorDistance(playerBody->getPosition()) < attackRange)
+		if (GetVectorDistance(playerBody->getPosition()) < attackRange && attackCooldown <= 0)
 		{
 			// do dash attack
 			isDashing = true;
 			dashDir = GetPlayerDir();
+			playName = "Attack";
 			std::cout << "player in range\n";
 		}
 		else
 		{
 			//blink towards player
 			blinkTime -= deltaTime;
+			playName = "Default";
 
 			if (blinkTime <= 0)
 			{
@@ -55,10 +59,10 @@ void Ghost::Update(float deltaTime)
 	}
 	else
 	{
-		//std::cout << "Attack cooldown " << attackCooldown << std::endl;
-		attackCooldown -= deltaTime;
+		//std::cout << "Attack cooldown " << attackCooldown << std::endl;		
 		if (attackCooldown <= 0)
 		{
+			playName = "Attack";
 			dashTime -= deltaTime;
 			if (dashTime <= 0.0f)
 			{

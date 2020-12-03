@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "Slime.h"
+#include "Ghost.h"
 
 class EnemiesManager
 {
@@ -11,9 +12,11 @@ public:
 	~EnemiesManager();
 
 	void Update(float deltaTime);
-	Slime* BuildSlime(sf::Vector2f spawnPos);
 
 private:
+	Slime* BuildSlime(sf::Vector2f spawnPos);
+
+
 	std::vector<Entity*>* entities;
 	sf::RectangleShape* playerBody;
 

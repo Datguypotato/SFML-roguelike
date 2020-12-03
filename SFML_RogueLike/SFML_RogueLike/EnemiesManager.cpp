@@ -47,3 +47,4 @@ Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos)
 	slimeAnimations.push_back(new Animation(slimeHit, 6, 0.2f, "Hit"));
 	return new Slime(slimeAnimations, spawnPos, playerBody);
 }
+

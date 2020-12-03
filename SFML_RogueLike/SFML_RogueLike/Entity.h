@@ -19,7 +19,7 @@ public:
 	Collider GetCollider() { return Collider(body); }
 	sf::RectangleShape* GetBody() { return &body; };
 
-	void OnHit(int damage);
+	void OnHit(const int damage);
 
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
@@ -36,6 +36,8 @@ protected:
 	float speed;
 	bool isAlive;
 	int health;
+	float damageCooldown;
+	float damageCooldownMax;
 
 	sf::Vector2f velocity;
 

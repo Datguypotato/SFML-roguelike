@@ -3,7 +3,9 @@
 Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed)
 	:	faceRight(true),
 		isAlive(true),
-		AC(animations)
+		AC(animations),
+		damageCooldown(1.0f),
+		damageCooldownMax(damageCooldown)
 {
 	TextureBody.setSize(textureSize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
@@ -50,6 +52,8 @@ void Entity::Update(float deltaTime)
 			faceRight = false;
 	}
 
+	damageCooldown -= deltaTime;
+
 
 	if (TextureBody.getTexture() != AC.GetActiveAnimation()->GetTexture())
 		TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
@@ -88,15 +92,21 @@ void Entity::OnCollision(sf::Vector2f direction)
 	}
 }
 
-void Entity::OnHit(int damage)
+void Entity::OnHit(const int damage)
 {
-	if (health - damage <= 0)
+	if (damageCooldown <= 0)
 	{
-		health = 0;
-		isAlive = false;
-	}
-	else
-	{
-		health -= damage;
+		damageCooldown = damageCooldownMax;
+		if (health - damage <= 0)
+		{
+			health = 0;
+			isAlive = false;
+		}
+		else
+		{
+			health -= damage;
+		}
+
+		std::cout << "$Lost " << damage << " hp you have " << health << " hp left\n";
 	}
 }
