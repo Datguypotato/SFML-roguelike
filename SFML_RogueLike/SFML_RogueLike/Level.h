@@ -21,10 +21,15 @@ public:
 	void CheckCollision(Collider playerCollider);
 	void CheckTrigger(Collider playerCollider);
 
+	bool isDoneLoading() { return doneLoading; }
+	bool isStartLoading() { return startLoading; }
+
 private:
 	std::unique_ptr<tson::Map> map;
 	std::map<int, sf::Texture*> tileSet;
 	fs::path levelPath;
+	bool doneLoading;
+	bool startLoading;
 
 	std::vector<Ground> floors;
 	std::vector<Wall> walls;

@@ -1,6 +1,5 @@
 #pragma once
 #include "Enemy.h"
-#include <iostream>
 
 class Slime : public Enemy
 {

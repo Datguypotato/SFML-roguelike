@@ -23,17 +23,17 @@ Animation* Animation::Clone() const
 	return new Animation(*this);
 }
 
-//Animation::Animation(const Animation& rhs)
-//{
-//	texture = rhs.texture;
-//	imageCount = rhs.imageCount;
-//	switchTime = rhs.switchTime;
-//	totalTime = rhs.totalTime;
-//	currentImage = rhs.currentImage;
-//	uvRect = sf::IntRect();
-//	loopedOnce = rhs.loopedOnce;
-//
-//}
+Animation::Animation(const Animation& rhs)
+{
+	texture = rhs.texture;
+	imageCount = rhs.imageCount;
+	switchTime = rhs.switchTime;
+	totalTime = rhs.totalTime;
+	currentImage = rhs.currentImage;
+	uvRect = sf::IntRect();
+	loopedOnce = rhs.loopedOnce;
+
+}
 
 void Animation::Update(float deltaTime, bool faceRight)
 {
@@ -49,11 +49,13 @@ void Animation::Update(float deltaTime, bool faceRight)
 			loopedOnce = true;
 		}
 
-		uvRect.top = 0;//currentImage.y * uvRect.height;
+		uvRect.top = 0;
 
 		UpdateFaceingDirection(faceRight);
 	}
 }
+
+
 void Animation::UpdateFaceingDirection(bool faceRight)
 {
 	if (faceRight)

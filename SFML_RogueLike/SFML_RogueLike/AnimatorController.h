@@ -14,6 +14,7 @@ public:
 
 	void Play(std::string animationName, bool faceRight);
 	void PlayNoInterupt(std::string animationName, bool faceRight);
+	void PlayOnce(std::string animationName, bool faceRight);
 	void UpdateAnimation(float deltaTime, bool faceRight);
 
 	Animation* GetActiveAnimation() { return activeAnimation; }

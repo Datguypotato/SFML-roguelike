@@ -55,6 +55,5 @@ void AnimatorController::UpdateAnimation(float deltaTime, bool faceRight)
 {
 	activeAnimation->Update(deltaTime, faceRight);
 
-	if (activeAnimation->GetLoopedOnce())
-		uninterruptibleIsPlaying = false;
+	uninterruptibleIsPlaying = !activeAnimation->GetLoopedOnce();
 }

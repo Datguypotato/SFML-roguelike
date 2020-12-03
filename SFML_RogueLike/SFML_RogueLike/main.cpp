@@ -1,17 +1,18 @@
-#include "SFML/Graphics.hpp"
-#include "iostream"
-#include "tileson.hpp"
-#include "string.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <tileson.hpp>
+#include <string.h>
+#include <cmath>
 
-#include <EnemiesManager.h>
-#include <Player.h>
-#include <Slime.h>
-#include <Ground.h>
-#include <Collider.h>
-#include <Button.h>
-#include <Wall.h>
-#include <Level.h>
-#include <LevelManager.h>
+#include "EnemiesManager.h"
+#include "Player.h"
+#include "Slime.h"
+#include "Ground.h"
+#include "Collider.h"
+#include "Button.h"
+#include "Wall.h"
+#include "Level.h"
+#include "LevelManager.h"
 
 static const float VIEW_HEIGHT = 720.0f;
 static const float SLIME_SPAWN_TIMERMAX = 3.0f;
@@ -73,6 +74,8 @@ int main()
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
+	EnemiesManager em = EnemiesManager(&player->GetCollider().GetBody(), &entities);
+
 #pragma region  Level gen
 	std::map<int, sf::Texture*> tileSet;
 	sf::Texture groundtexture;
@@ -89,13 +92,11 @@ int main()
 	paths.push_back("../SFML_RogueLike/Art/World/Test.json");
 	paths.push_back("../SFML_RogueLike/Art/World/Test2.json");
 
-	levelManager = new LevelManager(tileSet, paths, NextLevel, player);
+	levelManager = new LevelManager(tileSet, paths, NextLevel, player, &em);
 
 	levelManager->GetCurrentLevel()->Load(player);
 
 #pragma endregion
-
-	EnemiesManager em = EnemiesManager(&player->GetCollider().GetBody(), &entities);
 
 	while (window.isOpen())
 	{
@@ -117,6 +118,7 @@ int main()
 		}
 
 		view.setCenter(player->GetPosition());
+		levelManager->CenterRectangleShape(player->GetPosition());
 
 		float aspectRatio = float(window.getSize().x / float(window.getSize().y));
 		button.SetPosition(sf::Vector2f(0, 100) + player->GetPosition());
@@ -128,19 +130,19 @@ int main()
 
 		window.clear();
 
-
 		Collider pcoll = player->GetCollider();
 		levelManager->GetCurrentLevel()->CheckCollision(pcoll);
 		levelManager->GetCurrentLevel()->CheckTrigger(pcoll);
 		levelManager->GetCurrentLevel()->Draw(window);
+		levelManager->Update(deltaTime);
 
 		for (Entity* entity : entities)
 		{
 			entity->Draw(window);
 			entity->Update(deltaTime);
 		}
-		em.Update(deltaTime);
-
+		//em.Update(deltaTime);
+		levelManager->Draw(window);
 
 		window.setView(view);
 		window.display();
@@ -152,5 +154,5 @@ int main()
 void NextLevel()
 {
 	levelManager->NextLevel();
-	std::cout << "Player in doo\n";
+	std::cout << "Player in door\n";
 }

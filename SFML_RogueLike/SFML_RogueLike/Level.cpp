@@ -1,6 +1,8 @@
 #include "Level.h"
 
 Level::Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath)
+	:	doneLoading(false),
+		startLoading(false)
 {
 	this->tileSet = tileSet;
 	this->levelPath = levelPath;
@@ -20,6 +22,7 @@ void Level::Load(Player* p)
 {
 	tson::Tileson t;
 	map = t.parse(levelPath);
+	doneLoading = false;
 
 	if (map->getStatus() == tson::ParseStatus::OK)
 	{
@@ -76,6 +79,8 @@ void Level::Load(Player* p)
 	{
 		std::cout << map->getStatusMessage() << std::endl;
 	}
+
+	doneLoading = true;
 }
 
 void Level::Unload()
@@ -100,7 +105,10 @@ void Level::CheckTrigger(Collider playerCollider)
 {
 	for (auto door : doors)
 		if (door.GetCollider().CheckTrigger(playerCollider) && Changelevel != nullptr)
+		{
 			Changelevel();
+			startLoading = true;
+		}
 }
 
 
