@@ -19,6 +19,7 @@ public:
 	sf::IntRect uvRect;
 	sf::Texture* GetTexture() { return texture; }
 
+	float GetSwitchTime() { return switchTime; }
 	bool GetLoopedOnce() { return loopedOnce; }
 
 	void UpdateFaceingDirection(bool faceRight);

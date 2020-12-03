@@ -7,6 +7,8 @@
 #include "EnemiesManager.h"
 #include "Player.h"
 #include "Slime.h"
+#include "Goblin.h"
+#include "Ghost.h"
 #include "Ground.h"
 #include "Collider.h"
 #include "Button.h"
@@ -68,13 +70,29 @@ int main()
 
 	Player* player = new Player(playerAnimations, 250.0f);
 
+	std::vector<Animation*> goblinAnimations;
+	sf::Texture goblinDefault;
+
+	goblinDefault.loadFromFile("Art/Evilmerchant.png");
+	goblinAnimations.push_back(new Animation(&goblinDefault, 1, 0.25f, "Default"));
+
+	Goblin* goblin = new Goblin(goblinAnimations, sf::Vector2f(1000, 1000), player->GetBody());
+
+	std::vector<Animation*> ghostAnimations;
+	sf::Texture ghostDefault;
+
+	ghostDefault.loadFromFile("Art/GhostDefault.png");
+	ghostAnimations.push_back(new Animation(&ghostDefault, 9, 0.2f, "Default"));
+	Ghost* g = new Ghost(ghostAnimations, sf::Vector2f(1000, 1000), player->GetBody());
+
 	std::vector<Entity*> entities;
 	entities.push_back(player);
+	entities.push_back(g);
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
-	EnemiesManager em = EnemiesManager(&player->GetCollider().GetBody(), &entities);
+	EnemiesManager em = EnemiesManager(player->GetBody(), &entities);
 
 #pragma region  Level gen
 	std::map<int, sf::Texture*> tileSet;

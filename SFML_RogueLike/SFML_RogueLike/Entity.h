@@ -17,6 +17,7 @@ public:
 
 	virtual void OnCollision(sf::Vector2f direction);
 	Collider GetCollider() { return Collider(body); }
+	sf::RectangleShape* GetBody() { return &body; };
 
 	void OnHit(int damage);
 

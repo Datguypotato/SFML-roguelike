@@ -39,3 +39,9 @@ sf::Vector2f Enemy::GetPlayerDir()
 	float temp = (float)sqrt(delta.x * delta.x + delta.y * delta.y);
 	return delta / temp;
 }
+
+float Enemy::GetVectorDistance(sf::Vector2f target)
+{
+	return sqrt(pow(target.x - body.getPosition().x, 2) +
+				pow(target.y - body.getPosition().y, 2));
+}

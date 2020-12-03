@@ -12,6 +12,7 @@ public:
 	void LookAtPlayer();
 
 	sf::Vector2f GetPlayerDir();
+	float GetVectorDistance(sf::Vector2f target);
 
 protected:
 	sf::RectangleShape* playerBody;
