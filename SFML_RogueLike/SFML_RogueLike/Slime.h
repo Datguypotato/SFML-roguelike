@@ -5,6 +5,7 @@ class Slime : public Enemy
 {
 public:
 	Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerBody);
+	Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, sf::Vector2f spawnPosition);
 	~Slime();
 	Slime(const Slime& rhs);
 
@@ -12,8 +13,9 @@ public:
 	void Update(float deltaTime) override;
 	void OnCollision(sf::Vector2f direction);
 
-private:
+	void JumpToPlayer();
 
+protected:
 	sf::Vector2f jumpDir;
 
 	float jumpCooldown;
@@ -21,5 +23,5 @@ private:
 
 	bool isJumping;
 
-	sf::SoundBuffer jumpBuffer;
+	sf::SoundBuffer jumpSound;
 };

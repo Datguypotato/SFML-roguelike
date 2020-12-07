@@ -11,8 +11,23 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf:
 	isJumping = false;
 	jumpDir = sf::Vector2f();
 
-	jumpBuffer.loadFromFile("Audio/sfx_sound_neutral6.wav");
-	sound.setBuffer(jumpBuffer);
+	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
+	sound.setBuffer(jumpSound);
+}
+
+Slime::Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, sf::Vector2f spawnPosition)
+	:	Enemy(textureSize, bodySize, health, animations, playerBody, speed)
+{
+	body.setPosition(spawnPosition);
+
+	isAlive = true;
+	jumpCoolDownMax = 0.5f;
+	jumpCooldown = jumpCoolDownMax;
+	isJumping = false;
+	jumpDir = sf::Vector2f();
+
+	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
+	sound.setBuffer(jumpSound);
 }
 
 Slime::~Slime()
@@ -43,15 +58,7 @@ void Slime::Update(float deltaTime)
 
 	if (jumpCooldown <= 0.0f)
 	{
-		isJumping = !isJumping;
-		jumpCooldown = jumpCoolDownMax;
-
-		if (isJumping)
-		{
-			jumpDir = GetPlayerDir();
-			sound.play();
-		}
-		AC.PlayNoInterupt("Jump", faceRight);
+		JumpToPlayer();
 	}
 
 	if (isJumping)
@@ -68,6 +75,19 @@ void Slime::Update(float deltaTime)
 	AC.UpdateAnimation(deltaTime, faceRight);
 	body.move(velocity * deltaTime);
 	TextureBody.setPosition(body.getPosition());
+}
+
+void Slime::JumpToPlayer()
+{
+	isJumping = !isJumping;
+	jumpCooldown = jumpCoolDownMax;
+
+	if (isJumping)
+	{
+		jumpDir = GetPlayerDir();
+		sound.play();
+	}
+	AC.PlayNoInterupt("Jump", faceRight);
 }
 
 void Slime::OnCollision(sf::Vector2f direction)
@@ -94,3 +114,5 @@ void Slime::OnCollision(sf::Vector2f direction)
 		velocity.y *= 0.2f;
 	}
 }
+
+

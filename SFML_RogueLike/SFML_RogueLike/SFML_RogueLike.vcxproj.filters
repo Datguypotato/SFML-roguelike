@@ -81,6 +81,9 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="SlimeBoss.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Ghost.h">
       <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SlimeBoss.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

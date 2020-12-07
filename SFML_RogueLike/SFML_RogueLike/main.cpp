@@ -9,6 +9,8 @@
 #include "Slime.h"
 #include "Goblin.h"
 #include "Ghost.h"
+#include "SlimeBoss.h"
+
 #include "Ground.h"
 #include "Collider.h"
 #include "Button.h"
@@ -70,8 +72,27 @@ int main()
 
 	Player* player = new Player(playerAnimations, 250.0f);
 
+	std::vector<Animation*> slimeAnimations = std::vector<Animation*>();
+	sf::Texture slimeDefault = sf::Texture();
+	sf::Texture slimeJump = sf::Texture();
+	sf::Texture slimeAir = sf::Texture();
+	sf::Texture slimeHit = sf::Texture();
+
+	slimeDefault.loadFromFile("Art/SlimeDefault.png");
+	slimeJump.loadFromFile("Art/SlimeJump.png");
+	slimeAir.loadFromFile("Art/SlimeInAir.png");
+	slimeHit.loadFromFile("Art/SlimeHit.png");
+
+	slimeAnimations.push_back(new Animation(&slimeDefault, 8, 0.05f, "Default"));
+	slimeAnimations.push_back(new Animation(&slimeJump, 3, 0.2f, "Jump"));
+	slimeAnimations.push_back(new Animation(&slimeAir, 1, 0.2f, "Air"));
+	slimeAnimations.push_back(new Animation(&slimeHit, 6, 0.2f, "Hit"));
+
+	SlimeBoss* slimeboss = new SlimeBoss(slimeAnimations, sf::Vector2f(500, 500), player->GetBody());
+
 	std::vector<Entity*> entities;
 	entities.push_back(player);
+	entities.push_back(slimeboss);
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -152,7 +173,7 @@ int main()
 			}
 				
 		}
-		em.Update(deltaTime);
+		//em.Update(deltaTime);
 		levelManager->Draw(window);
 
 		window.setView(view);
