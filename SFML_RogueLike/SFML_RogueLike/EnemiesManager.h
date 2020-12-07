@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Slime.h"
 #include "Ghost.h"
+#include "Goblin.h"
 
 class EnemiesManager
 {
@@ -15,6 +16,8 @@ public:
 
 private:
 	Slime* BuildSlime(sf::Vector2f spawnPos);
+	Goblin* BuildGoblin(sf::Vector2f spawnPos);
+	Ghost* BuildGhost(sf::Vector2f spawnPos);
 
 
 	std::vector<Entity*>* entities;

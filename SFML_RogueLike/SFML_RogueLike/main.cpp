@@ -70,28 +70,8 @@ int main()
 
 	Player* player = new Player(playerAnimations, 250.0f);
 
-	std::vector<Animation*> goblinAnimations;
-	sf::Texture goblinDefault;
-
-	goblinDefault.loadFromFile("Art/Evilmerchant.png");
-	goblinAnimations.push_back(new Animation(&goblinDefault, 1, 0.25f, "Default"));
-
-	Goblin* goblin = new Goblin(goblinAnimations, sf::Vector2f(1000, 1000), player->GetBody());
-
-	std::vector<Animation*> ghostAnimations;
-	sf::Texture ghostDefault;
-	sf::Texture ghostAttack;
-
-	ghostDefault.loadFromFile("Art/GhostDefault.png");
-	ghostAttack.loadFromFile("Art/GhostAttack.png");
-
-	ghostAnimations.push_back(new Animation(&ghostDefault, 9, 0.2f, "Default"));
-	ghostAnimations.push_back(new Animation(&ghostAttack, 40, 0.1f, "Attack"));
-	Ghost* g = new Ghost(ghostAnimations, sf::Vector2f(1000, 1000), player->GetBody());
-
 	std::vector<Entity*> entities;
 	entities.push_back(player);
-	entities.push_back(g);
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -142,6 +122,7 @@ int main()
 		view.setCenter(player->GetPosition());
 		levelManager->CenterRectangleShape(player->GetPosition());
 
+		// testing ui
 		float aspectRatio = float(window.getSize().x / float(window.getSize().y));
 		button.SetPosition(sf::Vector2f(0, 100) + player->GetPosition());
 
@@ -166,12 +147,12 @@ int main()
 			{
 				if (entity->GetCollider().CheckCollision(pcoll, 0.8f))
 				{
-					player->OnHit(100);
+					player->OnHit(10);
 				}
 			}
 				
 		}
-		//em.Update(deltaTime);
+		em.Update(deltaTime);
 		levelManager->Draw(window);
 
 		window.setView(view);

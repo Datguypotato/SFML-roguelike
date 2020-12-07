@@ -27,9 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AnimatorController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,8 +75,11 @@
     <ClCompile Include="Goblin.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
     <ClCompile Include="Ghost.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,7 +132,7 @@
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Ghost.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

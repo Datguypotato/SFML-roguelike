@@ -1,17 +1,17 @@
 #include "Ghost.h"
 
 Ghost::Ghost(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* pb)
-	:	Enemy(sf::Vector2f(48, 54), sf::Vector2f(45, 50), 50, animations, pb, 150.0f),
-		blinkTime(3.0f),
-		blinkTimeMax(blinkTime),
+	:	Enemy(sf::Vector2f(60, 60), sf::Vector2f(30, 30), 50, animations, pb, 150.0f),
+		ActionTime(1.5f),
+		actionTimeMax(ActionTime),
 		blinkDistance(100.0f),
-		attackRange(250),
+		attackRange(200),
 		dashTime(2),
 		dashTimeMax(dashTime),
 		isDashing(false)
 {
 	body.setPosition(spawnPosition);
-	attackCooldown = 2.0f;
+	attackCooldown = 1.6f;
 	attackCooldownMax = attackCooldown;
 }
 
@@ -23,49 +23,55 @@ void Ghost::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
 	std::string playName;
+	//std::cout << "Action Time " << ActionTime << std::endl;
 
-	attackCooldown -= deltaTime;
-	//TODO: the timming is rubbish either split the animation in 2 or time it better
 	if (!isDashing)
 	{
-		if (GetVectorDistance(playerBody->getPosition()) < attackRange && attackCooldown <= 0)
+		ActionTime -= deltaTime;
+		if (ActionTime <= 0)
 		{
-			// do dash attack
-			isDashing = true;
-			dashDir = GetPlayerDir();
-			playName = "Attack";
-			std::cout << "player in range\n";
-		}
-		else
-		{
-			//blink towards player
-			blinkTime -= deltaTime;
-			playName = "Default";
+			ActionTime = actionTimeMax;
+			TextureBody.setFillColor(sf::Color(255, 255, 255, 155));
 
-			if (blinkTime <= 0)
+			if (GetVectorDistance(playerBody->getPosition()) <= attackRange)
 			{
+				// charge attack
+				isDashing = true;
+				dashDir = GetPlayerDir();
+				playName = "Charge";
+				std::cout << "player in range\n";
+			}
+			else
+			{
+				// blink towards player
+				ActionTime -= deltaTime;
+				playName = "Default";
+
 				sf::Vector2f teleportPos = (GetPlayerDir() * blinkDistance) + body.getPosition();
-				blinkTime -= deltaTime;
-				blinkTime = blinkTimeMax;
 
 				if (GetPlayerDir().x < 0)
 					faceRight = false;
-				else if(GetPlayerDir().x >= 0)
+				else if (GetPlayerDir().x >= 0)
 					faceRight = true;
 
 				body.setPosition(teleportPos);
 			}
 		}
+
 	}
 	else
-	{
-		//std::cout << "Attack cooldown " << attackCooldown << std::endl;		
+	{		
+		// attack
+		attackCooldown -= deltaTime;
+		TextureBody.setFillColor(sf::Color::White);
+
 		if (attackCooldown <= 0)
 		{
 			playName = "Attack";
 			dashTime -= deltaTime;
 			if (dashTime <= 0.0f)
 			{
+				playName = "Default";
 				isDashing = false;
 				dashTime = dashTimeMax;
 				attackCooldown = attackCooldownMax;
@@ -75,7 +81,6 @@ void Ghost::Update(float deltaTime)
 				velocity = dashDir * speed;
 			}
 		}
-
 	}
 
 	body.move(velocity * deltaTime);

@@ -12,8 +12,8 @@ public:
     void Update(float deltaTime);
 
 private:
-    float blinkTime;
-    float blinkTimeMax;
+    float ActionTime;
+    float actionTimeMax;
     float blinkDistance;
 
     float attackCooldown;

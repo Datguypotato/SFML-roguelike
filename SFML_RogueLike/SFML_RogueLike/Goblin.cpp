@@ -22,7 +22,7 @@ void Goblin::Update(float deltaTime)
 	{
 		if (GetVectorDistance(playerBody->getPosition()) < attackRange)
 		{
-			std::cout << "Player in range\n";
+			//std::cout << "Player in range\n";
 			// player in range
 			isAttacking = true;
 
