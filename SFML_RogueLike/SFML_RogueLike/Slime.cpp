@@ -15,6 +15,7 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf:
 	sound.setBuffer(jumpSound);
 }
 
+// for the Slime boss
 Slime::Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, sf::Vector2f spawnPosition)
 	:	Enemy(textureSize, bodySize, health, animations, playerBody, speed)
 {
@@ -51,14 +52,29 @@ Slime* Slime::Clone() const
 void Slime::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
-	std::string playName;
-
-	jumpCooldown -= deltaTime;
 		
+	JumpToPlayer(deltaTime);
 
+	AC.Play(playName, faceRight);
+	AC.UpdateAnimation(deltaTime, faceRight);
+	body.move(velocity * deltaTime);
+	TextureBody.setPosition(body.getPosition());
+}
+
+void Slime::JumpToPlayer(float deltaTime)
+{
+	jumpCooldown -= deltaTime;
 	if (jumpCooldown <= 0.0f)
 	{
-		JumpToPlayer();
+		isJumping = !isJumping;
+		jumpCooldown = jumpCoolDownMax;
+
+		if (isJumping)
+		{
+			jumpDir = GetPlayerDir();
+			sound.play();
+		}
+		AC.PlayNoInterupt("Jump", faceRight);
 	}
 
 	if (isJumping)
@@ -70,24 +86,7 @@ void Slime::Update(float deltaTime)
 	{
 		playName = "Default";
 	}
-
-	AC.Play(playName, faceRight);
-	AC.UpdateAnimation(deltaTime, faceRight);
-	body.move(velocity * deltaTime);
-	TextureBody.setPosition(body.getPosition());
-}
-
-void Slime::JumpToPlayer()
-{
-	isJumping = !isJumping;
-	jumpCooldown = jumpCoolDownMax;
-
-	if (isJumping)
-	{
-		jumpDir = GetPlayerDir();
-		sound.play();
-	}
-	AC.PlayNoInterupt("Jump", faceRight);
+	
 }
 
 void Slime::OnCollision(sf::Vector2f direction)

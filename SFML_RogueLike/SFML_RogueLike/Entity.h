@@ -13,7 +13,7 @@ public:
 	virtual Entity* Clone() const = 0;
 
 	virtual void Update(float deltaTime);
-	void Draw(sf::RenderWindow& window);
+	virtual void Draw(sf::RenderWindow& window);
 
 	virtual void OnCollision(sf::Vector2f direction);
 	Collider GetCollider() { return Collider(body); }
@@ -30,12 +30,15 @@ protected:
 	sf::RectangleShape TextureBody;
 	sf::RectangleShape body;
 
+	std::string playName;
 	AnimatorController AC;
 	bool faceRight;
 
+	int attackDamage;
 	float speed;
 	bool isAlive;
 	int health;
+
 	float damageCooldown;
 	float damageCooldownMax;
 

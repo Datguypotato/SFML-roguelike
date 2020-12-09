@@ -5,7 +5,8 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 		isAlive(true),
 		AC(animations),
 		damageCooldown(1.0f),
-		damageCooldownMax(damageCooldown)
+		damageCooldownMax(damageCooldown),
+		playName("Default")
 {
 	TextureBody.setSize(textureSize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);

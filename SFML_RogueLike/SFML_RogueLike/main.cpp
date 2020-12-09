@@ -77,11 +77,12 @@ int main()
 	sf::Texture slimeJump = sf::Texture();
 	sf::Texture slimeAir = sf::Texture();
 	sf::Texture slimeHit = sf::Texture();
+	sf::Texture slimeBite = sf::Texture();
 
 	slimeDefault.loadFromFile("Art/SlimeDefault.png");
 	slimeJump.loadFromFile("Art/SlimeJump.png");
 	slimeAir.loadFromFile("Art/SlimeInAir.png");
-	slimeHit.loadFromFile("Art/SlimeHit.png");
+	slimeHit.loadFromFile("Art/SlimeHit.png");	
 
 	slimeAnimations.push_back(new Animation(&slimeDefault, 8, 0.05f, "Default"));
 	slimeAnimations.push_back(new Animation(&slimeJump, 3, 0.2f, "Jump"));

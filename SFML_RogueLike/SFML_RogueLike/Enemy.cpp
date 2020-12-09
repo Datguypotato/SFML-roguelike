@@ -14,6 +14,7 @@ Enemy::Enemy(const Enemy& rhs)
 
 Enemy::~Enemy()
 {
+	playerBody = nullptr;
 }
 
 Entity* Enemy::Clone() const

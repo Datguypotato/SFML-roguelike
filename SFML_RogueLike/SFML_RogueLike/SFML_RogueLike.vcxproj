@@ -26,6 +26,7 @@
     <ClCompile Include="EnemiesManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="EnemiesManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Ground.h" />

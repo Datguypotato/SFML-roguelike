@@ -4,10 +4,10 @@
 
 enum class AttackPattern
 {
-	Projectile,
-	Jump,
-	Bite,
-	Move
+	Move = 0,
+	Projectile = 1,
+	Jump = 2,
+	Bite = 3,
 };
 
 class SlimeBoss : public Slime
@@ -18,6 +18,9 @@ public:
 	void Update(float deltaTime);
 
 private:
+	float patternTime;
+	float patternTimeMax;
+
 	AttackPattern activePattern;
 };
 
