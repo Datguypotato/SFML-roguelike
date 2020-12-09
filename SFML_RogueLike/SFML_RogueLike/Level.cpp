@@ -69,6 +69,7 @@ void Level::Load(Player* p)
 					if (points.isPoint() && points.getName() == "PlayerSpawn")
 					{
 						p->SetPosition(sf::Vector2f(points.getPosition().x, points.getPosition().y));
+						std::cout << "player start position = " << points.getPosition().x << " " << points.getPosition().y << std::endl;
 					}
 				}
 			}

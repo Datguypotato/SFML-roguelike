@@ -12,14 +12,11 @@ public:
 	LevelManager(std::map<int, sf::Texture*> tilset, std::vector<fs::path> paths, std::function<void()> Changelevel, Player* p, EnemiesManager* em);
 	~LevelManager();
 
-	void Update(float deltaTime);
-
 	void NextLevel();
 	void SwitchLevel(int index);
 	void CenterRectangleShape(sf::Vector2f newPos);
 
 	Level* GetCurrentLevel();
-	void Draw(sf::RenderWindow & window);
 
 private:
 	std::vector<Level*> levels;

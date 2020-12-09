@@ -29,6 +29,7 @@ void GameManager::Update(float deltaTime)
 	{
 		enemy.Update(deltaTime);
 	}
+
 }
 
 void GameManager::CheckCollision()
@@ -46,6 +47,8 @@ void GameManager::CheckCollision()
 
 void GameManager::Draw()
 {
+	window->clear();
+
 	levelmanager.GetCurrentLevel()->Draw(*window);
 	player.Draw(*window);
 
@@ -54,5 +57,7 @@ void GameManager::Draw()
 		enemy.Draw(*window);
 	}
 
-	
+	view.setCenter(player.GetPosition());
+	window->setView(view);
+	window->display();
 }

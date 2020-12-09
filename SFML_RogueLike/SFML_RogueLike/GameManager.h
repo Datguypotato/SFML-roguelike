@@ -21,6 +21,9 @@ public:
 	void CheckCollision();
 	void Draw();
 
+	sf::RenderWindow* GetWindow() { return window; }
+	Player GetPlayer() { return player; }
+
 private:
 	sf::View view;
 	sf::RenderWindow* window;

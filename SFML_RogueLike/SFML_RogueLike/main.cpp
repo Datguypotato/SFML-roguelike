@@ -4,6 +4,7 @@
 #include <string.h>
 #include <cmath>
 
+#include "GameManager.h"
 #include "EnemiesManager.h"
 #include "Player.h"
 #include "Slime.h"
@@ -42,7 +43,7 @@ void ButtonClicked(sf::RectangleShape box)
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
+	//sf::RenderWindow window(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));
 
 #pragma region UI
@@ -52,7 +53,7 @@ int main()
 	testingText = sf::Text("button", font, 10);
 	testingText.setFillColor(sf::Color::Blue);
 
-	Button button = Button(sf::Vector2f(200, 100), window.mapPixelToCoords(sf::Vector2i(0, 0)), std::function(ButtonClicked));
+	//Button button = Button(sf::Vector2f(200, 100), window.mapPixelToCoords(sf::Vector2i(0, 0)), std::function(ButtonClicked));
 #pragma endregion
 
 	// load player textures
@@ -70,7 +71,7 @@ int main()
 	playerAnimations.push_back(new Animation(&playerWalk, 12, 0.12f, "Walk"));
 	playerAnimations.push_back(new Animation(&playerAttack, 9, 0.035f, "Attack"));
 
-	Player* player = new Player(playerAnimations, 250.0f);
+	Player player = Player(playerAnimations, 250.0f);
 
 	std::vector<Animation*> slimeAnimations = std::vector<Animation*>();
 	sf::Texture slimeDefault = sf::Texture();
@@ -89,16 +90,16 @@ int main()
 	slimeAnimations.push_back(new Animation(&slimeAir, 1, 0.2f, "Air"));
 	slimeAnimations.push_back(new Animation(&slimeHit, 6, 0.2f, "Hit"));
 
-	SlimeBoss* slimeboss = new SlimeBoss(slimeAnimations, sf::Vector2f(500, 500), player->GetBody());
+	SlimeBoss* slimeboss = new SlimeBoss(slimeAnimations, sf::Vector2f(500, 500), player.GetBody());
 
 	std::vector<Entity*> entities;
-	entities.push_back(player);
+	entities.push_back(&player);
 	entities.push_back(slimeboss);
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
-	EnemiesManager em = EnemiesManager(player->GetBody(), &entities);
+	EnemiesManager em = EnemiesManager(player.GetBody(), &entities);
 
 #pragma region  Level gen
 	std::map<int, sf::Texture*> tileSet;
@@ -116,69 +117,67 @@ int main()
 	paths.push_back("../SFML_RogueLike/Art/World/Test.json");
 	paths.push_back("../SFML_RogueLike/Art/World/Test2.json");
 
-	levelManager = new LevelManager(tileSet, paths, NextLevel, player, &em);
-
-	levelManager->GetCurrentLevel()->Load(player);
+	levelManager = new LevelManager(tileSet, paths, NextLevel, &player, &em);
+	GameManager game = GameManager(view, player, *levelManager);
+	levelManager->GetCurrentLevel()->Load(&player);
 
 #pragma endregion
 
-	while (window.isOpen())
+
+
+	while (game.GetWindow()->isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();
 		if (deltaTime > 1.0f / 20.0f)
 			deltaTime = 1.0f / 20.0f;
 
 		sf::Event evnt;
-		while (window.pollEvent(evnt))
+		while (game.GetWindow()->pollEvent(evnt))
 		{
 			switch (evnt.type)
 			{
 			case sf::Event::Closed:
-				window.close();
+				game.GetWindow()->close();
 				break;
 			case sf::Event::Resized:
-				ResizeView(window, view);
+				game.ResizeView(*game.GetWindow(), view);
 			}
 		}
-
-		view.setCenter(player->GetPosition());
-		levelManager->CenterRectangleShape(player->GetPosition());
+		//levelManager->CenterRectangleShape(player->GetPosition());
 
 		// testing ui
-		float aspectRatio = float(window.getSize().x / float(window.getSize().y));
-		button.SetPosition(sf::Vector2f(0, 100) + player->GetPosition());
+		//float aspectRatio = float(window.getSize().x / float(window.getSize().y));
+		//button.SetPosition(sf::Vector2f(0, 100) + player->GetPosition());
 
-		sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-		if (button.CursorIsInBox(mousepos))
-			button.OnClick();
+		//sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+		//if (button.CursorIsInBox(mousepos))
+		//	button.OnClick();
 
+		game.Update(deltaTime);
+		game.CheckCollision();
+		game.Draw();		
+		//Collider pcoll = player->GetCollider();
+		//levelManager->GetCurrentLevel()->CheckCollision(pcoll);
+		//levelManager->GetCurrentLevel()->CheckTrigger(pcoll);
+		//levelManager->GetCurrentLevel()->Draw(window);
+		//levelManager->Update(deltaTime);
 
-		window.clear();
+		//for (Entity* entity : entities)
+		//{
+		//	entity->Draw(window);
+		//	entity->Update(deltaTime);
+		//	if (entity != player)
+		//	{
+		//		if (entity->GetCollider().CheckCollision(pcoll, 0.8f))
+		//		{
+		//			player->OnHit(10);
+		//		}
+		//	}
+		//		
+		//}
+		////em.Update(deltaTime);
+		//evelManager->Draw(window);
 
-		Collider pcoll = player->GetCollider();
-		levelManager->GetCurrentLevel()->CheckCollision(pcoll);
-		levelManager->GetCurrentLevel()->CheckTrigger(pcoll);
-		levelManager->GetCurrentLevel()->Draw(window);
-		levelManager->Update(deltaTime);
-
-		for (Entity* entity : entities)
-		{
-			entity->Draw(window);
-			entity->Update(deltaTime);
-			if (entity != player)
-			{
-				if (entity->GetCollider().CheckCollision(pcoll, 0.8f))
-				{
-					player->OnHit(10);
-				}
-			}
-				
-		}
-		//em.Update(deltaTime);
-		levelManager->Draw(window);
-
-		window.setView(view);
-		window.display();
 	}
 
 	return 0;

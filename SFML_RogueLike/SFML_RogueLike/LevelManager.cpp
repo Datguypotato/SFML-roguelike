@@ -22,17 +22,6 @@ LevelManager::~LevelManager()
 {
 }
 
-void LevelManager::Update(float deltaTime)
-{
-	//TODO enlarge the size of transition screen till done loading
-	//if (levels[activeLevelIndex]->isStartLoading())
-	//{
-	//	lerpTime += deltaTime;
-	//	transitionScreen.setScale(Lerp(transitionScreen.getScale().x, 1920.0f, lerpTime)
-	//							, Lerp(transitionScreen.getScale().y, 1080.0f, lerpTime));
-	//}
-}
-
 float LevelManager::Lerp(float a, float b, float t)
 {
 	return a * (1 - t) + b * t;
@@ -61,9 +50,4 @@ Level* LevelManager::GetCurrentLevel()
 	return levels[activeLevelIndex];
 }
 
-void LevelManager::Draw(sf::RenderWindow& window)
-{
-	//if (levels[activeLevelIndex]->isStartLoading())
-		//window.draw(transitionScreen);
-}
 
