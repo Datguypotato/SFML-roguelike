@@ -9,7 +9,7 @@
 class LevelManager
 {
 public:
-	LevelManager(std::map<int, sf::Texture*> tilset, std::vector<fs::path> paths, std::function<void()> Changelevel, Player* p, EnemiesManager* em);
+	LevelManager(std::function<void()> Changelevel, Player* p);
 	~LevelManager();
 
 	void NextLevel();
@@ -24,6 +24,7 @@ private:
 	Player* p;
 
 	EnemiesManager* em;
+	std::map<int, sf::Texture*>* CreateTiles();
 	//sf::RectangleShape transitionScreen;
 	//sf::Vector2f transitionScale;
 

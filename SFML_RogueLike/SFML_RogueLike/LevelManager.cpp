@@ -1,21 +1,21 @@
 #include "LevelManager.h"
 
-LevelManager::LevelManager(std::map<int, sf::Texture*> tileset, std::vector<fs::path> paths, std::function<void()> Changelevel, Player* p, EnemiesManager* em)
+LevelManager::LevelManager(std::function<void()> Changelevel, Player* p)
 	:	activeLevelIndex(0),
 		lerpTime(0)
 {
 	this->p = p;
 	levels = std::vector<Level*>();
+
+	std::vector<fs::path> paths = std::vector<fs::path>();
+	paths.push_back("../SFML_RogueLike/Art/World/Test.json");
+	paths.push_back("../SFML_RogueLike/Art/World/Test2.json");
+
+	levels = std::vector<Level*>();
 	for (auto path : paths)
 	{
-		levels.push_back(new Level(tileset, path, Changelevel));
+		levels.push_back(new Level(CreateTiles(), path, Changelevel));
 	}
-
-	//transitionScale = sf::Vector2f(320.0f, 180.0f);
-	//transitionScreen.setSize(transitionScale);
-	//transitionScreen.setOrigin(transitionScreen.getSize() / 2.0f);
-	//transitionScreen.setFillColor(sf::Color::Black);
-	//transitionScreen.setOutlineColor(sf::Color::White);
 }
 
 LevelManager::~LevelManager()
@@ -50,4 +50,19 @@ Level* LevelManager::GetCurrentLevel()
 	return levels[activeLevelIndex];
 }
 
+std::map<int, sf::Texture*>* LevelManager::CreateTiles()
+{
+	std::map<int, sf::Texture*>* tileSet = new std::map<int, sf::Texture*>();
+	sf::Texture* groundtexture = new sf::Texture();
+	sf::Texture* oldGround = new sf::Texture();
+	sf::Texture* door = new sf::Texture();
 
+	groundtexture->loadFromFile("Art/World/GrassTopDown.png");
+	oldGround->loadFromFile("Art/World/GrassGround.png");
+	door->loadFromFile("Art/World/door.png");
+	tileSet->insert(std::pair(0, groundtexture));
+	tileSet->insert(std::pair(1, oldGround));
+	tileSet->insert(std::pair(2, door));
+
+	return tileSet;
+}

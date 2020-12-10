@@ -1,6 +1,6 @@
 #include "Level.h"
 
-Level::Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath)
+Level::Level(std::map<int, sf::Texture*>* tileSet, fs::path levelPath)
 	:	doneLoading(false),
 		startLoading(false)
 {
@@ -8,7 +8,7 @@ Level::Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath)
 	this->levelPath = levelPath;
 }
 
-Level::Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath, std::function<void()> Changelevel)
+Level::Level(std::map<int, sf::Texture*>* tileSet, fs::path levelPath, std::function<void()> Changelevel)
 	:	Level::Level(tileSet, levelPath)
 {
 	this->Changelevel = Changelevel;
@@ -45,17 +45,16 @@ void Level::Load(Player* p)
 					sf::Vector2f Pos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
 					sf::Vector2f size = sf::Vector2f(obj.getTile()->getTileSize().x, obj.getTile()->getTileSize().y);
 
-					// TODO: doors don't position themself always get (0, 0) for some reason
 					switch (blockID)
 					{
 					case(0):
-						floors.push_back(Ground(tileSet[blockID], size, Pos));
+						floors.push_back(Ground(tileSet->operator[](blockID), size, Pos));
 						break;
 					case(1):
-						walls.push_back(Wall(tileSet[blockID], size, Pos));
+						walls.push_back(Wall(tileSet->operator[](blockID), size, Pos));
 						break;
 					case(2):
-						doors.push_back(LevelSwitcher(tileSet[blockID], size, Pos));
+						doors.push_back(LevelSwitcher(tileSet->operator[](blockID), size, Pos));
 						break;
 					default:
 						break;

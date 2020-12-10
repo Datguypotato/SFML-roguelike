@@ -12,26 +12,35 @@
 class GameManager
 {
 public:
-	GameManager(sf::View view, Player p, LevelManager lm);
-	~GameManager();
+	static GameManager* GetInstance();
 
-	void ResizeView(const sf::RenderWindow& window, sf::View& view);
+	void ResizeView();
 
+	void Start();
 	void Update(float deltaTime);
 	void CheckCollision();
 	void Draw();
 
+	void NextLevel();
+
 	sf::RenderWindow* GetWindow() { return window; }
-	Player GetPlayer() { return player; }
+	sf::View* GetView() { return view; }
+	Player* GetPlayer() { return player; }
 
 private:
-	sf::View view;
+	GameManager();
+	~GameManager();
+	static GameManager* instance;
+
+	Player* BuildPlayer();
+
+	sf::View* view;
 	sf::RenderWindow* window;
 	float totalTime;
 
 	std::vector<fs::path> paths;
-	LevelManager levelmanager;
+	LevelManager* levelmanager;
 
-	Player player;
+	Player* player;
 	std::vector<Enemy> enemies;
 };

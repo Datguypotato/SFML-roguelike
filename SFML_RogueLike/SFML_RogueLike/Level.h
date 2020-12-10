@@ -10,8 +10,8 @@
 class Level
 {
 public:
-	Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath);
-	Level(std::map<int, sf::Texture*> tileSet, fs::path levelPath, std::function<void()> Changelevel);
+	Level(std::map<int, sf::Texture*>* tileSet, fs::path levelPath);
+	Level(std::map<int, sf::Texture*>* tileSet, fs::path levelPath, std::function<void()> Changelevel);
 	~Level();
 
 	void Load(Player* p);
@@ -26,7 +26,7 @@ public:
 
 private:
 	std::unique_ptr<tson::Map> map;
-	std::map<int, sf::Texture*> tileSet;
+	std::map<int, sf::Texture*>* tileSet;
 	fs::path levelPath;
 	bool doneLoading;
 	bool startLoading;
