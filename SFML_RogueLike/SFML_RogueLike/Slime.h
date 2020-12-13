@@ -13,7 +13,7 @@ public:
 	void Update(float deltaTime) override;
 	void OnCollision(sf::Vector2f direction);
 
-	void JumpToPlayer(float deltaTime);
+	void JumpToPlayer();
 
 protected:
 	sf::Vector2f jumpDir;

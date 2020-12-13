@@ -37,6 +37,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="SlimeBoss.cpp" />
+    <ClCompile Include="TimeEvent.cpp" />
     <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
@@ -58,6 +59,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="SlimeBoss.h" />
+    <ClInclude Include="TimeEvent.h" />
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>

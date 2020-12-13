@@ -52,30 +52,6 @@ Slime* Slime::Clone() const
 void Slime::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
-		
-	JumpToPlayer(deltaTime);
-
-	AC.Play(playName, faceRight);
-	AC.UpdateAnimation(deltaTime, faceRight);
-	body.move(velocity * deltaTime);
-	TextureBody.setPosition(body.getPosition());
-}
-
-void Slime::JumpToPlayer(float deltaTime)
-{
-	jumpCooldown -= deltaTime;
-	if (jumpCooldown <= 0.0f)
-	{
-		isJumping = !isJumping;
-		jumpCooldown = jumpCoolDownMax;
-
-		if (isJumping)
-		{
-			jumpDir = GetPlayerDir();
-			sound.play();
-		}
-		AC.PlayNoInterupt("Jump", faceRight);
-	}
 
 	if (isJumping)
 	{
@@ -86,7 +62,25 @@ void Slime::JumpToPlayer(float deltaTime)
 	{
 		playName = "Default";
 	}
-	
+
+	AC.Play(playName, faceRight);
+	AC.UpdateAnimation(deltaTime, faceRight);
+	body.move(velocity * deltaTime);
+	TextureBody.setPosition(body.getPosition());
+}
+
+void Slime::JumpToPlayer()
+{
+	isJumping = !isJumping;
+	jumpCooldown = jumpCoolDownMax;
+
+	if (isJumping)
+	{
+		jumpDir = GetPlayerDir();
+		sound.play();
+	}
+	AC.PlayNoInterupt("Jump", faceRight);
+
 }
 
 void Slime::OnCollision(sf::Vector2f direction)

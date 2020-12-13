@@ -2,28 +2,15 @@
 
 GameManager::GameManager()
 	:	player(BuildPlayer()),
-		totalTime(0)
+		totalTime(0),
+		timedEvents(),
+		enemies()
 {
 	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 
 	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this),  player);
-}
-
-GameManager::~GameManager()
-{
-}
-
-GameManager* GameManager::instance = 0;
-
-GameManager* GameManager::GetInstance()
-{
-	if (!instance)
-	{
-		instance = new GameManager();
-	}
-
-	return instance;
+	em = new EnemiesManager(player->GetBody()); 
 }
 
 void GameManager::ResizeView()
@@ -36,6 +23,10 @@ void GameManager::ResizeView()
 void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player);
+
+	Slime* s = em->BuildSlime(em->RandomPos());
+	AddEvent(std::bind(&Slime::JumpToPlayer, s), 0.5f);
+	enemies.push_back(s);
 }
 
 void GameManager::Update(float deltaTime)
@@ -43,19 +34,29 @@ void GameManager::Update(float deltaTime)
 	totalTime += deltaTime;
 	player->Update(deltaTime);
 
-	for (Enemy enemy : enemies)
+	for (auto enemy : enemies)
 	{
-		enemy.Update(deltaTime);
+		enemy->Update(deltaTime);
 	}
 
+	for (TimeEvent* e : timedEvents)
+	{
+		e->Tick(deltaTime);
+		std::cout << "Timer: " << e->GetTimer() << std::endl;
+	}
+}
+
+void GameManager::AddEvent(std::function<void()> callback, float interval)
+{
+	timedEvents.push_back(new TimeEvent(callback, interval));
 }
 
 void GameManager::CheckCollision()
 {
 	Collider pcoll = player->GetCollider();
-	for (Enemy enemy : enemies)
+	for (auto enemy : enemies)
 	{
-		if (enemy.GetCollider().CheckCollision(pcoll, 0.8f))
+		if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
 			player->OnHit(1);
 	}
 
@@ -70,9 +71,10 @@ void GameManager::Draw()
 	levelmanager->GetCurrentLevel()->Draw(*window);
 	player->Draw(*window);
 
-	for (Enemy enemy : enemies)
+
+	for (auto enemy : enemies)
 	{
-		enemy.Draw(*window);
+		enemy->Draw(*window);
 	}
 
 	view->setCenter(player->GetPosition());
@@ -93,15 +95,15 @@ Player* GameManager::BuildPlayer()
 	playerWalk->loadFromFile("Art/PlayerWalk.png");
 	playerAttack->loadFromFile("Art/PlayerAttack.png");
 
-	playerAnimations.push_back(new Animation(playerDefault, 7, 0.25f, "Default"));
 	playerAnimations.push_back(new Animation(playerWalk, 12, 0.12f, "Walk"));
 	playerAnimations.push_back(new Animation(playerAttack, 9, 0.035f, "Attack"));
+	playerAnimations.push_back(new Animation(playerDefault, 7, 0.25f, "Default"));
 
 	return new Player(playerAnimations, 250.0f);
 }
 
 void GameManager::NextLevel()
 {
-	levelmanager->NextLevel();
+	//levelmanager->NextLevel();
 	std::cout << "Player in door\n";
 }

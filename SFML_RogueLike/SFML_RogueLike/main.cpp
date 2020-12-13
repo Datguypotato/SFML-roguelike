@@ -2,22 +2,8 @@
 #include <iostream>
 #include <tileson.hpp>
 #include <string.h>
-#include <cmath>
 
 #include "GameManager.h"
-#include "EnemiesManager.h"
-#include "Player.h"
-#include "Slime.h"
-#include "Goblin.h"
-#include "Ghost.h"
-#include "SlimeBoss.h"
-
-#include "Ground.h"
-#include "Collider.h"
-#include "Button.h"
-#include "Wall.h"
-#include "Level.h"
-#include "LevelManager.h"
 
 static const float VIEW_HEIGHT = 720.0f;
 static const float SLIME_SPAWN_TIMERMAX = 3.0f;
@@ -62,35 +48,32 @@ int main()
 
 	//SlimeBoss* slimeboss = new SlimeBoss(slimeAnimations, sf::Vector2f(500, 500), player.GetBody());
 
-	std::vector<Entity*> entities;
-	//entities.push_back(&player);
-	//entities.push_back(slimeboss);
 
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
 
-	GameManager* game = GameManager::GetInstance();
+	GameManager game = GameManager();
 
-	game->Start();
+	game.Start();
 
 
-	while (game->GetWindow()->isOpen())
+	while (game.GetWindow()->isOpen())
 	{
 		deltaTime = clock.restart().asSeconds();
 		if (deltaTime > 1.0f / 20.0f)
 			deltaTime = 1.0f / 20.0f;
 
 		sf::Event evnt;
-		while (game->GetWindow()->pollEvent(evnt))
+		while (game.GetWindow()->pollEvent(evnt))
 		{
 			switch (evnt.type)
 			{
 			case sf::Event::Closed:
-				game->GetWindow()->close();
+				game.GetWindow()->close();
 				break;
 			case sf::Event::Resized:
-				game->ResizeView();
+				game.ResizeView();
 			}
 		}
 
@@ -102,9 +85,9 @@ int main()
 		//if (button.CursorIsInBox(mousepos))
 		//	button.OnClick();
 
-		game->Update(deltaTime);
-		game->CheckCollision();
-		game->Draw();		
+		game.Update(deltaTime);
+		game.CheckCollision();
+		game.Draw();		
 	}
 
 	return 0;

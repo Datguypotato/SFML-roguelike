@@ -3,16 +3,17 @@
 #include <tileson.hpp>
 #include <vector>
 
+#include "TimeEvent.h"
+#include "LevelManager.h"
+#include "EnemiesManager.h"
+
 #include "Player.h"
 #include "Enemy.h"
-
-#include "Level.h"
-#include "LevelManager.h"
 
 class GameManager
 {
 public:
-	static GameManager* GetInstance();
+	GameManager();
 
 	void ResizeView();
 
@@ -27,12 +28,11 @@ public:
 	sf::View* GetView() { return view; }
 	Player* GetPlayer() { return player; }
 
-private:
-	GameManager();
-	~GameManager();
-	static GameManager* instance;
+	void AddEvent(std::function<void()> callback, float interval);
 
+private:
 	Player* BuildPlayer();
+	std::vector<TimeEvent*> timedEvents;
 
 	sf::View* view;
 	sf::RenderWindow* window;
@@ -40,7 +40,8 @@ private:
 
 	std::vector<fs::path> paths;
 	LevelManager* levelmanager;
+	EnemiesManager* em;
 
 	Player* player;
-	std::vector<Enemy> enemies;
+	std::vector<Enemy*> enemies;
 };

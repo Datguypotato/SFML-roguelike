@@ -23,7 +23,7 @@ private:
 	int activeLevelIndex;
 	Player* p;
 
-	EnemiesManager* em;
+	//EnemiesManager* em;
 	std::map<int, sf::Texture*>* CreateTiles();
 	//sf::RectangleShape transitionScreen;
 	//sf::Vector2f transitionScale;

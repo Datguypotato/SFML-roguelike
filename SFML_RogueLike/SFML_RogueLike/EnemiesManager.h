@@ -9,18 +9,17 @@
 class EnemiesManager
 {
 public:
-	EnemiesManager(sf::RectangleShape* playerBody, std::vector<Entity*>* entities);
+	EnemiesManager(sf::RectangleShape* playerBody);
 	~EnemiesManager();
 
-	void Update(float deltaTime);
+	sf::Vector2f RandomPos();
 
-private:
 	Slime* BuildSlime(sf::Vector2f spawnPos);
 	Goblin* BuildGoblin(sf::Vector2f spawnPos);
 	Ghost* BuildGhost(sf::Vector2f spawnPos);
 
 
-	std::vector<Entity*>* entities;
+private:
 	sf::RectangleShape* playerBody;
 
 	float currTimer;

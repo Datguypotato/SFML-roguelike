@@ -1,49 +1,25 @@
 #include "EnemiesManager.h"
 
-EnemiesManager::EnemiesManager(sf::RectangleShape* playerBody, std::vector<Entity*>* entities)
+EnemiesManager::EnemiesManager(sf::RectangleShape* playerBody)
 	:	currTimer(0.0f),
 		maxTimer(2.0f)
 {
 	this->playerBody = playerBody;
-	this->entities = entities;
 }
 
 EnemiesManager::~EnemiesManager()
 {
 }
 
-void EnemiesManager::Update(float deltaTime)
+sf::Vector2f EnemiesManager::RandomPos()
 {
-	currTimer -= deltaTime;
-
-	if (currTimer <= 0.0f)
-	{
-		currTimer = maxTimer - currTimer;
-
-		float randomX = 100 + (rand() % 1000);
-		float randomY = 100 + (rand() % 1000);
+	float randomX = 100 + (rand() % 1000);
+	float randomY = 100 + (rand() % 1000);
 
 
-		int randomId = rand() % 3;
+	int randomId = rand() % 3;
 
-		switch (randomId)
-		{
-		case 0:
-			entities->push_back(BuildSlime(sf::Vector2f(randomX, randomY)));
-			break;
-		case 1:
-			entities->push_back(BuildGoblin(sf::Vector2f(randomX, randomY)));
-			break;
-		case 2:
-			entities->push_back(BuildGhost(sf::Vector2f(randomX, randomY)));
-			break;
-		default:
-			std::cout << "Unexpected int " << randomId << std::endl;
-			break;
-		}
-		
-		std::cout << "chosen random monster is " << randomId << std::endl;
-	}
+	return sf::Vector2f(randomX, randomY);
 }
 
 Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos)
@@ -64,7 +40,11 @@ Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos)
 	slimeAnimations.push_back(new Animation(slimeJump, 3, 0.2f, "Jump"));
 	slimeAnimations.push_back(new Animation(slimeAir, 1, 0.2f, "Air"));
 	slimeAnimations.push_back(new Animation(slimeHit, 6, 0.2f, "Hit"));
-	return new Slime(slimeAnimations, spawnPos, playerBody);
+
+	Slime* temp = new Slime(slimeAnimations, spawnPos, playerBody);
+
+
+	return temp;
 }
 
 Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos)
