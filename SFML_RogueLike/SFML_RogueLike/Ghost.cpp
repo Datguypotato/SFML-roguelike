@@ -1,18 +1,18 @@
 #include "Ghost.h"
 
 Ghost::Ghost(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* pb)
-	:	Enemy(sf::Vector2f(60, 60), sf::Vector2f(30, 30), 50, animations, pb, 150.0f),
-		ActionTime(1.5f),
-		actionTimeMax(ActionTime),
+	:	Enemy(sf::Vector2f(60, 60), sf::Vector2f(30, 30), 50, animations, pb, 150.0f, 10),
 		blinkDistance(100.0f),
 		attackRange(200),
-		dashTime(2),
-		dashTimeMax(dashTime),
+		dashTime(2.0f),
+		actionTime(1.5f),
+		attackCooldown(1.5f),
 		isDashing(false)
 {
+	events.push_back(new TimeEvent(std::bind(&Ghost::Action, this), actionTime, false));
+	events.push_back(new TimeEvent(std::bind(&Ghost::StopDash, this), dashTime, true));
+
 	body.setPosition(spawnPosition);
-	attackCooldown = 1.6f;
-	attackCooldownMax = attackCooldown;
 }
 
 Ghost::~Ghost()
@@ -23,68 +23,53 @@ void Ghost::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
 	std::string playName;
-	//std::cout << "Action Time " << ActionTime << std::endl;
 
-	if (!isDashing)
+	if (isDashing)
 	{
-		ActionTime -= deltaTime;
-		if (ActionTime <= 0)
-		{
-			ActionTime = actionTimeMax;
-			TextureBody.setFillColor(sf::Color(255, 255, 255, 155));
-
-			if (GetVectorDistance(playerBody->getPosition()) <= attackRange)
-			{
-				// charge attack
-				isDashing = true;
-				dashDir = GetPlayerDir();
-				playName = "Charge";
-				std::cout << "player in range\n";
-			}
-			else
-			{
-				// blink towards player
-				ActionTime -= deltaTime;
-				playName = "Default";
-
-				sf::Vector2f teleportPos = (GetPlayerDir() * blinkDistance) + body.getPosition();
-
-				if (GetPlayerDir().x < 0)
-					faceRight = false;
-				else if (GetPlayerDir().x >= 0)
-					faceRight = true;
-
-				body.setPosition(teleportPos);
-			}
-		}
-
+		playName = "Attack";
+		velocity = dashDir * speed;
 	}
 	else
-	{		
-		// attack
-		attackCooldown -= deltaTime;
-		TextureBody.setFillColor(sf::Color::White);
-
-		if (attackCooldown <= 0)
-		{
-			playName = "Attack";
-			dashTime -= deltaTime;
-			if (dashTime <= 0.0f)
-			{
-				playName = "Default";
-				isDashing = false;
-				dashTime = dashTimeMax;
-				attackCooldown = attackCooldownMax;
-			}
-			else
-			{
-				velocity = dashDir * speed;
-			}
-		}
+	{
+		playName = "Default";
 	}
 
 	body.move(velocity * deltaTime);
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
 	TextureBody.setPosition(body.getPosition());
+}
+
+
+void Ghost::Action()
+{
+	if (!isDashing)
+	{
+		// if in attack range
+		if (GetVectorDistance(playerBody->getPosition()) <= attackRange)
+		{
+			playName = "Charge";
+			TextureBody.setFillColor(sf::Color::White);
+			isDashing = true;
+			dashDir = GetPlayerDir();
+			events[1]->Play();
+		}
+		else
+		{
+			playName = "Default";
+			TextureBody.setFillColor(sf::Color(255, 255, 255, 155));
+			BlinkToPlayer();
+		}
+	}
+}
+
+void Ghost::BlinkToPlayer()
+{
+	sf::Vector2f teleportPos = (GetPlayerDir() * blinkDistance + body.getPosition());
+	body.setPosition(teleportPos);
+}
+
+void Ghost::StopDash()
+{
+	isDashing = false;
 }

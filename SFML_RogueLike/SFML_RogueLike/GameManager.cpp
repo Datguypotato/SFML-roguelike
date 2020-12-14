@@ -3,14 +3,13 @@
 GameManager::GameManager()
 	:	player(BuildPlayer()),
 		totalTime(0),
-		timedEvents(),
-		enemies()
+		timedEvents()
 {
 	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 
 	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this),  player);
-	em = new EnemiesManager(player->GetBody()); 
+	em = new EnemiesManager(player); 
 }
 
 void GameManager::ResizeView()
@@ -24,9 +23,7 @@ void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player);
 
-	Slime* s = em->BuildSlime(em->RandomPos());
-	AddEvent(std::bind(&Slime::JumpToPlayer, s), 0.5f);
-	enemies.push_back(s);
+	Enemy* s = em->BuildGoblin(em->RandomPos(), &timedEvents);
 }
 
 void GameManager::Update(float deltaTime)
@@ -34,15 +31,12 @@ void GameManager::Update(float deltaTime)
 	totalTime += deltaTime;
 	player->Update(deltaTime);
 
-	for (auto enemy : enemies)
-	{
-		enemy->Update(deltaTime);
-	}
+	em->Update(deltaTime);
 
 	for (TimeEvent* e : timedEvents)
 	{
 		e->Tick(deltaTime);
-		std::cout << "Timer: " << e->GetTimer() << std::endl;
+		//std::cout << e->GetTimer() << std::endl;
 	}
 }
 
@@ -54,11 +48,7 @@ void GameManager::AddEvent(std::function<void()> callback, float interval)
 void GameManager::CheckCollision()
 {
 	Collider pcoll = player->GetCollider();
-	for (auto enemy : enemies)
-	{
-		if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
-			player->OnHit(1);
-	}
+	em->CheckCollision(player);
 
 	levelmanager->GetCurrentLevel()->CheckCollision(pcoll);
 	levelmanager->GetCurrentLevel()->CheckTrigger(pcoll);
@@ -70,12 +60,7 @@ void GameManager::Draw()
 
 	levelmanager->GetCurrentLevel()->Draw(*window);
 	player->Draw(*window);
-
-
-	for (auto enemy : enemies)
-	{
-		enemy->Draw(*window);
-	}
+	em->Draw(*window);
 
 	view->setCenter(player->GetPosition());
 	window->setView(*view);
@@ -99,7 +84,7 @@ Player* GameManager::BuildPlayer()
 	playerAnimations.push_back(new Animation(playerAttack, 9, 0.035f, "Attack"));
 	playerAnimations.push_back(new Animation(playerDefault, 7, 0.25f, "Default"));
 
-	return new Player(playerAnimations, 250.0f);
+	return new Player(playerAnimations, 250.0f, 1);
 }
 
 void GameManager::NextLevel()

@@ -1,12 +1,13 @@
 #include "Entity.h"
 
-Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed)
+Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage)
 	:	faceRight(true),
 		isAlive(true),
 		AC(animations),
 		damageCooldown(1.0f),
 		damageCooldownMax(damageCooldown),
-		playName("Default")
+		playName("Default"),
+		attackDamage(attackDamage)
 {
 	TextureBody.setSize(textureSize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);

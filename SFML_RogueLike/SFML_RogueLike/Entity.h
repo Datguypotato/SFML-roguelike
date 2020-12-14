@@ -7,7 +7,7 @@
 class Entity
 {
 public:
-	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed);
+	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage);
 	virtual ~Entity();
 	Entity(const Entity& rhs);
 	virtual Entity* Clone() const = 0;
@@ -25,6 +25,7 @@ public:
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
 
 	AnimatorController GetAC() { return AC; }
+	int GetAttackDamage() { return attackDamage; }
 
 protected:
 	sf::RectangleShape TextureBody;

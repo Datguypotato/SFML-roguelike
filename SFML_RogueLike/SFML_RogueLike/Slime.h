@@ -15,6 +15,8 @@ public:
 
 	void JumpToPlayer();
 
+	float GetJumpCooldown() { return jumpCooldown; }
+
 protected:
 	sf::Vector2f jumpDir;
 

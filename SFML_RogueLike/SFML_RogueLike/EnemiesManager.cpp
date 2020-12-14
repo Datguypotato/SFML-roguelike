@@ -1,14 +1,39 @@
 #include "EnemiesManager.h"
 
-EnemiesManager::EnemiesManager(sf::RectangleShape* playerBody)
-	:	currTimer(0.0f),
-		maxTimer(2.0f)
+EnemiesManager::EnemiesManager(Player* player)
+	:	player(player),
+		playerBody(player->GetBody())
 {
-	this->playerBody = playerBody;
 }
 
 EnemiesManager::~EnemiesManager()
 {
+}
+
+void EnemiesManager::Update(float deltaTime)
+{
+	for (Enemy* enemy : enemies)
+	{
+		enemy->Update(deltaTime);
+	}
+}
+
+void EnemiesManager::CheckCollision(Entity* player)
+{
+	for (Enemy* enemy : enemies)
+	{
+		Collider pcoll = player->GetCollider();
+		if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
+			player->OnHit(1);
+	}
+}
+
+void EnemiesManager::Draw(sf::RenderWindow& window)
+{
+	for (Enemy* enemy : enemies)
+	{
+		enemy->Draw(window);
+	}
 }
 
 sf::Vector2f EnemiesManager::RandomPos()
@@ -22,7 +47,7 @@ sf::Vector2f EnemiesManager::RandomPos()
 	return sf::Vector2f(randomX, randomY);
 }
 
-Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos)
+Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
 {
 	// load slime textures
 	std::vector<Animation*> slimeAnimations;
@@ -42,12 +67,14 @@ Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos)
 	slimeAnimations.push_back(new Animation(slimeHit, 6, 0.2f, "Hit"));
 
 	Slime* temp = new Slime(slimeAnimations, spawnPos, playerBody);
-
+	enemies.push_back(temp);
+	for (TimeEvent* event : temp->GetEvents())
+		e->push_back(event);
 
 	return temp;
 }
 
-Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos)
+Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
 {
 	// TODO Need to make the other art assets
 	std::vector<Animation*> goblinAnimations;
@@ -56,10 +83,16 @@ Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos)
 	goblinDefault->loadFromFile("Art/Evilmerchant.png");
 	goblinAnimations.push_back(new Animation(goblinDefault, 1, 0.25f, "Default"));
 
-	return new Goblin(goblinAnimations, sf::Vector2f(1000, 1000), playerBody);
+	std::function<void(int)> functonWithInt = std::bind(&EnemiesManager::DamagePlayer, this, 0);
+	Goblin* temp = new Goblin(goblinAnimations, spawnPos, playerBody, std::bind(&EnemiesManager::DamagePlayer, this, 0));
+	enemies.push_back(temp);
+	for (TimeEvent* event : temp->GetEvents())
+		e->push_back(event);
+
+	return temp;
 }
 
-Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos)
+Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
 {
 	std::vector<Animation*> ghostAnimations;
 	sf::Texture* ghostDefault = new sf::Texture();
@@ -74,6 +107,16 @@ Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos)
 	ghostAnimations.push_back(new Animation(ghostAttack, 27, 0.05f, "Attack"));
 	ghostAnimations.push_back(new Animation(ghostCharge, 8, 0.2f, "Charge"));
 
-	return new Ghost(ghostAnimations, sf::Vector2f(1000, 1000), playerBody);
+	Ghost* temp = new Ghost(ghostAnimations, spawnPos, playerBody);
+	enemies.push_back(temp);
+	for (TimeEvent* event : temp->GetEvents())
+		e->push_back(event);
+
+	return temp;
 }
 
+// change agrument to a enemy
+void EnemiesManager::DamagePlayer(int damage)
+{
+	player->OnHit(damage);
+}

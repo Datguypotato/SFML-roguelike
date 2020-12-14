@@ -1,7 +1,7 @@
 #include "Slime.h"
 
 Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody)
-	:	Enemy(sf::Vector2f(59, 59), sf::Vector2f(60, 51), 10, animations, playerbody, 100)
+	:	Enemy(sf::Vector2f(59, 59), sf::Vector2f(60, 51), 10, animations, playerbody, 100, 10)
 {
 	body.setPosition(spawnPosition);
 
@@ -11,13 +11,15 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf:
 	isJumping = false;
 	jumpDir = sf::Vector2f();
 
+	events.push_back(new TimeEvent(std::bind(&Slime::JumpToPlayer, this), jumpCooldown));
+
 	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
 	sound.setBuffer(jumpSound);
 }
 
 // for the Slime boss
 Slime::Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, sf::Vector2f spawnPosition)
-	:	Enemy(textureSize, bodySize, health, animations, playerBody, speed)
+	:	Enemy(textureSize, bodySize, health, animations, playerBody, speed, 20)
 {
 	body.setPosition(spawnPosition);
 

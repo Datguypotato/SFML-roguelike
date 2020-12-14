@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(std::vector<Animation*> animations, float speed)
-	: Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed)
+Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
+	: Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage)
 {
 	body.setPosition(sf::Vector2f(150, 150));
 	attackbox.setSize(sf::Vector2f(50, 50));

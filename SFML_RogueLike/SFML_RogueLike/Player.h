@@ -8,7 +8,7 @@
 class Player: public Entity
 {
 public:
-	Player(std::vector<Animation*> animations, float speed);
+	Player(std::vector<Animation*> animations, float speed, int attackDamage);
 	Player(const Player& rhs);
 	~Player();
 

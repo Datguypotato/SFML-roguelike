@@ -4,10 +4,14 @@
 class Goblin : public Enemy
 {
 public:
-	Goblin(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody);
+	Goblin(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody, std::function<void(int)> DamagePlayer);
 	~Goblin();
 
 	void Update(float deltaTime) override;
+	void Action();
+	void Attack();
+
+	void Draw(sf::RenderWindow& window) override;
 
 private:
 

@@ -5,9 +5,11 @@ class TimeEvent
 {
 public:
 	TimeEvent(std::function<void()> callback, float interval);
+	TimeEvent(std::function<void()> callback, float interval, bool oneShot);
 
 	void Tick(float deltaTime);
-	void Pause(bool p);
+	void Play();
+	void Pause();
 	void Reset();
 
 	float GetTimer() { return timer; }
@@ -15,6 +17,7 @@ public:
 private:
 	float timer;
 	bool isPaused;
+	bool isOneShot;
 
 	float interval;
 	std::function<void()> callback;

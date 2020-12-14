@@ -6,6 +6,13 @@ TimeEvent::TimeEvent(std::function<void()> callback, float interval)
 	this->interval = interval;
 	timer = interval;
 	isPaused = false;
+	isOneShot = false;
+}
+
+TimeEvent::TimeEvent(std::function<void()> callback, float interval, bool oneShot)
+	:	TimeEvent::TimeEvent(callback, interval)
+{
+	isOneShot = oneShot;
 }
 
 void TimeEvent::Tick(float deltaTime)
@@ -16,13 +23,21 @@ void TimeEvent::Tick(float deltaTime)
 	if (timer <= 0)
 	{
 		timer = interval - timer;
+		if (isOneShot)
+			isPaused = true;
+		
 		callback();
 	}
 }
 
-void TimeEvent::Pause(bool p)
+void TimeEvent::Play()
 {
-	isPaused = p;
+	isPaused = false;
+}
+
+void TimeEvent::Pause()
+{
+	isPaused = true;
 }
 
 void TimeEvent::Reset()

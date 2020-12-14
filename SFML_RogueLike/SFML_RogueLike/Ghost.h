@@ -12,16 +12,17 @@ public:
     void Update(float deltaTime);
 
 private:
-    float ActionTime;
-    float actionTimeMax;
-    float blinkDistance;
-
+    void Action();
+    void BlinkToPlayer();
+    void StopDash();
+    
+    float dashTime;
+    float actionTime;
     float attackCooldown;
-    float attackCooldownMax;
+
+    float blinkDistance;
     float attackRange;
 
-    float dashTime;
-    float dashTimeMax;
     bool isDashing;
     sf::Vector2f dashDir;
 };

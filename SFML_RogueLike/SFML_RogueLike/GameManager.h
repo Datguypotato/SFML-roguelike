@@ -43,5 +43,4 @@ private:
 	EnemiesManager* em;
 
 	Player* player;
-	std::vector<Enemy*> enemies;
 };
