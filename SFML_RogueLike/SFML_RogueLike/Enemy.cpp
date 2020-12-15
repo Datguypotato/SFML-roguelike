@@ -1,27 +1,23 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, int attackDamage)
+Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, Player* player, float speed, int attackDamage)
 	:	Entity(textureSize, bodySize, health, animations, speed, attackDamage)
 {
-	this->playerBody = playerBody;
-}
-
-Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, std::function<void(int)> DamagePlayer, int attackDamage)
-	:	Entity(textureSize, bodySize, health, animations, speed, attackDamage),
-		DamagePlayer(DamagePlayer),
-		playerBody(playerBody)
-{
+	this->playerBody = player->GetBody();
+	this->player = player;
 }
 
 Enemy::Enemy(const Enemy& rhs)
 	:	Entity(rhs)
 {
 	playerBody = rhs.playerBody;
+	player = rhs.player;
 }
 
 Enemy::~Enemy()
 {
 	playerBody = nullptr;
+	player = nullptr;
 }
 
 Entity* Enemy::Clone() const

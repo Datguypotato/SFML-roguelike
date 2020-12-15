@@ -1,7 +1,7 @@
 #include "Slime.h"
 
-Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody)
-	:	Enemy(sf::Vector2f(59, 59), sf::Vector2f(60, 51), 10, animations, playerbody, 100, 10)
+Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
+	:	Enemy(sf::Vector2f(59, 59), sf::Vector2f(60, 51), 10, animations, player, 100, 10)
 {
 	body.setPosition(spawnPosition);
 
@@ -18,8 +18,8 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf:
 }
 
 // for the Slime boss
-Slime::Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, sf::Vector2f spawnPosition)
-	:	Enemy(textureSize, bodySize, health, animations, playerBody, speed, 20)
+Slime::Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, Player* player, float speed, sf::Vector2f spawnPosition)
+	:	Enemy(textureSize, bodySize, health, animations, player, speed, 20)
 {
 	body.setPosition(spawnPosition);
 

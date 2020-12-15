@@ -6,7 +6,7 @@ class Ghost :
     public Enemy
 {
 public:
-    Ghost(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* playerbody);
+    Ghost(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* playerbody);
     ~Ghost();
 
     void Update(float deltaTime);

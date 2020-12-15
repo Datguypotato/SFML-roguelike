@@ -3,7 +3,6 @@
 
 #include "Collider.h"
 #include "Entity.h"
-#include "Enemy.h"
 
 class Player: public Entity
 {
@@ -22,5 +21,5 @@ public:
 private:
 	sf::RectangleShape attackbox;
 
-	std::vector<Enemy*> inRange;
+	std::vector<Entity*> inRange;
 };

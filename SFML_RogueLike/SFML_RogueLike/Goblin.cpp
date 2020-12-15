@@ -1,7 +1,7 @@
 #include "Goblin.h"
 
-Goblin::Goblin(std::vector<Animation*> animations, sf::Vector2f spawnPosition, sf::RectangleShape* pb, std::function<void(int)> DamagePlayer)
-	:	Enemy(sf::Vector2f(66,57), sf::Vector2f(60, 55), 20, animations, pb, 120, DamagePlayer, 10),
+Goblin::Goblin(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
+	:	Enemy(sf::Vector2f(66,57), sf::Vector2f(60, 55), 20, animations, player, 120, 10),
 		attackRange(100.0f),
 		isAttacking(false),
 		windupAttackTime(2.0f)
@@ -56,7 +56,7 @@ void Goblin::Attack()
 	{
 		Collider pcoll = Collider(*playerBody);
 		if (Collider(attackBox).CheckTrigger(pcoll))
-			DamagePlayer(attackDamage);
+			player->OnHit(attackDamage);
 	}
 	isAttacking = false;
 }

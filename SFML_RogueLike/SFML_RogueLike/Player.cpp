@@ -51,7 +51,7 @@ void Player::Update(float deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		velocity.y -= speed;
-		attackbox.setPosition(body.getPosition() - sf::Vector2f(0, body.getSize().y));
+		//attackbox.setPosition(body.getPosition() - sf::Vector2f(0, body.getSize().y));
 	}
 
 

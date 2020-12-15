@@ -2,14 +2,14 @@
 #include <functional>
 
 #include "Entity.h"
+#include "Player.h"
 #include "TimeEvent.h"
 
 class Enemy : public Entity
 {
 public:
 	//TODO: Change it to getting a reff to player instead
-	Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, int attackDamage);
-	Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, sf::RectangleShape* playerBody, float speed, std::function<void(int)> DamagePlayer, int attackDamage);
+	Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, Player* player, float speed, int attackDamage);
 	Enemy(const Enemy& rhs);
 	~Enemy();
 
@@ -23,6 +23,7 @@ public:
 	std::vector<TimeEvent*> GetEvents() { return events; }
 
 protected:
+	Player* player;
 	sf::RectangleShape* playerBody;
 	sf::RectangleShape attackBox;
 

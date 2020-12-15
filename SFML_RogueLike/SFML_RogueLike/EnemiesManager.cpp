@@ -24,7 +24,7 @@ void EnemiesManager::CheckCollision(Entity* player)
 	{
 		Collider pcoll = player->GetCollider();
 		if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
-			player->OnHit(1);
+			player->OnHit(enemy->GetAttackDamage());
 	}
 }
 
@@ -66,7 +66,7 @@ Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos, std::vector<TimeEvent*>
 	slimeAnimations.push_back(new Animation(slimeAir, 1, 0.2f, "Air"));
 	slimeAnimations.push_back(new Animation(slimeHit, 6, 0.2f, "Hit"));
 
-	Slime* temp = new Slime(slimeAnimations, spawnPos, playerBody);
+	Slime* temp = new Slime(slimeAnimations, spawnPos, player);
 	enemies.push_back(temp);
 	for (TimeEvent* event : temp->GetEvents())
 		e->push_back(event);
@@ -84,7 +84,7 @@ Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos, std::vector<TimeEvent
 	goblinAnimations.push_back(new Animation(goblinDefault, 1, 0.25f, "Default"));
 
 	std::function<void(int)> functonWithInt = std::bind(&EnemiesManager::DamagePlayer, this, 0);
-	Goblin* temp = new Goblin(goblinAnimations, spawnPos, playerBody, std::bind(&EnemiesManager::DamagePlayer, this, 0));
+	Goblin* temp = new Goblin(goblinAnimations, spawnPos, player);
 	enemies.push_back(temp);
 	for (TimeEvent* event : temp->GetEvents())
 		e->push_back(event);
@@ -107,7 +107,7 @@ Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos, std::vector<TimeEvent*>
 	ghostAnimations.push_back(new Animation(ghostAttack, 27, 0.05f, "Attack"));
 	ghostAnimations.push_back(new Animation(ghostCharge, 8, 0.2f, "Charge"));
 
-	Ghost* temp = new Ghost(ghostAnimations, spawnPos, playerBody);
+	Ghost* temp = new Ghost(ghostAnimations, spawnPos, player);
 	enemies.push_back(temp);
 	for (TimeEvent* event : temp->GetEvents())
 		e->push_back(event);
