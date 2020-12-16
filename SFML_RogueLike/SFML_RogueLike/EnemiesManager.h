@@ -24,7 +24,7 @@ public:
 	Goblin* BuildGoblin(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e);
 	Ghost* BuildGhost(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e);
 
-	void DamagePlayer(int damage);
+	std::vector<Enemy*> GetEnemies() { return enemies; }
 
 private:
 	std::vector<Enemy*> enemies;

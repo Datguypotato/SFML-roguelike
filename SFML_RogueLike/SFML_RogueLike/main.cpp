@@ -85,8 +85,8 @@ int main()
 		//if (button.CursorIsInBox(mousepos))
 		//	button.OnClick();
 
-		game.Update(deltaTime);
 		game.CheckCollision();
+		game.Update(deltaTime);
 		game.Draw();		
 	}
 

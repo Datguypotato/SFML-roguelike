@@ -17,9 +17,14 @@ public:
 	void Draw(sf::RenderWindow& window);
 
 	Collider GetAttackBox();
+	std::vector<Entity*>* GetInRange() { return &inRange; }
+
+	bool CanAttack() { return (attackTimer <= 0); }
 
 private:
 	sf::RectangleShape attackbox;
-
 	std::vector<Entity*> inRange;
+
+	float attackTimer;
+	float attackTimerMax;
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+
 #include "Collider.h"
 #include "AnimatorController.h"
 
@@ -19,7 +20,7 @@ public:
 	Collider GetCollider() { return Collider(body); }
 	sf::RectangleShape* GetBody() { return &body; };
 
-	void OnHit(const int damage);
+	virtual void OnHit(const int damage);
 
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }

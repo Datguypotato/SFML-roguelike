@@ -109,6 +109,6 @@ void Entity::OnHit(const int damage)
 			health -= damage;
 		}
 
-		std::cout << "$Lost " << damage << " hp you have " << health << " hp left\n";
+		std::cout << "Lost " << damage << " hp you have " << health << " hp left\n";
 	}
 }

@@ -83,7 +83,6 @@ Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos, std::vector<TimeEvent
 	goblinDefault->loadFromFile("Art/Evilmerchant.png");
 	goblinAnimations.push_back(new Animation(goblinDefault, 1, 0.25f, "Default"));
 
-	std::function<void(int)> functonWithInt = std::bind(&EnemiesManager::DamagePlayer, this, 0);
 	Goblin* temp = new Goblin(goblinAnimations, spawnPos, player);
 	enemies.push_back(temp);
 	for (TimeEvent* event : temp->GetEvents())
@@ -113,10 +112,4 @@ Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos, std::vector<TimeEvent*>
 		e->push_back(event);
 
 	return temp;
-}
-
-// change agrument to a enemy
-void EnemiesManager::DamagePlayer(int damage)
-{
-	player->OnHit(damage);
 }

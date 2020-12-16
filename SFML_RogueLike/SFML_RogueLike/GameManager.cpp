@@ -5,9 +5,8 @@ GameManager::GameManager()
 		totalTime(0),
 		timedEvents()
 {
-	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
-
+	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
 	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this),  player);
 	em = new EnemiesManager(player); 
 }
@@ -47,6 +46,21 @@ void GameManager::AddEvent(std::function<void()> callback, float interval)
 
 void GameManager::CheckCollision()
 {
+	std::vector<Enemy*> enemies = em->GetEnemies();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && player->CanAttack())
+	{
+		std::vector<Enemy*> enemies = em->GetEnemies();
+		for (Enemy* enemy : enemies)
+		{
+			Collider eColl = enemy->GetCollider();
+			if (player->GetAttackBox().CheckTrigger(eColl))
+			{
+				player->GetInRange()->push_back(enemy);
+			}
+		}
+	}
+
 	Collider pcoll = player->GetCollider();
 	em->CheckCollision(player);
 
@@ -84,7 +98,9 @@ Player* GameManager::BuildPlayer()
 	playerAnimations.push_back(new Animation(playerAttack, 9, 0.035f, "Attack"));
 	playerAnimations.push_back(new Animation(playerDefault, 7, 0.25f, "Default"));
 
-	return new Player(playerAnimations, 250.0f, 1);
+	Player* p = new Player(playerAnimations, 250.0f, 1);
+
+	return p;
 }
 
 void GameManager::NextLevel()

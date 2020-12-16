@@ -1,9 +1,9 @@
 #pragma once
 #include <functional>
 
+#include "TimeEvent.h"
 #include "Entity.h"
 #include "Player.h"
-#include "TimeEvent.h"
 
 class Enemy : public Entity
 {
@@ -27,8 +27,8 @@ protected:
 	sf::RectangleShape* playerBody;
 	sf::RectangleShape attackBox;
 
-	std::vector<TimeEvent*> events;
-
 	std::function<void(int)> DamagePlayer;
+
+	std::vector<TimeEvent*> events;
 };
 

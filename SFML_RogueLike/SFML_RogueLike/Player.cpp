@@ -1,7 +1,9 @@
 #include "Player.h"
 
 Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
-	: Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage)
+	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage),
+		attackTimer(1.0f),
+		attackTimerMax(attackTimer)
 {
 	body.setPosition(sf::Vector2f(150, 150));
 	attackbox.setSize(sf::Vector2f(50, 50));
@@ -51,17 +53,23 @@ void Player::Update(float deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		velocity.y -= speed;
-		//attackbox.setPosition(body.getPosition() - sf::Vector2f(0, body.getSize().y));
+		attackbox.setPosition(body.getPosition() - sf::Vector2f(0, body.getSize().y));
 	}
 
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+	attackTimer -= deltaTime;
+	if (CanAttack())
 	{
-		AC.PlayNoInterupt("Attack", faceRight);
-
-		for (auto target : inRange)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 		{
-			target->OnHit(attackDamage);
+			AC.PlayNoInterupt("Attack", faceRight);
+			attackTimer = attackTimerMax;
+
+			for (auto target : inRange)
+			{
+				target->OnHit(attackDamage);
+				inRange.erase(inRange.begin());
+			}
 		}
 	}
 
@@ -88,5 +96,6 @@ void Player::Draw(sf::RenderWindow& window)
 {
 	Entity::Draw(window);
 
-	window.draw(attackbox);
+	if(CanAttack())
+		window.draw(attackbox);
 }

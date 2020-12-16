@@ -28,7 +28,8 @@ void Goblin::Update(float deltaTime)
 
 	Action();
 
-	Enemy::UpdateAttackBox();
+	if(!isAttacking)
+		Enemy::UpdateAttackBox();
 
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
@@ -64,5 +65,13 @@ void Goblin::Attack()
 void Goblin::Draw(sf::RenderWindow& window)
 {
 	Entity::Draw(window);
-	window.draw(attackBox);
+	
+	if(isAttacking)
+		window.draw(attackBox);
+}
+
+void Goblin::OnHit(const int damage)
+{
+	std::cout << "Goblin: ";
+	Entity::OnHit(damage);
 }
