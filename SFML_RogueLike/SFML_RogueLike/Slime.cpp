@@ -1,7 +1,7 @@
 #include "Slime.h"
 
 Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
-	:	Enemy(sf::Vector2f(59, 59), sf::Vector2f(60, 51), 10, animations, player, 100, 10)
+	:	SlimeBase(sf::Vector2f(59, 59), sf::Vector2f(60, 51), animations, player, 2, 1, 50)
 {
 	body.setPosition(spawnPosition);
 
@@ -11,7 +11,7 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Pla
 	isJumping = false;
 	jumpDir = sf::Vector2f();
 
-	events.push_back(new TimeEvent(std::bind(&Slime::JumpToPlayer, this), jumpCooldown));
+	events.push_back(new TimeEvent(std::bind(&SlimeBase::JumpToPlayer, this), jumpCooldown));
 
 	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
 	sound.setBuffer(jumpSound);
@@ -19,7 +19,7 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Pla
 
 // for the Slime boss
 Slime::Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, Player* player, float speed, sf::Vector2f spawnPosition)
-	:	Enemy(textureSize, bodySize, health, animations, player, speed, 20)
+	:	SlimeBase(textureSize, bodySize, animations, player, health, speed, 20)
 {
 	body.setPosition(spawnPosition);
 
@@ -38,7 +38,7 @@ Slime::~Slime()
 }
 
 Slime::Slime(const Slime& rhs)
-	:	Enemy(rhs)
+	:	SlimeBase(rhs)
 {
 	jumpCoolDownMax = rhs.jumpCoolDownMax;
 	jumpCooldown = jumpCoolDownMax;
@@ -54,35 +54,13 @@ Slime* Slime::Clone() const
 void Slime::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
+	SlimeBase::Update(deltaTime);
 
-	if (isJumping)
-	{
-		velocity = jumpDir * speed;
-		playName = "Air";
-	}
-	else
-	{
-		playName = "Default";
-	}
 
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
 	body.move(velocity * deltaTime);
 	TextureBody.setPosition(body.getPosition());
-}
-
-void Slime::JumpToPlayer()
-{
-	isJumping = !isJumping;
-	jumpCooldown = jumpCoolDownMax;
-
-	if (isJumping)
-	{
-		jumpDir = GetPlayerDir();
-		sound.play();
-	}
-	AC.PlayNoInterupt("Jump", faceRight);
-
 }
 
 void Slime::OnCollision(sf::Vector2f direction)
@@ -110,4 +88,8 @@ void Slime::OnCollision(sf::Vector2f direction)
 	}
 }
 
-
+void Slime::OnHit(const int damage)
+{
+	std::cout << "Slime: ";
+	Entity::OnHit(damage);
+}

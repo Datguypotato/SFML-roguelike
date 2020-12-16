@@ -22,7 +22,7 @@ void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player);
 
-	Enemy* s = em->BuildGoblin(em->RandomPos(), &timedEvents);
+	Enemy* s = em->BuildSlimeBoss(em->RandomPos(), &timedEvents);
 }
 
 void GameManager::Update(float deltaTime)

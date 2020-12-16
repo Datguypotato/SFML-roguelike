@@ -40,6 +40,12 @@ void Ghost::Update(float deltaTime)
 	TextureBody.setPosition(body.getPosition());
 }
 
+void Ghost::OnHit(const int damage)
+{
+	std::cout << "Ghost: ";
+	Entity::OnHit(damage);
+}
+
 
 void Ghost::Action()
 {

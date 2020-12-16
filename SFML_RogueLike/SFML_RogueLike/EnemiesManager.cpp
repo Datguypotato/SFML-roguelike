@@ -14,7 +14,8 @@ void EnemiesManager::Update(float deltaTime)
 {
 	for (Enemy* enemy : enemies)
 	{
-		enemy->Update(deltaTime);
+		if(enemy->GetAliveStatus())
+			enemy->Update(deltaTime);
 	}
 }
 
@@ -22,9 +23,12 @@ void EnemiesManager::CheckCollision(Entity* player)
 {
 	for (Enemy* enemy : enemies)
 	{
-		Collider pcoll = player->GetCollider();
-		if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
-			player->OnHit(enemy->GetAttackDamage());
+		if (enemy->GetAliveStatus())
+		{
+			Collider pcoll = player->GetCollider();
+			if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
+				player->OnHit(enemy->GetAttackDamage());
+		}
 	}
 }
 
@@ -32,7 +36,8 @@ void EnemiesManager::Draw(sf::RenderWindow& window)
 {
 	for (Enemy* enemy : enemies)
 	{
-		enemy->Draw(window);
+		if(enemy->GetAliveStatus())
+			enemy->Draw(window);
 	}
 }
 
@@ -50,21 +55,7 @@ sf::Vector2f EnemiesManager::RandomPos()
 Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
 {
 	// load slime textures
-	std::vector<Animation*> slimeAnimations;
-	sf::Texture* slimeDefault = new sf::Texture();
-	sf::Texture* slimeJump = new sf::Texture();
-	sf::Texture* slimeAir = new sf::Texture();
-	sf::Texture* slimeHit = new sf::Texture();
-
-	slimeDefault->loadFromFile("Art/SlimeDefault.png");
-	slimeJump->loadFromFile("Art/SlimeJump.png");
-	slimeAir->loadFromFile("Art/SlimeInAir.png");
-	slimeHit->loadFromFile("Art/SlimeHit.png");
-
-	slimeAnimations.push_back(new Animation(slimeDefault, 8, 0.05f, "Default"));
-	slimeAnimations.push_back(new Animation(slimeJump, 3, 0.2f, "Jump"));
-	slimeAnimations.push_back(new Animation(slimeAir, 1, 0.2f, "Air"));
-	slimeAnimations.push_back(new Animation(slimeHit, 6, 0.2f, "Hit"));
+	std::vector<Animation*> slimeAnimations = LoadSlimeAnimation();
 
 	Slime* temp = new Slime(slimeAnimations, spawnPos, player);
 	enemies.push_back(temp);
@@ -112,4 +103,39 @@ Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos, std::vector<TimeEvent*>
 		e->push_back(event);
 
 	return temp;
+}
+
+SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
+{
+	std::vector<Animation*> slimeAnimations = LoadSlimeAnimation();
+
+	SlimeBoss* temp = new SlimeBoss(slimeAnimations, spawnPos, player);
+
+	enemies.push_back(temp);
+	for (TimeEvent* event : temp->GetEvents())
+		e->push_back(event);
+
+	return nullptr;
+}
+
+std::vector<Animation*> EnemiesManager::LoadSlimeAnimation()
+{
+	std::vector<Animation*> slimeAnimations;
+
+	sf::Texture* slimeDefault = new sf::Texture();
+	sf::Texture* slimeJump = new sf::Texture();
+	sf::Texture* slimeAir = new sf::Texture();
+	sf::Texture* slimeHit = new sf::Texture();
+
+	slimeDefault->loadFromFile("Art/SlimeDefault.png");
+	slimeJump->loadFromFile("Art/SlimeJump.png");
+	slimeAir->loadFromFile("Art/SlimeInAir.png");
+	slimeHit->loadFromFile("Art/SlimeHit.png");
+
+	slimeAnimations.push_back(new Animation(slimeDefault, 8, 0.05f, "Default"));
+	slimeAnimations.push_back(new Animation(slimeJump, 3, 0.2f, "Jump"));
+	slimeAnimations.push_back(new Animation(slimeAir, 1, 0.2f, "Air"));
+	slimeAnimations.push_back(new Animation(slimeHit, 6, 0.2f, "Hit"));
+
+	return slimeAnimations;
 }

@@ -1,7 +1,7 @@
 #pragma once
-#include "Enemy.h"
+#include "SlimeBase.h"
 
-class Slime : public Enemy
+class Slime : public SlimeBase
 {
 public:
 	Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player);
@@ -12,8 +12,7 @@ public:
 	Slime* Clone() const override;
 	void Update(float deltaTime) override;
 	void OnCollision(sf::Vector2f direction);
-
-	void JumpToPlayer();
+	void OnHit(const int damage) override;
 
 	float GetJumpCooldown() { return jumpCooldown; }
 

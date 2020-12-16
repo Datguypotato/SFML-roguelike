@@ -103,6 +103,7 @@ void Entity::OnHit(const int damage)
 		{
 			health = 0;
 			isAlive = false;
+			OnDeath();
 		}
 		else
 		{
@@ -112,3 +113,10 @@ void Entity::OnHit(const int damage)
 		std::cout << "Lost " << damage << " hp you have " << health << " hp left\n";
 	}
 }
+
+void Entity::OnDeath()
+{
+	std::cout << " has died\n";
+	sound.stop();
+}
+

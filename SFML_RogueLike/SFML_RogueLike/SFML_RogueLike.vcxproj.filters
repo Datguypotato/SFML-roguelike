@@ -25,6 +25,12 @@
     <Filter Include="Header Files\Level">
       <UniqueIdentifier>{4e393ee1-1e54-4c73-96a3-68af2e501b21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Base">
+      <UniqueIdentifier>{f0f24b95-c93d-4cf3-ac42-bdeed0d4d97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities\Base">
+      <UniqueIdentifier>{4804cbe6-fcc5-4e5c-85d7-6557867af585}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp">
@@ -37,15 +43,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Slime.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemiesManager.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="UIComponent.cpp">
@@ -72,9 +69,6 @@
     <ClCompile Include="Goblin.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Ghost.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
@@ -90,6 +84,21 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Entities\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Entities\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SlimeBase.cpp">
+      <Filter>Source Files\Entities\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h">
@@ -102,15 +111,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Slime.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemiesManager.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="UIComponent.h">
@@ -151,6 +151,18 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Entities\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entities\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SlimeBase.h">
+      <Filter>Header Files\Entities\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

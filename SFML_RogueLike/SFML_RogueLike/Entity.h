@@ -17,16 +17,19 @@ public:
 	virtual void Draw(sf::RenderWindow& window);
 
 	virtual void OnCollision(sf::Vector2f direction);
+	virtual void OnHit(const int damage);
+	virtual void OnDeath();
+
 	Collider GetCollider() { return Collider(body); }
 	sf::RectangleShape* GetBody() { return &body; };
-
-	virtual void OnHit(const int damage);
 
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
 
 	AnimatorController GetAC() { return AC; }
 	int GetAttackDamage() { return attackDamage; }
+
+	bool GetAliveStatus() { return isAlive; }
 
 protected:
 	sf::RectangleShape TextureBody;
