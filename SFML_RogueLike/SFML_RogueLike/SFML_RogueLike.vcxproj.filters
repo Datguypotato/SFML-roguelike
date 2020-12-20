@@ -99,6 +99,9 @@
     <ClCompile Include="SlimeBase.cpp">
       <Filter>Source Files\Entities\Base</Filter>
     </ClCompile>
+    <ClCompile Include="SlimeBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="SlimeBase.h">
       <Filter>Header Files\Entities\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SlimeBall.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

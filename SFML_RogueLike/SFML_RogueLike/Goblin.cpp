@@ -55,9 +55,7 @@ void Goblin::Attack()
 {
 	if (GetVectorDistance(playerBody->getPosition()) < attackRange)
 	{
-		Collider pcoll = Collider(*playerBody);
-		if (Collider(attackBox).CheckTrigger(pcoll))
-			player->OnHit(attackDamage);
+		AttackPlayer();
 	}
 	isAttacking = false;
 }

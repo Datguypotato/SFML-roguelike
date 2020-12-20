@@ -23,6 +23,29 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	sound.setVolume(05.0f);
 }
 
+Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage)
+	:	faceRight(true),
+		isAlive(true),
+		damageCooldown(1.0f),
+		damageCooldownMax(damageCooldown),
+		playName("Default"),
+		attackDamage(attackDamage),
+		AC(animations)
+{
+	TextureBody.setSize(bodySize);
+	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
+
+	body.setSize(bodySize);
+	body.setOrigin(body.getSize() / 2.0f);
+
+	this->health = health;
+	this->speed = speed;
+	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
+
+	sound = sf::Sound();
+	sound.setVolume(05.0f);
+}
+
 Entity::~Entity()
 {
 }
@@ -66,31 +89,35 @@ void Entity::Update(float deltaTime)
 
 void Entity::Draw(sf::RenderWindow& window)
 {
-	window.draw(TextureBody);
+	if(isAlive)
+		window.draw(TextureBody);
 }
 
 void Entity::OnCollision(sf::Vector2f direction)
 {
-	if (direction.x < 0.0f)
+	if (isAlive)
 	{
-		// collision on the left
-		velocity.x = 0.0f;
-	}
-	else if (direction.x > 0.0f)
-	{
-		// collision on the right
-		velocity.x = 0.0f;
-	}
+		if (direction.x < 0.0f)
+		{
+			// collision on the left
+			velocity.x = 0.0f;
+		}
+		else if (direction.x > 0.0f)
+		{
+			// collision on the right
+			velocity.x = 0.0f;
+		}
 
-	if (direction.y < 0.0f)
-	{
-		// collision down
-		velocity.y = 0.0f;
-	}
-	else if (direction.y < 0.0f)
-	{
-		// collision up
-		velocity.y = 0.0f;
+		if (direction.y < 0.0f)
+		{
+			// collision down
+			velocity.y = 0.0f;
+		}
+		else if (direction.y < 0.0f)
+		{
+			// collision up
+			velocity.y = 0.0f;
+		}
 	}
 }
 
@@ -117,6 +144,6 @@ void Entity::OnHit(const int damage)
 void Entity::OnDeath()
 {
 	std::cout << " has died\n";
-	sound.stop();
+	sound.resetBuffer();
 }
 

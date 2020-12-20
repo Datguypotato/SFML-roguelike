@@ -8,6 +8,7 @@
 #include "Ghost.h"
 #include "Goblin.h"
 #include "SlimeBoss.h"
+#include "SlimeBall.h"
 
 class EnemiesManager
 {
@@ -32,6 +33,7 @@ private:
 	std::vector<Animation*> LoadSlimeAnimation();
 
 	std::vector<Enemy*> enemies;
+	SlimeBoss* boss;
 	Player* player;
 	sf::RectangleShape* playerBody;
 };

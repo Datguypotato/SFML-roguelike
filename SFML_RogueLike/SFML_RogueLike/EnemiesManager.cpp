@@ -2,7 +2,8 @@
 
 EnemiesManager::EnemiesManager(Player* player)
 	:	player(player),
-		playerBody(player->GetBody())
+		playerBody(player->GetBody()),
+		boss(nullptr)
 {
 }
 
@@ -17,17 +18,45 @@ void EnemiesManager::Update(float deltaTime)
 		if(enemy->GetAliveStatus())
 			enemy->Update(deltaTime);
 	}
+
+	if (boss != nullptr)
+	{
+		boss->Update(deltaTime);
+
+		std::vector<SlimeBall*> p = boss->GetProjectiles();
+		for (SlimeBall* ball : p)
+		{
+			ball->Update(deltaTime);
+		}
+	}
+
 }
 
 void EnemiesManager::CheckCollision(Entity* player)
 {
+	Collider pcoll = player->GetCollider();
 	for (Enemy* enemy : enemies)
 	{
 		if (enemy->GetAliveStatus())
 		{
-			Collider pcoll = player->GetCollider();
 			if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
 				player->OnHit(enemy->GetAttackDamage());
+		}
+	}
+
+	if (boss != nullptr)
+	{
+		if (boss->GetCollider().CheckCollision(pcoll, 1.0f))
+			player->OnHit(boss->GetAttackDamage());
+
+		std::vector<SlimeBall*> p = boss->GetProjectiles();
+		for (SlimeBall* ball : p)
+		{
+			if (ball->GetCollider().CheckCollision(pcoll, 0.0f) && ball->GetAliveStatus())
+			{
+				player->OnHit(ball->GetAttackDamage());
+				ball->OnHit(1);
+			}
 		}
 	}
 }
@@ -38,6 +67,14 @@ void EnemiesManager::Draw(sf::RenderWindow& window)
 	{
 		if(enemy->GetAliveStatus())
 			enemy->Draw(window);
+	}
+
+	boss->Draw(window);
+
+	std::vector<SlimeBall*> p = boss->GetProjectiles();
+	for (SlimeBall* ball : p)
+	{
+		ball->Draw(window);
 	}
 }
 
@@ -111,7 +148,7 @@ SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos, std::vector<Tim
 
 	SlimeBoss* temp = new SlimeBoss(slimeAnimations, spawnPos, player);
 
-	enemies.push_back(temp);
+	boss = temp;
 	for (TimeEvent* event : temp->GetEvents())
 		e->push_back(event);
 

@@ -46,11 +46,6 @@ Slime::Slime(const Slime& rhs)
 	jumpDir = rhs.jumpDir;
 }
 
-Slime* Slime::Clone() const
-{
-	return new Slime(*this);
-}
-
 void Slime::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);

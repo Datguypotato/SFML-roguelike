@@ -1,5 +1,8 @@
 #pragma once
+#include <vector>
+
 #include "SlimeBase.h"
+#include "SlimeBall.h"
 
 enum class AttackPattern
 {
@@ -16,10 +19,22 @@ public:
 
 	void Update(float deltaTime);
 	void OnHit(const int damage) override;
+
+	void Draw(sf::RenderWindow& window) override;
+	std::vector<SlimeBall*> GetProjectiles() { return projectiles; }
+
 private:
 	void SwitchPattern();
+	void Bite();
+	void Shoot();
 
+	SlimeBall* BuildSlimeBall();
+
+	std::vector<SlimeBall*> projectiles;
 	float jumpCooldown;
+	float jumpSpeed;
+	float bigJumpCoolDown;
+	float bigJumpSpeed;
 	bool isJumping;
 	sf::Vector2f jumpDir;
 
@@ -27,4 +42,3 @@ private:
 
 	AttackPattern activePattern;
 };
-

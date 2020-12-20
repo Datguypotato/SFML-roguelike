@@ -23,15 +23,12 @@ void SlimeBase::Update(float deltaTime)
 
 void SlimeBase::JumpToPlayer()
 {
-	if (isAlive)
-	{
-		isJumping = !isJumping;
+	isJumping = !isJumping;
 
-		if (isJumping)
-		{
-			jumpDir = GetPlayerDir();
-			sound.play();
-		}
-		AC.PlayNoInterupt("Jump", faceRight);
+	if (isJumping)
+	{
+		jumpDir = GetPlayerDir();
+		sound.play();
 	}
+	AC.PlayNoInterupt("Jump", faceRight);
 }

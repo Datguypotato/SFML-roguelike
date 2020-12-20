@@ -14,6 +14,8 @@ public:
 
 	float GetTimer() { return timer; }
 
+	void SetInterval(float i) { interval = i; Reset(); }
+
 private:
 	float timer;
 	bool isPaused;

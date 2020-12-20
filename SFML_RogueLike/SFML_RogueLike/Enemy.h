@@ -13,7 +13,6 @@ public:
 	Enemy(const Enemy& rhs);
 	~Enemy();
 
-	virtual Entity* Clone() const override;
 	void LookAtPlayer();
 
 	sf::Vector2f GetPlayerDir();
@@ -23,11 +22,11 @@ public:
 	std::vector<TimeEvent*> GetEvents() { return events; }
 
 protected:
+	void AttackPlayer();
+
 	Player* player;
 	sf::RectangleShape* playerBody;
 	sf::RectangleShape attackBox;
-
-	std::function<void(int)> DamagePlayer;
 
 	std::vector<TimeEvent*> events;
 };

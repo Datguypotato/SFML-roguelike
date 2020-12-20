@@ -20,11 +20,6 @@ Enemy::~Enemy()
 	player = nullptr;
 }
 
-Entity* Enemy::Clone() const
-{
-	return new Enemy(*this);
-}
-
 void Enemy::LookAtPlayer()
 {
 	if (GetPlayerDir().x > body.getPosition().x)
@@ -54,4 +49,11 @@ void Enemy::UpdateAttackBox()
 {
 	attackBox.setPosition(body.getPosition() + sf::Vector2f(body.getSize().x * GetPlayerDir().x,
 															body.getSize().y * GetPlayerDir().y));
+}
+
+void Enemy::AttackPlayer()
+{
+	Collider pcoll = Collider(*playerBody);
+	if(Collider(attackBox).CheckTrigger(pcoll))
+		player->OnHit(attackDamage);
 }
