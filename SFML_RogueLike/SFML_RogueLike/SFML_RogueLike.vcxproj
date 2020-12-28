@@ -29,6 +29,10 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Goblin.cpp" />
+    <ClCompile Include="Healthbar.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventorySlot.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelSwitcher.cpp" />
@@ -55,6 +59,10 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="Healthbar.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventorySlot.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelSwitcher.h" />

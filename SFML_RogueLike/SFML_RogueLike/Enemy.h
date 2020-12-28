@@ -8,7 +8,6 @@
 class Enemy : public Entity
 {
 public:
-	//TODO: Change it to getting a reff to player instead
 	Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, Player* player, float speed, int attackDamage);
 	Enemy(const Enemy& rhs);
 	~Enemy();

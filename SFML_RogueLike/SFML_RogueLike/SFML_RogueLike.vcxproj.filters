@@ -31,6 +31,18 @@
     <Filter Include="Header Files\Entities\Base">
       <UniqueIdentifier>{4804cbe6-fcc5-4e5c-85d7-6557867af585}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Inventory">
+      <UniqueIdentifier>{680e8e69-1a36-4392-aa88-e2710e1cf888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inventory">
+      <UniqueIdentifier>{569579ff-6fbf-49d9-b16a-6775f083a9d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{40d266ed-ea11-437f-91d4-ab814c409eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{3a4a9dae-d93a-4533-b7c0-c542a6f11fc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp">
@@ -39,17 +51,8 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Slime.cpp">
       <Filter>Source Files\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="UIComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Source Files\Level</Filter>
@@ -102,6 +105,27 @@
     <ClCompile Include="SlimeBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="InventorySlot.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Healthbar.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h">
@@ -115,12 +139,6 @@
     </ClInclude>
     <ClInclude Include="Slime.h">
       <Filter>Header Files\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="UIComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Header Files\Level</Filter>
@@ -167,8 +185,26 @@
     <ClInclude Include="SlimeBase.h">
       <Filter>Header Files\Entities\Base</Filter>
     </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="InventorySlot.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Healthbar.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
     <ClInclude Include="SlimeBall.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

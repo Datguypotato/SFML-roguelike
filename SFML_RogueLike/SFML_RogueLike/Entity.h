@@ -28,6 +28,8 @@ public:
 
 	AnimatorController GetAC() { return AC; }
 	int GetAttackDamage() { return attackDamage; }
+	int GetHealth() { return health; }
+	int* GetHealthP() { return &health; }
 
 	bool GetAliveStatus() { return isAlive; }
 

@@ -1,24 +1,32 @@
 #include "Button.h"
 
-Button::Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::RectangleShape box)> callBack)
-	:	UIComponent(size)
+Button::Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::RectangleShape box)> callBack, sf::Texture* buttonText)
+	:	UIComponent(size, pos),
+		isClickable(true)
 {
 	callbacks = callBack;
-	box.setPosition(pos);
-	box.setFillColor(sf::Color::Red);
+	box.setTexture(buttonText);
+	
+	e = new TimeEvent(std::bind(&Button::SetClickable, this), 0.3f, true);
+	e->Pause();
+	
 }
 
-Button::~Button()
+void Button::Update(Player* player)
 {
-}
-
-void Button::SetPosition(sf::Vector2f pos)
-{
-	UIComponent::SetPosition(pos);
 }
 
 void Button::OnClick()
 {
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isClickable && isDrawing)
+	{
 		callbacks(box);
+		isClickable = false;
+		e->Play();
+	}
+}
+
+void Button::SetClickable()
+{
+	isClickable = true;
 }

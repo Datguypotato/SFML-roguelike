@@ -69,12 +69,15 @@ void EnemiesManager::Draw(sf::RenderWindow& window)
 			enemy->Draw(window);
 	}
 
-	boss->Draw(window);
-
-	std::vector<SlimeBall*> p = boss->GetProjectiles();
-	for (SlimeBall* ball : p)
+	if (boss != nullptr)
 	{
-		ball->Draw(window);
+		boss->Draw(window);
+
+		std::vector<SlimeBall*> p = boss->GetProjectiles();
+		for (SlimeBall* ball : p)
+		{
+			ball->Draw(window);
+		}
 	}
 }
 

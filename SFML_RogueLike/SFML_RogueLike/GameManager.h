@@ -6,9 +6,12 @@
 #include "TimeEvent.h"
 #include "LevelManager.h"
 #include "EnemiesManager.h"
+#include "Healthbar.h"
+#include "Button.h"
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Inventory.h"
 
 class GameManager
 {
@@ -28,9 +31,10 @@ public:
 	sf::View* GetView() { return view; }
 	Player* GetPlayer() { return player; }
 
-	void AddEvent(std::function<void()> callback, float interval);
 
 private:
+	void OpenInventory();
+
 	Player* BuildPlayer();
 	std::vector<TimeEvent*> timedEvents;
 
@@ -38,9 +42,11 @@ private:
 	sf::RenderWindow* window;
 	float totalTime;
 
-	std::vector<fs::path> paths;
 	LevelManager* levelmanager;
 	EnemiesManager* em;
 
 	Player* player;
+	Inventory* inventory;
+	Healthbar* healthbar;
+	Button* bagIcon;
 };

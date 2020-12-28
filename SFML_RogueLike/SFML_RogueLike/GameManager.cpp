@@ -9,6 +9,15 @@ GameManager::GameManager()
 	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
 	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this),  player);
 	em = new EnemiesManager(player); 
+	healthbar = new Healthbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
+
+	inventory = new Inventory(player);
+	sf::Texture* btext = new sf::Texture();
+	btext->loadFromFile("Art/UI/BagIcon.png");
+	bagIcon = new Button(sf::Vector2f(100, 100), sf::Vector2f(500, -300), std::bind(&Inventory::OpenClose, inventory), btext);
+
+	timedEvents.push_back(bagIcon->GetEvent());
+	timedEvents.push_back(inventory->GetEvent());
 }
 
 void GameManager::ResizeView()
@@ -22,14 +31,21 @@ void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player);
 
-	Enemy* s = em->BuildSlimeBoss(em->RandomPos(), &timedEvents);
+	Enemy* s = em->BuildSlime(em->RandomPos(), &timedEvents);
 }
 
 void GameManager::Update(float deltaTime)
 {
 	totalTime += deltaTime;
 	player->Update(deltaTime);
+	healthbar->CanUpdate(player);
+	bagIcon->CanUpdate(player);
 
+	sf::Vector2f mousepos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+	if (bagIcon->CursorIsInBox(mousepos))
+		bagIcon->OnClick();
+
+	inventory->Update(mousepos);
 	em->Update(deltaTime);
 
 	for (TimeEvent* e : timedEvents)
@@ -37,11 +53,6 @@ void GameManager::Update(float deltaTime)
 		e->Tick(deltaTime);
 		//std::cout << e->GetTimer() << std::endl;
 	}
-}
-
-void GameManager::AddEvent(std::function<void()> callback, float interval)
-{
-	timedEvents.push_back(new TimeEvent(callback, interval));
 }
 
 void GameManager::CheckCollision()
@@ -75,6 +86,9 @@ void GameManager::Draw()
 	levelmanager->GetCurrentLevel()->Draw(*window);
 	player->Draw(*window);
 	em->Draw(*window);
+	healthbar->Draw(*window);
+	bagIcon->Draw(*window);
+	inventory->Draw(*window);
 
 	view->setCenter(player->GetPosition());
 	window->setView(*view);
@@ -105,6 +119,11 @@ Player* GameManager::BuildPlayer()
 
 void GameManager::NextLevel()
 {
-	//levelmanager->NextLevel();
+	levelmanager->NextLevel();
 	std::cout << "Player in door\n";
+}
+
+void GameManager::OpenInventory()
+{
+	std::cout << "inventory open\n";
 }

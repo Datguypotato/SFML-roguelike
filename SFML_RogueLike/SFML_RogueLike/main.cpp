@@ -19,44 +19,11 @@ void ButtonClicked(sf::RectangleShape box)
 
 int main()
 {
-
-#pragma region UI
-	sf::Font font;
-	font.loadFromFile("Fonts/04B_30.TTF");
-	sf::Text testingText;
-	testingText = sf::Text("button", font, 10);
-	testingText.setFillColor(sf::Color::Blue);
-
-#pragma endregion
-
-	//std::vector<Animation*> slimeAnimations = std::vector<Animation*>();
-	//sf::Texture slimeDefault = sf::Texture();
-	//sf::Texture slimeJump = sf::Texture();
-	//sf::Texture slimeAir = sf::Texture();
-	//sf::Texture slimeHit = sf::Texture();
-	//sf::Texture slimeBite = sf::Texture();
-
-	//slimeDefault.loadFromFile("Art/SlimeDefault.png");
-	//slimeJump.loadFromFile("Art/SlimeJump.png");
-	//slimeAir.loadFromFile("Art/SlimeInAir.png");
-	//slimeHit.loadFromFile("Art/SlimeHit.png");	
-
-	//slimeAnimations.push_back(new Animation(&slimeDefault, 8, 0.05f, "Default"));
-	//slimeAnimations.push_back(new Animation(&slimeJump, 3, 0.2f, "Jump"));
-	//slimeAnimations.push_back(new Animation(&slimeAir, 1, 0.2f, "Air"));
-	//slimeAnimations.push_back(new Animation(&slimeHit, 6, 0.2f, "Hit"));
-
-	//SlimeBoss* slimeboss = new SlimeBoss(slimeAnimations, sf::Vector2f(500, 500), player.GetBody());
-
-
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
-
 	GameManager game = GameManager();
-
 	game.Start();
-
 
 	while (game.GetWindow()->isOpen())
 	{
@@ -76,14 +43,6 @@ int main()
 				game.ResizeView();
 			}
 		}
-
-		// testing ui
-		//float aspectRatio = float(window.getSize().x / float(window.getSize().y));
-		//button.SetPosition(sf::Vector2f(0, 100) + player->GetPosition());
-
-		//sf::Vector2f mousepos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-		//if (button.CursorIsInBox(mousepos))
-		//	button.OnClick();
 
 		game.CheckCollision();
 		game.Update(deltaTime);
