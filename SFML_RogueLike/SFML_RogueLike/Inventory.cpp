@@ -69,12 +69,19 @@ void Inventory::OnClick(sf::Vector2f mousePos)
 	{
 		if (slot->CursorIsInBox(mousePos) && slot->GetDrawnStatus())
 		{
-			if (!slot->isSlotEmpty())
+			if (!slot->isSlotEmpty() && currItem == nullptr)
 				currItem = slot->GrabItem();
-			else
+			else if(slot->isSlotEmpty() && currItem != nullptr)
 			{
-				slot->SetItem(currItem);
+				slot->SetItem(new Item(*currItem));
 				currItem = nullptr;
+			}
+			else if (!slot->isSlotEmpty() && currItem != nullptr)
+			{
+				Item* temp = new Item(*currItem);
+				currItem = slot->GetItem();
+				slot->SetItem(temp);
+				std::cout << "Swap Item\n";
 			}
 				
 		}
@@ -99,22 +106,15 @@ void Inventory::OnClick(sf::Vector2f mousePos)
 void Inventory::Draw(sf::RenderWindow& window)
 {
 	isDrawing = true;
-	if (currItem != nullptr)
-		currItem->Draw(window);
-
 	if (isOpen)
 	{
 		for (InventorySlot* slot : *slots)
 		{
 			slot->Draw(window);
 		}
-
-		for (InventorySlot* slot : *slots)
-		{
-			if(slot->GetItem() != nullptr)
-				slot->GetItem()->Draw(window);
-		}
 	}
+	if (currItem != nullptr)
+		currItem->Draw(window);
 }
 
 

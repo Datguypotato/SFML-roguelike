@@ -11,6 +11,8 @@ public:
 
 	void Update(Player* player) override;
 
+	void Draw(sf::RenderWindow& window);
+
 	Item* GetItem() { return item; }
 	void SetItem(Item* i);
 	Item* GrabItem();

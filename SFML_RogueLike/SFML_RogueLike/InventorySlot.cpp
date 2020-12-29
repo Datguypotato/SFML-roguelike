@@ -21,6 +21,15 @@ void InventorySlot::Update(Player* player)
 		item->SetPosition(box.getPosition());
 }
 
+void InventorySlot::Draw(sf::RenderWindow& window)
+{
+	UIComponent::Draw(window);
+	if (!isEmpty)
+	{
+		item->Draw(window);
+	}
+}
+
 
 void InventorySlot::SetItem(Item* i)
 {
@@ -31,16 +40,17 @@ void InventorySlot::SetItem(Item* i)
 Item* InventorySlot::GrabItem()
 {
 	item->GetItemBox().setTexture(nullptr);
-	//item = nullptr;
 	isEmpty = true;
+	Item* temp = new Item(*item);
+	delete item;
 
-	return item;
+	return temp;
 }
 
 Item* InventorySlot::GrabItem(Item* i)
 {
-	Item* temp = item;
-	item = i;
+	Item* temp = new Item(*item);
+	item = new Item(*i);
 
 	return temp;
 }
