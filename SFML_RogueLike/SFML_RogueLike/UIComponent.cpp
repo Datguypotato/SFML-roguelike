@@ -20,16 +20,16 @@ bool UIComponent::CursorIsInBox(sf::Vector2f mousePos)
 	return (box.getGlobalBounds().contains(mousePos));
 }
 
-void UIComponent::CanUpdate(Player* player)
+void UIComponent::CanUpdate(sf::RectangleShape player)
 {
 	if (isDrawing)
 	{
 		Update(player);
-		box.setPosition(player->GetPosition() - position);
+		box.setPosition(player.getPosition() - position);
 	}
 }
 
-void UIComponent::Update(Player* player)
+void UIComponent::Update(sf::RectangleShape player)
 {
 }
 

@@ -5,7 +5,7 @@
 class SlimeBall : public Entity
 {
 public:
-	SlimeBall(Player* p, std::vector<Animation*> animations, sf::Vector2f direction);
+	SlimeBall(std::vector<Animation*> animations, sf::Vector2f direction);
 
 
 	void Update(float deltaTime) override;
@@ -15,7 +15,6 @@ public:
 	void OnDeath() override;
 
 private:
-	Player* player;
 	sf::Vector2f direction;
 };
 

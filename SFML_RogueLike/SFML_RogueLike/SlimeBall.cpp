@@ -1,9 +1,8 @@
 #include "SlimeBall.h"
 
-SlimeBall::SlimeBall(Player* p, std::vector<Animation*> animations, sf::Vector2f dir)
+SlimeBall::SlimeBall(std::vector<Animation*> animations, sf::Vector2f dir)
 	:	Entity(sf::Vector2f(50,50), sf::Vector2f(50,50), 1, animations, 200, 10)
 {
-	player = p;
 	direction = dir;
 }
 

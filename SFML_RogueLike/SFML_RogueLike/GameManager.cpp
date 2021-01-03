@@ -11,7 +11,7 @@ GameManager::GameManager()
 	em = new EnemiesManager(player); 
 	healthbar = new Healthbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
 
-	inventory = new Inventory(player);
+	inventory = new Inventory(player->GetBody());
 	sf::Texture* btext = new sf::Texture();
 	btext->loadFromFile("Art/UI/BagIcon.png");
 	bagIcon = new Button(sf::Vector2f(100, 100), sf::Vector2f(500, -300), std::bind(&Inventory::OpenClose, inventory), btext);
@@ -32,14 +32,25 @@ void GameManager::Start()
 	levelmanager->GetCurrentLevel()->Load(player);
 
 	Enemy* s = em->BuildSlime(em->RandomPos(), &timedEvents);
+
+	s->GetEffectHandler()->SetBleed(2, 1);
+	for (int i = 0; i < 4; i++)
+	{
+		sf::Texture* fBroodje = new sf::Texture();
+		fBroodje->loadFromFile("Art/UI/Frikandelbroodje.png");
+		Item* ie = new Item(fBroodje, "Frikandelbroodje");
+		std::vector<Animation*> temp;
+		temp.push_back(new Animation(fBroodje, 1, 1, "Default"));
+		c.push_back(new Collectable(temp, em->RandomPos(), ie));
+	}
 }
 
 void GameManager::Update(float deltaTime)
 {
 	totalTime += deltaTime;
 	player->Update(deltaTime);
-	healthbar->CanUpdate(player);
-	bagIcon->CanUpdate(player);
+	healthbar->Update(player);
+	bagIcon->CanUpdate(*player->GetBody());
 
 	sf::Vector2f mousepos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 	if (bagIcon->CursorIsInBox(mousepos))
@@ -48,10 +59,15 @@ void GameManager::Update(float deltaTime)
 	inventory->Update(mousepos);
 	em->Update(deltaTime);
 
+	for (Collectable* collect : c)
+	{
+		if(collect != nullptr)
+			collect->Update(deltaTime);
+	}
+
 	for (TimeEvent* e : timedEvents)
 	{
 		e->Tick(deltaTime);
-		//std::cout << e->GetTimer() << std::endl;
 	}
 }
 
@@ -59,20 +75,33 @@ void GameManager::CheckCollision()
 {
 	std::vector<Enemy*> enemies = em->GetEnemies();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && player->CanAttack())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && player->GetWeapon()->CanAttack())
 	{
 		std::vector<Enemy*> enemies = em->GetEnemies();
 		for (Enemy* enemy : enemies)
 		{
 			Collider eColl = enemy->GetCollider();
-			if (player->GetAttackBox().CheckTrigger(eColl))
+			if (player->GetWeapon()->GetAttackBox().CheckTrigger(eColl))
 			{
-				player->GetInRange()->push_back(enemy);
+				player->GetWeapon()->GetInRange()->push_back(enemy);
 			}
 		}
 	}
 
+
 	Collider pcoll = player->GetCollider();
+	for (Collectable* collect : c)
+	{
+		if (collect->GetCollider().CheckTrigger(pcoll) && collect->GetAliveStatus())
+		{
+			if (!inventory->isFull())
+			{
+				inventory->GetItem(collect->GetItem());
+				std::cout << "Touched broodje\n";
+			}
+		}
+	}
+
 	em->CheckCollision(player);
 
 	levelmanager->GetCurrentLevel()->CheckCollision(pcoll);
@@ -89,6 +118,11 @@ void GameManager::Draw()
 	healthbar->Draw(*window);
 	bagIcon->Draw(*window);
 	inventory->Draw(*window);
+	for (Collectable* collect : c)
+	{
+		if (collect != nullptr)
+			collect->Draw(*window);
+	}
 
 	view->setCenter(player->GetPosition());
 	window->setView(*view);

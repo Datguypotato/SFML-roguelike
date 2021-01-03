@@ -7,9 +7,10 @@
 class InventorySlot : public UIComponent
 {
 public:
+	InventorySlot();
 	InventorySlot(Item* it);
 
-	void Update(Player* player) override;
+	void Update(sf::RectangleShape player) override;
 
 	void Draw(sf::RenderWindow& window);
 

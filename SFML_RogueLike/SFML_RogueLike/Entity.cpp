@@ -7,7 +7,9 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 		damageCooldown(1.0f),
 		damageCooldownMax(damageCooldown),
 		playName("Default"),
-		attackDamage(attackDamage)
+		attackDamage(attackDamage),
+		effecthandler(new EffectHandler()),
+		events(std::vector<TimeEvent*>())
 {
 	TextureBody.setSize(textureSize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
@@ -21,6 +23,8 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 
 	sound = sf::Sound();
 	sound.setVolume(05.0f);
+
+	events.push_back(new TimeEvent(std::bind(&Entity::GetEffects, this), 1.0f));
 }
 
 Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage)
@@ -30,7 +34,9 @@ Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animat
 		damageCooldownMax(damageCooldown),
 		playName("Default"),
 		attackDamage(attackDamage),
-		AC(animations)
+		AC(animations),
+		effecthandler(new EffectHandler()),
+		events(std::vector<TimeEvent*>())
 {
 	TextureBody.setSize(bodySize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
@@ -141,9 +147,14 @@ void Entity::OnHit(const int damage)
 	}
 }
 
-void Entity::OnDeath()
+void Entity::GetEffects()
 {
-	std::cout << " has died\n";
-	sound.resetBuffer();
+	if(effecthandler->hasEffects())
+		OnHit(effecthandler->GetBleedDamage());
 }
 
+void Entity::OnDeath()
+{
+	std::cout << "has died\n";
+	sound.resetBuffer();
+}

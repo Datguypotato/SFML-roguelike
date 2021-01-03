@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Inventory.h"
+#include "Item.h"
+#include "Collectable.h"
 
 class GameManager
 {
@@ -31,7 +33,6 @@ public:
 	sf::View* GetView() { return view; }
 	Player* GetPlayer() { return player; }
 
-
 private:
 	void OpenInventory();
 
@@ -49,4 +50,5 @@ private:
 	Inventory* inventory;
 	Healthbar* healthbar;
 	Button* bagIcon;
+	std::vector<Collectable*> c;
 };

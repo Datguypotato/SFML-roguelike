@@ -1,5 +1,16 @@
 #include "InventorySlot.h"
 
+InventorySlot::InventorySlot()
+	:	UIComponent(sf::Vector2f(75, 75), sf::Vector2f()),
+		item(nullptr)
+{
+	emptySlotText = new sf::Texture();
+	emptySlotText->loadFromFile("Art/UI/EmptySlot.png");
+	box.setTexture(emptySlotText);
+
+	isEmpty = true;
+}
+
 InventorySlot::InventorySlot(Item* i)
 	:	UIComponent(sf::Vector2f(75, 75), sf::Vector2f()),
 		item(i)
@@ -15,7 +26,7 @@ InventorySlot::InventorySlot(Item* i)
 		isEmpty = false;
 }
 
-void InventorySlot::Update(Player* player)
+void InventorySlot::Update(sf::RectangleShape player)
 {
 	if(!isEmpty)
 		item->SetPosition(box.getPosition());
@@ -24,7 +35,7 @@ void InventorySlot::Update(Player* player)
 void InventorySlot::Draw(sf::RenderWindow& window)
 {
 	UIComponent::Draw(window);
-	if (!isEmpty)
+	if (!isEmpty && item != nullptr)
 	{
 		item->Draw(window);
 	}

@@ -1,34 +1,41 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "TimeEvent.h"
-#include "Player.h"
 #include "Item.h"
 #include "InventorySlot.h"
 
 class Inventory
 {
 public: 
-	Inventory(Player* p);
+	Inventory(sf::RectangleShape* p);
 
 	void OpenClose();
 
 	void Update(sf::Vector2f mousePos);
+	void GetItem(Item* i);
+	bool isFull();
 	void Draw(sf::RenderWindow& window);
 
 	TimeEvent* GetEvent() { return timedEvent; }
 	void SetOpenable() { canInteract = true; };
 private:
-	void OnClick(sf::Vector2f mousePos);
+	void SetupSlots();
 
-	Player* player;
+	void OnClick(sf::Vector2f mousePos, InventorySlot* slot);
+
+	sf::RectangleShape* player;
 
 	bool canInteract;
 	bool isOpen;
 	int slotCount;
 	Item* currItem;
 	sf::Vector2f slotStartingPos;
+	sf::Vector2f equipSlotStartingPos;
 	std::vector<InventorySlot*>* slots;
+	std::vector<InventorySlot*>* equipSlots;
+	InventorySlot* trashBin;
 
 	bool isDrawing;
 	TimeEvent* timedEvent;

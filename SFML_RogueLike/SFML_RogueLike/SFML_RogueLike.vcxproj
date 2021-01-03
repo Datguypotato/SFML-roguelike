@@ -21,8 +21,12 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimatorController.cpp" />
+    <ClCompile Include="BleedEffect.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Collectable.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectHandler.cpp" />
     <ClCompile Include="EnemiesManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -43,15 +47,21 @@
     <ClCompile Include="SlimeBall.cpp" />
     <ClCompile Include="SlimeBase.cpp" />
     <ClCompile Include="SlimeBoss.cpp" />
+    <ClCompile Include="StunEffect.cpp" />
     <ClCompile Include="TimeEvent.cpp" />
     <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimatorController.h" />
+    <ClInclude Include="BleedEffect.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Collectable.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectHandler.h" />
     <ClInclude Include="EnemiesManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
@@ -71,9 +81,11 @@
     <ClInclude Include="SlimeBall.h" />
     <ClInclude Include="SlimeBase.h" />
     <ClInclude Include="SlimeBoss.h" />
+    <ClInclude Include="StunEffect.h" />
     <ClInclude Include="TimeEvent.h" />
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -7,7 +7,7 @@ class Healthbar : public UIComponent
 public:
 	Healthbar(sf::Vector2f size, sf::Vector2f pos, int playerHealth);
 
-	void Update(Player* player) override;
+	void Update(Player* player);
 
 	void Draw(sf::RenderWindow& window);
 

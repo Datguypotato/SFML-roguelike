@@ -21,9 +21,9 @@ SlimeBoss::SlimeBoss(std::vector<Animation*> animations, sf::Vector2f spawnPosit
 	events.push_back(new TimeEvent(std::bind(&SlimeBoss::Bite, this), 1.0f, true));
 	events.push_back(new TimeEvent(std::bind(&SlimeBoss::Shoot, this), 0.5f));
 
-	events[1]->Pause();
 	events[2]->Pause();
 	events[3]->Pause();
+	events[4]->Pause();
 }
 
 void SlimeBoss::Update(float deltaTime)
@@ -95,7 +95,7 @@ SlimeBall* SlimeBoss::BuildSlimeBall()
 	ballTexture->loadFromFile("Art/SlimeBall.png");
 	slimeballAnimations->push_back(new Animation(ballTexture, 1, 1, "Default"));
 
-	SlimeBall* b = new SlimeBall(player, *slimeballAnimations, GetPlayerDir());
+	SlimeBall* b = new SlimeBall(*slimeballAnimations, GetPlayerDir());
 	b->SetPosition(body.getPosition());
 
 	return b;

@@ -3,12 +3,12 @@
 
 #include "Collider.h"
 #include "Entity.h"
+#include "Weapon.h"
 
 class Player: public Entity
 {
 public:
 	Player(std::vector<Animation*> animations, float speed, int attackDamage);
-	Player(const Player& rhs);
 	~Player();
 
 	Player* Clone() const;
@@ -16,15 +16,7 @@ public:
 	void Update(float deltaTime) override;
 	void Draw(sf::RenderWindow& window);
 
-	Collider GetAttackBox();
-	std::vector<Entity*>* GetInRange() { return &inRange; }
-
-	bool CanAttack() { return (attackTimer <= 0); }
-
+	Weapon* GetWeapon() { return weapon; }
 private:
-	sf::RectangleShape attackbox;
-	std::vector<Entity*> inRange;
-
-	float attackTimer;
-	float attackTimerMax;
+	Weapon* weapon;
 };

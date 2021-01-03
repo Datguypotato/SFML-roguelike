@@ -1,30 +1,16 @@
 #include "Inventory.h"
 
-Inventory::Inventory(Player* p)
-	:	isOpen(false),
-		isDrawing(false),
-		slotCount(3),
-		slotStartingPos(sf::Vector2f(500, 200)),
-		currItem(nullptr),
-		canInteract(true)
+Inventory::Inventory(sf::RectangleShape* p)
+:	isOpen(false),
+	isDrawing(false),
+	slotCount(3),
+	slotStartingPos(sf::Vector2f(500, 200)),
+	equipSlotStartingPos(sf::Vector2f(-500, 200)),
+	currItem(nullptr),
+	canInteract(true)
 {
 	player = p;
-	slots = new std::vector<InventorySlot*>();
-
-	std::string path;
-	for (int i = 0; i < slotCount; i++)
-	{
-		sf::Texture* text = new sf::Texture();
-
-		if (i == 0)
-			path = "Art/UI/Frikandelbroodje.png";
-		else if (i == 1)
-			path = "Art/UI/1.png";
-		else
-			path = "Art/UI/2.png";
-		text->loadFromFile(path);
-		slots->push_back(new InventorySlot(new Item(text, std::to_string(i))));
-	}
+	SetupSlots();
 
 	timedEvent = new TimeEvent(std::bind(&Inventory::SetOpenable, this), 0.5f, true);
 	timedEvent->Pause();
@@ -45,14 +31,47 @@ void Inventory::Update(sf::Vector2f mousePos)
 		for (InventorySlot* slot : *slots)
 		{
 			float xPos = (slot->GetSize().x * (float)i) + 10 * (float)i;
-			slot->SetPosition(player->GetPosition() - slotStartingPos + (sf::Vector2f(xPos, 0)));
-			slot->Update(player);
+			slot->SetPosition(player->getPosition() - slotStartingPos + sf::Vector2f(xPos, 0));
+			slot->Update(*player);
 			i++;
 		}
 
+		i = 0;
+		for (InventorySlot* slot : *equipSlots)
+		{
+			float yPos = (slot->GetSize().y * (float)i) + 10 * (float)i;
+			slot->SetPosition(player->getPosition() - equipSlotStartingPos + sf::Vector2f(0, yPos));
+			slot->Update(*player);
+			i++;
+		}
+
+		trashBin->SetPosition(player->getPosition() - sf::Vector2f(-500, -200));
+
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isDrawing && canInteract)
 		{
-			OnClick(mousePos);
+			for (InventorySlot* slot : *slots)
+			{
+				OnClick(mousePos, slot);
+
+				//std::cout << std::endl;
+			}
+
+			for (InventorySlot* slot : *equipSlots)
+			{
+				OnClick(mousePos, slot);
+			}
+			canInteract = false;
+			timedEvent->Play();
+
+			//if (currItem != nullptr)
+			//	std::cout << "Current item: " << currItem->GetName() << std::endl;
+
+			if (trashBin->CursorIsInBox(mousePos))
+			{
+				delete currItem;
+				currItem = nullptr;
+			}
+				
 		}
 
 
@@ -63,44 +82,68 @@ void Inventory::Update(sf::Vector2f mousePos)
 	}
 }
 
-void Inventory::OnClick(sf::Vector2f mousePos)
+void Inventory::GetItem(Item* i)
 {
 	for (InventorySlot* slot : *slots)
 	{
-		if (slot->CursorIsInBox(mousePos) && slot->GetDrawnStatus())
+		if (slot->isSlotEmpty())
 		{
-			if (!slot->isSlotEmpty() && currItem == nullptr)
-				currItem = slot->GrabItem();
-			else if(slot->isSlotEmpty() && currItem != nullptr)
-			{
-				slot->SetItem(new Item(*currItem));
-				currItem = nullptr;
-			}
-			else if (!slot->isSlotEmpty() && currItem != nullptr)
-			{
-				Item* temp = new Item(*currItem);
-				currItem = slot->GetItem();
-				slot->SetItem(temp);
-				std::cout << "Swap Item\n";
-			}
-				
+			slot->SetItem(i);
+			break;
 		}
 
-
-		if (!slot->isSlotEmpty())
-		{
-			std::cout << slot->GetItem()->GetName() << "  ";
-		}
-		else
-			std::cout << "Empty" << "  ";
+		std::cout << "inventory is full\n";
 	}
-	std::cout << std::endl;
-	canInteract = false;
+}
 
-	if (currItem != nullptr)
-		std::cout << "Current item: " << currItem->GetName() << std::endl;
+bool Inventory::isFull()
+{
+	bool full = true;
+	for (InventorySlot* slot : *slots)
+	{
+		if (slot->isSlotEmpty())
+		{
+			full = false;
+			break;
+		}
+	}
 
-	timedEvent->Play();
+	return full;
+}
+
+void Inventory::SetupSlots()
+{
+	slots = new std::vector<InventorySlot*>();
+	equipSlots = new std::vector<InventorySlot*>();
+	trashBin = new InventorySlot();
+
+	for (int i = 0; i < slotCount; i++)
+	{
+		slots->push_back(new InventorySlot());
+		equipSlots->push_back(new InventorySlot());
+	}
+
+}
+
+void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
+{
+	if (slot->CursorIsInBox(mousePos))
+	{
+		if (!slot->isSlotEmpty() && currItem == nullptr)
+			currItem = slot->GrabItem();
+		else if (slot->isSlotEmpty() && currItem != nullptr)
+		{
+			slot->SetItem(new Item(*currItem));
+			currItem = nullptr;
+		}
+		else if (!slot->isSlotEmpty() && currItem != nullptr)
+		{
+			Item* temp = new Item(*currItem);
+			currItem = slot->GetItem();
+			slot->SetItem(temp);
+			//std::cout << "Swap Item\n";
+		}
+	}
 }
 
 void Inventory::Draw(sf::RenderWindow& window)
@@ -112,9 +155,14 @@ void Inventory::Draw(sf::RenderWindow& window)
 		{
 			slot->Draw(window);
 		}
+
+		for (InventorySlot* slot : *equipSlots)
+		{
+			slot->Draw(window);
+		}
+
+		trashBin->Draw(window);
 	}
 	if (currItem != nullptr)
 		currItem->Draw(window);
 }
-
-

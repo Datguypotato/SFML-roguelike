@@ -12,7 +12,7 @@ Button::Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::Recta
 	
 }
 
-void Button::Update(Player* player)
+void Button::Update(sf::RectangleShape player)
 {
 }
 

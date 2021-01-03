@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <string.h>;
 
-#include "Player.h"
 
 class UIComponent
 {
@@ -11,8 +10,8 @@ public:
 	~UIComponent();
 
 	bool CursorIsInBox(sf::Vector2f mousePos);
-	void CanUpdate(Player* player);
-	virtual void Update(Player* player);
+	void CanUpdate(sf::RectangleShape player);
+	virtual void Update(sf::RectangleShape player);
 	void SetPosition(sf::Vector2f pos) { box.setPosition(pos); }
 
 	void Draw(sf::RenderWindow& window);

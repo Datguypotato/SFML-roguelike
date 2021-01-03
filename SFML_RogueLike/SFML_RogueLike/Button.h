@@ -9,7 +9,7 @@ class Button : public UIComponent
 public:
 	Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::RectangleShape box)> callBack, sf::Texture* buttonText);
 
-	void Update(Player* player) override;
+	void Update(sf::RectangleShape player) override;
 	void OnClick();
 
 	TimeEvent* GetEvent() { return e; }

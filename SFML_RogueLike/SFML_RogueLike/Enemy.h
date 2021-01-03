@@ -18,15 +18,11 @@ public:
 	float GetVectorDistance(sf::Vector2f target);
 	void UpdateAttackBox();
 
-	std::vector<TimeEvent*> GetEvents() { return events; }
-
 protected:
 	void AttackPlayer();
 
 	Player* player;
 	sf::RectangleShape* playerBody;
 	sf::RectangleShape attackBox;
-
-	std::vector<TimeEvent*> events;
 };
 

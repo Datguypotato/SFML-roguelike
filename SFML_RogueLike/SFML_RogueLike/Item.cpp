@@ -5,7 +5,6 @@ Item::Item(sf::Texture* itemText)
 		itemName("Default")
 {
 	itemBox.setTexture(itemText);
-	itemTexture = itemText;
 
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
 }
@@ -15,9 +14,12 @@ Item::Item(sf::Texture* itemText, std::string name)
 		itemName(name)
 {
 	itemBox.setTexture(itemText);
-	itemTexture = itemText;
 
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
+}
+
+Item::~Item()
+{
 }
 
 void Item::SetPosition(sf::Vector2f pos)

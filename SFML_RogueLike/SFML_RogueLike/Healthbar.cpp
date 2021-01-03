@@ -18,6 +18,7 @@ Healthbar::Healthbar(sf::Vector2f size, sf::Vector2f pos, int playerHealth)
 
 void Healthbar::Update(Player* player)
 {
+	UIComponent::CanUpdate(*player->GetBody());
 	healthbarFill.setScale((float)player->GetHealth() / maxHealth, 1);
 	healthbarFill.setPosition(box.getPosition());
 
