@@ -51,6 +51,10 @@ void Slime::Update(float deltaTime)
 	Entity::Update(deltaTime);
 	SlimeBase::Update(deltaTime);
 
+	if (effecthandler->IsStunned())
+		events[1]->Pause();
+	else
+		events[1]->Play();
 
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);

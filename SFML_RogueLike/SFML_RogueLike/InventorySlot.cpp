@@ -54,6 +54,7 @@ Item* InventorySlot::GrabItem()
 	isEmpty = true;
 	Item* temp = new Item(*item);
 	delete item;
+	item = nullptr;
 
 	return temp;
 }

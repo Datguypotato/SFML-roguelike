@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 #include "Collider.h"
+#include "Item.h"
+#include "BleedEffect.h"
 
 class Weapon
 {
@@ -11,6 +13,7 @@ public:
 
 	void Attack();
 	void Update(float deltaTime);
+	void UpdateItems(std::vector<Item*> items);
 	void Draw(sf::RenderWindow& window);
 
 	void SetAttackBoxPos(sf::Vector2f newPos) { attackbox.setPosition(newPos); }
@@ -25,4 +28,8 @@ private:
 	int attackDamage;
 	float attackTimer;
 	float attackTimerMax;
+
+	EffectValue effectvalue;
+
+	int timesAttacked;
 };

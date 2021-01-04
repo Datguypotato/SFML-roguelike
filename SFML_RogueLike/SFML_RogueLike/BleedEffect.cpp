@@ -1,13 +1,12 @@
 #include "BleedEffect.h"
 
-BleedEffect::BleedEffect(int amount, int dmg)
-	:	Effect(amount),
-		damage(dmg)
+BleedEffect::BleedEffect(EffectValue ev)
+	:	Effect(ev)
 {
 }
 
 int BleedEffect::GetEffect()
 {
 	effectTimes--;
-	return damage;
+	return effectValue.bleedDamage;
 }

@@ -2,7 +2,8 @@
 
 Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
 	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage),
-		weapon(new Weapon(attackDamage, 1.0f))
+		weapon(new Weapon(attackDamage, 1.0f)),
+		inventory(new Inventory(&body))
 {
 	body.setPosition(sf::Vector2f(150, 150));
 }
@@ -19,6 +20,7 @@ Player* Player::Clone() const
 void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
+	weapon->Update(deltaTime);
 
 	std::string playName;
 
@@ -47,8 +49,6 @@ void Player::Update(float deltaTime)
 	}
 
 
-
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && weapon->CanAttack())
 	{
 		AC.PlayNoInterupt("Attack", faceRight);
@@ -72,5 +72,13 @@ void Player::Draw(sf::RenderWindow& window)
 {
 	Entity::Draw(window);
 
+	if(weapon->CanAttack())
+		weapon->Draw(window);
 
+	inventory->Draw(window);
+}
+
+void Player::CollectItem(Collectable* c)
+{
+	inventory->GetItem(c->GetItem());
 }

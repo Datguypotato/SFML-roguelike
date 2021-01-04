@@ -15,8 +15,19 @@ void EnemiesManager::Update(float deltaTime)
 {
 	for (Enemy* enemy : enemies)
 	{
-		if(enemy->GetAliveStatus())
-			enemy->Update(deltaTime);
+		if (enemy->GetAliveStatus() && !enemy->GetEffectHandler()->IsStunned())
+		{
+			if (!enemy->GetEffectHandler()->IsStunned())
+			{
+				enemy->Update(deltaTime);
+				enemy->GetSound().setVolume(0.0f);
+			}
+			else
+				enemy->GetSound().setVolume(100.0f);
+		}
+
+		if(enemy)
+		enemy->GetEffectHandler()->CountDownStun(deltaTime);
 	}
 
 	if (boss != nullptr)

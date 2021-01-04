@@ -5,8 +5,9 @@ Item::Item(sf::Texture* itemText)
 		itemName("Default")
 {
 	itemBox.setTexture(itemText);
-
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
+
+	effectValue = EffectValue();
 }
 
 Item::Item(sf::Texture* itemText, std::string name)
@@ -14,7 +15,16 @@ Item::Item(sf::Texture* itemText, std::string name)
 		itemName(name)
 {
 	itemBox.setTexture(itemText);
+	itemBox.setOrigin(itemBox.getSize() / 2.0f);
+	effectValue = EffectValue();
+}
 
+Item::Item(sf::Texture* itemText, std::string name, EffectValue e)
+	:	effectValue(e),
+		itemBox(sf::Vector2f(100, 100)),
+		itemName(name)
+{
+	itemBox.setTexture(itemText);
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
 }
 

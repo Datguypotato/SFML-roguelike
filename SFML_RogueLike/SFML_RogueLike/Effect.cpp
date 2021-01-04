@@ -1,6 +1,6 @@
 #include "Effect.h"
 
-Effect::Effect(int et)
-	:	effectTimes(et)
+Effect::Effect(EffectValue ev)
+	:	effectValue(ev)
 {
 }

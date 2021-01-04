@@ -23,7 +23,7 @@ void Inventory::OpenClose()
 	std::cout << "The inventory is now " << isOpen << std::endl;
 }
 
-void Inventory::Update(sf::Vector2f mousePos)
+void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 {
 	if (isDrawing)
 	{
@@ -59,6 +59,8 @@ void Inventory::Update(sf::Vector2f mousePos)
 			for (InventorySlot* slot : *equipSlots)
 			{
 				OnClick(mousePos, slot);
+				if(slot->CursorIsInBox(mousePos))
+					weapon->UpdateItems(GetCurrEquipItem());
 			}
 			canInteract = false;
 			timedEvent->Play();
@@ -109,6 +111,18 @@ bool Inventory::isFull()
 	}
 
 	return full;
+}
+
+std::vector<Item*> Inventory::GetCurrEquipItem()
+{
+	std::vector<Item*> i = std::vector<Item*>();
+
+	for (InventorySlot* slot : *equipSlots)
+	{
+		i.push_back(slot->GetItem());
+	}
+
+	return i;
 }
 
 void Inventory::SetupSlots()

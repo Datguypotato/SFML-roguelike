@@ -28,6 +28,7 @@ public:
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
 
+	sf::Sound GetSound() { return sound; }
 	std::vector<TimeEvent*> GetEvents() { return events; }
 	EffectHandler* GetEffectHandler() { return effecthandler; }
 	AnimatorController GetAC() { return AC; }

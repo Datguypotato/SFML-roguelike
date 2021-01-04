@@ -1,10 +1,12 @@
-#pragma once
-#include "Effect.h"
-
-class StunEffect :
-    public Effect
-{
-public:
-    StunEffect(int times);
-};
-
+//#pragma once
+//#include "Effect.h"
+//
+//class StunEffect :
+//    public Effect
+//{
+//public:
+//    StunEffect(int times);
+//
+//    bool GetStunned();
+//};
+//

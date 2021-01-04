@@ -4,7 +4,7 @@
 class BleedEffect : public Effect
 {
 public:
-	BleedEffect(int amount, int dmg);
+	BleedEffect(EffectValue ev);
 	int GetEffect() override;
 
 private:

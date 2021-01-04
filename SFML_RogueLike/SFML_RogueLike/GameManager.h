@@ -11,7 +11,6 @@
 
 #include "Player.h"
 #include "Enemy.h"
-#include "Inventory.h"
 #include "Item.h"
 #include "Collectable.h"
 
@@ -47,7 +46,6 @@ private:
 	EnemiesManager* em;
 
 	Player* player;
-	Inventory* inventory;
 	Healthbar* healthbar;
 	Button* bagIcon;
 	std::vector<Collectable*> c;

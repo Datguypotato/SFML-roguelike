@@ -85,7 +85,6 @@ void Entity::Update(float deltaTime)
 
 	damageCooldown -= deltaTime;
 
-
 	if (TextureBody.getTexture() != AC.GetActiveAnimation()->GetTexture())
 		TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
 
@@ -151,10 +150,14 @@ void Entity::GetEffects()
 {
 	if(effecthandler->hasEffects())
 		OnHit(effecthandler->GetBleedDamage());
+
+
 }
 
 void Entity::OnDeath()
 {
 	std::cout << "has died\n";
 	sound.resetBuffer();
+	for (TimeEvent* event : events)
+		event->Pause();
 }

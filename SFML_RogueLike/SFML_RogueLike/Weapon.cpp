@@ -2,7 +2,9 @@
 
 Weapon::Weapon(int ad, float at)
 	:	attackDamage(ad),
-		attackTimer(at)
+		attackTimer(at),
+		attackTimerMax(at),
+		timesAttacked(0)
 {
 	attackbox.setSize(sf::Vector2f(50, 50));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
@@ -11,18 +13,44 @@ Weapon::Weapon(int ad, float at)
 
 void Weapon::Attack()
 {
-	attackTimer = attackTimerMax;
-
-	for (auto target : inRange)
+	if (CanAttack())
 	{
-		target->OnHit(attackDamage);
-		inRange.clear();
+		attackTimer = attackTimerMax;
+		timesAttacked++;
+
+		for (auto target : inRange)
+		{
+			//target->OnHit(attackDamage);
+			
+			if (timesAttacked % 3 == 0)
+				target->GetEffectHandler()->SetBleed(effectvalue.bleedTimes, effectvalue.bleedDamage);
+
+			inRange.clear();
+		}
+		std::cout << "Player has attacked " << timesAttacked << " times\n";
 	}
+
 }
 
 void Weapon::Update(float deltaTime)
 {
 	attackTimer -= deltaTime;
+}
+
+void Weapon::UpdateItems(std::vector<Item*> items)
+{
+	effectvalue = EffectValue();
+
+	for (Item* item : items)
+	{
+		if (item != nullptr)
+		{
+			EffectValue temp = item->GetEffectValue();
+			effectvalue.bleedDamage += temp.bleedDamage;
+			effectvalue.bleedTimes += temp.bleedTimes;
+			effectvalue.stun += temp.stun;
+		}
+	}
 }
 
 void Weapon::Draw(sf::RenderWindow& window)

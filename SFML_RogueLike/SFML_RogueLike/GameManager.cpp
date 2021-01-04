@@ -11,13 +11,12 @@ GameManager::GameManager()
 	em = new EnemiesManager(player); 
 	healthbar = new Healthbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
 
-	inventory = new Inventory(player->GetBody());
 	sf::Texture* btext = new sf::Texture();
 	btext->loadFromFile("Art/UI/BagIcon.png");
-	bagIcon = new Button(sf::Vector2f(100, 100), sf::Vector2f(500, -300), std::bind(&Inventory::OpenClose, inventory), btext);
+	bagIcon = new Button(sf::Vector2f(100, 100), sf::Vector2f(500, -300), std::bind(&Inventory::OpenClose, player->GetInventory()), btext);
 
 	timedEvents.push_back(bagIcon->GetEvent());
-	timedEvents.push_back(inventory->GetEvent());
+	timedEvents.push_back(player->GetInventory()->GetEvent());
 }
 
 void GameManager::ResizeView()
@@ -33,12 +32,14 @@ void GameManager::Start()
 
 	Enemy* s = em->BuildSlime(em->RandomPos(), &timedEvents);
 
-	s->GetEffectHandler()->SetBleed(2, 1);
 	for (int i = 0; i < 4; i++)
 	{
 		sf::Texture* fBroodje = new sf::Texture();
 		fBroodje->loadFromFile("Art/UI/Frikandelbroodje.png");
-		Item* ie = new Item(fBroodje, "Frikandelbroodje");
+		EffectValue ev = EffectValue();
+		ev.bleedDamage = 1;
+		ev.bleedTimes = 2;
+		Item* ie = new Item(fBroodje, "Frikandelbroodje", ev);
 		std::vector<Animation*> temp;
 		temp.push_back(new Animation(fBroodje, 1, 1, "Default"));
 		c.push_back(new Collectable(temp, em->RandomPos(), ie));
@@ -56,7 +57,7 @@ void GameManager::Update(float deltaTime)
 	if (bagIcon->CursorIsInBox(mousepos))
 		bagIcon->OnClick();
 
-	inventory->Update(mousepos);
+	player->GetInventory()->Update(mousepos, player->GetWeapon());
 	em->Update(deltaTime);
 
 	for (Collectable* collect : c)
@@ -94,10 +95,9 @@ void GameManager::CheckCollision()
 	{
 		if (collect->GetCollider().CheckTrigger(pcoll) && collect->GetAliveStatus())
 		{
-			if (!inventory->isFull())
+			if (!player->GetInventory()->isFull())
 			{
-				inventory->GetItem(collect->GetItem());
-				std::cout << "Touched broodje\n";
+				player->CollectItem(collect);
 			}
 		}
 	}
@@ -117,7 +117,6 @@ void GameManager::Draw()
 	em->Draw(*window);
 	healthbar->Draw(*window);
 	bagIcon->Draw(*window);
-	inventory->Draw(*window);
 	for (Collectable* collect : c)
 	{
 		if (collect != nullptr)

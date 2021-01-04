@@ -1,23 +1,39 @@
 #include "EffectHandler.h"
 
 EffectHandler::EffectHandler()
+	:	stunTimer(0)
 {
 	effects = std::vector<Effect*>();
 }
 
 void EffectHandler::SetBleed(float time, int damage)
 {
-	effects.push_back(new BleedEffect(time, damage));
+	if (time == 0 || damage == 0)
+		return;
+
+	EffectValue ev;
+	ev.bleedTimes = time;
+	ev.bleedDamage = damage;
+
+	effects.push_back(new BleedEffect(ev));
+}
+
+void EffectHandler::SetBleed(BleedEffect* bleedEffect)
+{
+	if (bleedEffect == nullptr || bleedEffect->GetEffect() == 0 || bleedEffect->GetTimes() == 0)
+		return;
+
+	effects.push_back(bleedEffect);
 }
 
 void EffectHandler::SetStunned(float time)
 {
-	if (stunEffect->GetTimes() < time)
-		delete stunEffect;
-	if (stunEffect == nullptr)
-	{
-		stunEffect = new StunEffect(time);
-	}
+	if (time <= 0)
+		return;
+
+	if (stunTimer < time)
+		stunTimer = time;
+
 }
 
 int EffectHandler::GetBleedDamage()
@@ -39,3 +55,15 @@ int EffectHandler::GetBleedDamage()
 
 	return totalDamage;
 }
+
+// TODO WIP
+bool EffectHandler::IsStunned()
+{
+	return (stunTimer > 0);
+}
+
+void EffectHandler::CountDownStun(float deltaTime)
+{
+	stunTimer -= deltaTime;
+}
+
