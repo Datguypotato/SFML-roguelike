@@ -43,9 +43,6 @@
     <Filter Include="Header Files\UI">
       <UniqueIdentifier>{3a4a9dae-d93a-4533-b7c0-c542a6f11fc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Effects">
-      <UniqueIdentifier>{1c0df86c-00dc-4b51-9707-d2ca0c282730}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Effects">
       <UniqueIdentifier>{acb2f66d-2783-4ad2-a571-3f84613a902f}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="Source Files\manager">
       <UniqueIdentifier>{9e3c1f6c-37df-4368-8965-e36db69de513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects">
+      <UniqueIdentifier>{1c0df86c-00dc-4b51-9707-d2ca0c282730}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

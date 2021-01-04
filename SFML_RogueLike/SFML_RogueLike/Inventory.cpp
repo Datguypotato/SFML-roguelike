@@ -56,17 +56,43 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 				//std::cout << std::endl;
 			}
 
+			int index = 0;
 			for (InventorySlot* slot : *equipSlots)
 			{
-				OnClick(mousePos, slot);
+				OnClickEquipment(mousePos, slot, index);
+				index++;
 				if(slot->CursorIsInBox(mousePos))
 					weapon->UpdateItems(GetCurrEquipItem());
 			}
 			canInteract = false;
 			timedEvent->Play();
 
-			//if (currItem != nullptr)
-			//	std::cout << "Current item: " << currItem->GetName() << std::endl;
+			if (currItem != nullptr)
+			{
+				std::string region;
+				
+				switch (currItem->GetSlotRegion())
+				{
+				case SlotRegion::none:
+					region = "None";
+					break;
+				case SlotRegion::head:
+					region = "Head";
+					break;
+				case SlotRegion::body:
+					region = "Body";
+					break;
+				case SlotRegion::legs:
+					region = "Legs";
+					break;
+				default:
+					region = "Unkown";
+					break;
+				}
+
+				std::cout << "Current item " << region << std::endl;
+			}
+				
 
 			if (trashBin->CursorIsInBox(mousePos))
 			{
@@ -131,16 +157,34 @@ void Inventory::SetupSlots()
 	equipSlots = new std::vector<InventorySlot*>();
 	trashBin = new InventorySlot();
 
+	std::vector<SlotRegion> slotregions;
+	slotregions.push_back(SlotRegion::head);
+	slotregions.push_back(SlotRegion::body);
+	slotregions.push_back(SlotRegion::legs);
 	for (int i = 0; i < slotCount; i++)
 	{
 		slots->push_back(new InventorySlot());
-		equipSlots->push_back(new InventorySlot());
+		equipSlots->push_back(new InventorySlot(&slotregions[i]));
 	}
 
 }
 
+void Inventory::OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int index)
+{
+	if (slot->CursorIsInBox(mousePos))
+	{
+		if (currItem != nullptr && currItem->GetSlotRegion() != slot->GetSlotRegion())
+		{
+			return;
+		}
+		else
+			OnClick(mousePos, slot);
+	}
+}
+
 void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
 {
+
 	if (slot->CursorIsInBox(mousePos))
 	{
 		if (!slot->isSlotEmpty() && currItem == nullptr)
@@ -155,7 +199,7 @@ void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
 			Item* temp = new Item(*currItem);
 			currItem = slot->GetItem();
 			slot->SetItem(temp);
-			//std::cout << "Swap Item\n";
+			std::cout << "Swap Item\n";
 		}
 	}
 }

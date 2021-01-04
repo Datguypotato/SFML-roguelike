@@ -26,6 +26,7 @@ public:
 private:
 	void SetupSlots();
 	void OnClick(sf::Vector2f mousePos, InventorySlot* slot);
+	void OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int index);
 
 	sf::RectangleShape* player;
 

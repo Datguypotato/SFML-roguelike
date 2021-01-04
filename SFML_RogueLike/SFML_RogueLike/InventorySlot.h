@@ -8,6 +8,7 @@ class InventorySlot : public UIComponent
 {
 public:
 	InventorySlot();
+	InventorySlot(SlotRegion* sr);
 	InventorySlot(Item* it);
 
 	void Update(sf::RectangleShape player) override;
@@ -21,9 +22,11 @@ public:
 
 	bool isSlotEmpty() { return (isEmpty); }
 
+	SlotRegion GetSlotRegion() { return *slotRegion; }
 private:
-	Item* item;
-	sf::Texture* emptySlotText;
 	bool isEmpty;
+	sf::Texture* emptySlotText;
+	Item* item;
+	SlotRegion* slotRegion;
 };
 

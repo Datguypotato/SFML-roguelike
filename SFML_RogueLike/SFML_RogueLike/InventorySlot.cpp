@@ -2,7 +2,20 @@
 
 InventorySlot::InventorySlot()
 	:	UIComponent(sf::Vector2f(75, 75), sf::Vector2f()),
-		item(nullptr)
+		item(nullptr),
+		slotRegion(new SlotRegion(SlotRegion::none))
+{
+	emptySlotText = new sf::Texture();
+	emptySlotText->loadFromFile("Art/UI/EmptySlot.png");
+	box.setTexture(emptySlotText);
+
+	isEmpty = true;
+}
+
+InventorySlot::InventorySlot(SlotRegion* sr)
+	:	UIComponent(sf::Vector2f(75, 75), sf::Vector2f()),
+		item(nullptr),
+		slotRegion(new SlotRegion(*sr))
 {
 	emptySlotText = new sf::Texture();
 	emptySlotText->loadFromFile("Art/UI/EmptySlot.png");
@@ -13,7 +26,8 @@ InventorySlot::InventorySlot()
 
 InventorySlot::InventorySlot(Item* i)
 	:	UIComponent(sf::Vector2f(75, 75), sf::Vector2f()),
-		item(i)
+		item(i),
+		slotRegion(new SlotRegion(SlotRegion::none))
 {
 	emptySlotText = new sf::Texture();
 	emptySlotText->loadFromFile("Art/UI/EmptySlot.png");

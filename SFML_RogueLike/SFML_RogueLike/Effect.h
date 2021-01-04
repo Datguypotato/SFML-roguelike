@@ -2,7 +2,8 @@
 
 struct EffectValue
 {
-	float stun;
+	float stunTime;
+	float stunPercentage;
 	int bleedTimes;
 	int bleedDamage;
 };

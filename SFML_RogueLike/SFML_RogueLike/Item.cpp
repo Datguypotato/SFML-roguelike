@@ -2,7 +2,8 @@
 
 Item::Item(sf::Texture* itemText)
 	:	itemBox(sf::Vector2f(100, 100)),
-		itemName("Default")
+		itemName("Default"),
+		slotRegion(new SlotRegion(SlotRegion::none))
 {
 	itemBox.setTexture(itemText);
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
@@ -12,17 +13,19 @@ Item::Item(sf::Texture* itemText)
 
 Item::Item(sf::Texture* itemText, std::string name)
 	:	itemBox(sf::Vector2f(100, 100)),
-		itemName(name)
+		itemName(name),
+		slotRegion(new SlotRegion(SlotRegion::none))
 {
 	itemBox.setTexture(itemText);
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
 	effectValue = EffectValue();
 }
 
-Item::Item(sf::Texture* itemText, std::string name, EffectValue e)
+Item::Item(sf::Texture* itemText, std::string name, EffectValue e, SlotRegion* sr)
 	:	effectValue(e),
 		itemBox(sf::Vector2f(100, 100)),
-		itemName(name)
+		itemName(name),
+		slotRegion(new SlotRegion(*sr))
 {
 	itemBox.setTexture(itemText);
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);

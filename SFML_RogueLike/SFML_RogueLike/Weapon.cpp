@@ -25,6 +25,9 @@ void Weapon::Attack()
 			if (timesAttacked % 3 == 0)
 				target->GetEffectHandler()->SetBleed(effectvalue.bleedTimes, effectvalue.bleedDamage);
 
+			if (rand() % 100 < effectvalue.stunPercentage)
+				target->GetEffectHandler()->SetStunned(effectvalue.stunTime);
+
 			inRange.clear();
 		}
 		std::cout << "Player has attacked " << timesAttacked << " times\n";
@@ -48,7 +51,8 @@ void Weapon::UpdateItems(std::vector<Item*> items)
 			EffectValue temp = item->GetEffectValue();
 			effectvalue.bleedDamage += temp.bleedDamage;
 			effectvalue.bleedTimes += temp.bleedTimes;
-			effectvalue.stun += temp.stun;
+			effectvalue.stunPercentage += temp.stunPercentage;
+			effectvalue.stunTime += temp.stunTime;
 		}
 	}
 }

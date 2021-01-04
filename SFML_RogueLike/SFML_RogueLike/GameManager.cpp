@@ -37,9 +37,11 @@ void GameManager::Start()
 		sf::Texture* fBroodje = new sf::Texture();
 		fBroodje->loadFromFile("Art/UI/Frikandelbroodje.png");
 		EffectValue ev = EffectValue();
-		ev.bleedDamage = 1;
-		ev.bleedTimes = 2;
-		Item* ie = new Item(fBroodje, "Frikandelbroodje", ev);
+		ev.bleedDamage = 0;
+		ev.bleedTimes = 0;
+		ev.stunPercentage = 100;
+		ev.stunTime = 1;
+		Item* ie = new Item(fBroodje, "Frikandelbroodje", ev, new SlotRegion(SlotRegion::head));
 		std::vector<Animation*> temp;
 		temp.push_back(new Animation(fBroodje, 1, 1, "Default"));
 		c.push_back(new Collectable(temp, em->RandomPos(), ie));
@@ -113,8 +115,8 @@ void GameManager::Draw()
 	window->clear();
 
 	levelmanager->GetCurrentLevel()->Draw(*window);
-	player->Draw(*window);
 	em->Draw(*window);
+	player->Draw(*window);
 	healthbar->Draw(*window);
 	bagIcon->Draw(*window);
 	for (Collectable* collect : c)

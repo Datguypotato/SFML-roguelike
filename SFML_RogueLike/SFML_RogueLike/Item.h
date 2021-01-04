@@ -4,12 +4,20 @@
 
 #include "BleedEffect.h"
 
+enum class SlotRegion
+{
+	none,
+	head,
+	body,
+	legs
+};
+
 class Item
 {
 public:
 	Item(sf::Texture* itemText);
 	Item(sf::Texture* itemText, std::string name);
-	Item(sf::Texture* itemText, std::string name, EffectValue e);
+	Item(sf::Texture* itemText, std::string name, EffectValue e, SlotRegion* sr);
 
 	~Item();
 
@@ -20,9 +28,11 @@ public:
 	sf::RectangleShape GetItemBox() { return itemBox; }
 	std::string GetName() { return itemName; }
 	EffectValue GetEffectValue() { return effectValue; }
+	SlotRegion GetSlotRegion() { return *slotRegion; }
 
 protected:
 	sf::RectangleShape itemBox;
 	std::string itemName;
 	EffectValue effectValue;
+	SlotRegion* slotRegion;
 };
