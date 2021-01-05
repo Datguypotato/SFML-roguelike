@@ -27,17 +27,17 @@ float LevelManager::Lerp(float a, float b, float t)
 	return a * (1 - t) + b * t;
 }
 
-void LevelManager::NextLevel()
+void LevelManager::NextLevel(EnemiesManager* em)
 {
-	LevelManager::SwitchLevel(activeLevelIndex + 1);
+	LevelManager::SwitchLevel(activeLevelIndex + 1, em);
 }
 
-void LevelManager::SwitchLevel(int index)
+void LevelManager::SwitchLevel(int index, EnemiesManager* em)
 {
 	// TODO set transition screen back to normal
 	levels[activeLevelIndex]->Unload();
 	activeLevelIndex++;
-	levels[index]->Load(p);
+	levels[index]->Load(p, em);
 }
 
 void LevelManager::CenterRectangleShape(sf::Vector2f newPos)

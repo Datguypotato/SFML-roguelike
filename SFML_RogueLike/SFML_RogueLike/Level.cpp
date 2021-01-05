@@ -18,7 +18,7 @@ Level::~Level()
 {
 }
 
-void Level::Load(Player* p)
+void Level::Load(Player* p, EnemiesManager* em)
 {
 	tson::Tileson t;
 	map = t.parse(levelPath);
@@ -63,14 +63,23 @@ void Level::Load(Player* p)
 			}
 			else if (layer.getType() == tson::LayerType::ObjectGroup)
 			{
-				for (const auto& points : layer.getObjects())
+				int index = 0;
+				for (auto it = begin(layer.getObjects()); it != end(layer.getObjects()); ++it)
 				{
-					if (points.isPoint() && points.getName() == "PlayerSpawn")
+					if (it->isPoint())
 					{
-						p->SetPosition(sf::Vector2f(points.getPosition().x, points.getPosition().y));
-						std::cout << "player start position = " << points.getPosition().x << " " << points.getPosition().y << std::endl;
+						if (it->getName() == "PlayerSpawn")
+						{
+							p->SetPosition(sf::Vector2f(it->getPosition().x, it->getPosition().y));
+							std::cout << "player start position = " << it->getPosition().x << " " << it->getPosition().y << std::endl;
+						}
+						else if (it->getName() == "SlimeSpawn")
+						{
+							em->AddEnemyData(EnemyType::Slime, it->get<float>("SpawnTime"), sf::Vector2f(it->getPosition().x, it->getPosition().y));
+						}
 					}
 				}
+
 			}
 
 		}

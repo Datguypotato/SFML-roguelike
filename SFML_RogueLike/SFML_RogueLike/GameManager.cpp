@@ -28,9 +28,7 @@ void GameManager::ResizeView()
 
 void GameManager::Start()
 {
-	levelmanager->GetCurrentLevel()->Load(player);
-
-	Enemy* s = em->BuildSlime(em->RandomPos(), &timedEvents);
+	levelmanager->GetCurrentLevel()->Load(player, em);
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -115,15 +113,16 @@ void GameManager::Draw()
 	window->clear();
 
 	levelmanager->GetCurrentLevel()->Draw(*window);
-	em->Draw(*window);
-	player->Draw(*window);
-	healthbar->Draw(*window);
-	bagIcon->Draw(*window);
 	for (Collectable* collect : c)
 	{
 		if (collect != nullptr)
 			collect->Draw(*window);
 	}
+	em->Draw(*window);
+	player->Draw(*window);
+	healthbar->Draw(*window);
+	bagIcon->Draw(*window);
+
 
 	view->setCenter(player->GetPosition());
 	window->setView(*view);
@@ -154,7 +153,7 @@ Player* GameManager::BuildPlayer()
 
 void GameManager::NextLevel()
 {
-	levelmanager->NextLevel();
+	levelmanager->NextLevel(em);
 	std::cout << "Player in door\n";
 }
 

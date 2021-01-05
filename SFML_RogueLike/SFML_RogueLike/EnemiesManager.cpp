@@ -3,7 +3,9 @@
 EnemiesManager::EnemiesManager(Player* player)
 	:	player(player),
 		playerBody(player->GetBody()),
-		boss(nullptr)
+		boss(nullptr),
+		enemiesData(std::vector<SpawnData*>()),
+		enemies(std::vector<Enemy*>())
 {
 }
 
@@ -13,6 +15,33 @@ EnemiesManager::~EnemiesManager()
 
 void EnemiesManager::Update(float deltaTime)
 {
+	for (TimeEvent* timeEvent : timedEvents)
+		timeEvent->Tick(deltaTime);
+
+
+	for (int i = 0; i < enemiesData.size(); i++)
+	{
+
+		if (enemiesData[i] != nullptr)
+		{
+			enemiesData[i]->time -= deltaTime;
+
+			if (enemiesData[i]->time <= 0)
+			{
+				switch (enemiesData[i]->type)
+				{
+				case EnemyType::Slime:
+					BuildSlime(enemiesData[i]->spawnPos);
+					delete enemiesData[i];
+					enemiesData[i] = nullptr;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+
 	for (Enemy* enemy : enemies)
 	{
 		if (enemy->GetAliveStatus() && !enemy->GetEffectHandler()->IsStunned())
@@ -103,7 +132,7 @@ sf::Vector2f EnemiesManager::RandomPos()
 	return sf::Vector2f(randomX, randomY);
 }
 
-Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
+Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos)
 {
 	// load slime textures
 	std::vector<Animation*> slimeAnimations = LoadSlimeAnimation();
@@ -111,12 +140,12 @@ Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos, std::vector<TimeEvent*>
 	Slime* temp = new Slime(slimeAnimations, spawnPos, player);
 	enemies.push_back(temp);
 	for (TimeEvent* event : temp->GetEvents())
-		e->push_back(event);
+		timedEvents.push_back(event);
 
 	return temp;
 }
 
-Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
+Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos)
 {
 	// TODO Need to make the other art assets
 	std::vector<Animation*> goblinAnimations;
@@ -128,12 +157,12 @@ Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos, std::vector<TimeEvent
 	Goblin* temp = new Goblin(goblinAnimations, spawnPos, player);
 	enemies.push_back(temp);
 	for (TimeEvent* event : temp->GetEvents())
-		e->push_back(event);
+		timedEvents.push_back(event);
 
 	return temp;
 }
 
-Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
+Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos)
 {
 	std::vector<Animation*> ghostAnimations;
 	sf::Texture* ghostDefault = new sf::Texture();
@@ -151,12 +180,12 @@ Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos, std::vector<TimeEvent*>
 	Ghost* temp = new Ghost(ghostAnimations, spawnPos, player);
 	enemies.push_back(temp);
 	for (TimeEvent* event : temp->GetEvents())
-		e->push_back(event);
+		timedEvents.push_back(event);
 
 	return temp;
 }
 
-SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos, std::vector<TimeEvent*>* e)
+SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos)
 {
 	std::vector<Animation*> slimeAnimations = LoadSlimeAnimation();
 
@@ -164,9 +193,14 @@ SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos, std::vector<Tim
 
 	boss = temp;
 	for (TimeEvent* event : temp->GetEvents())
-		e->push_back(event);
+		timedEvents.push_back(event);
 
 	return nullptr;
+}
+
+void EnemiesManager::AddEnemyData(EnemyType et, float time, sf::Vector2f pos)
+{
+	enemiesData.push_back(new SpawnData(et, time, pos));
 }
 
 std::vector<Animation*> EnemiesManager::LoadSlimeAnimation()

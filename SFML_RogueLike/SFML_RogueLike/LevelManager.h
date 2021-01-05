@@ -12,8 +12,8 @@ public:
 	LevelManager(std::function<void()> Changelevel, Player* p);
 	~LevelManager();
 
-	void NextLevel();
-	void SwitchLevel(int index);
+	void NextLevel(EnemiesManager* em);
+	void SwitchLevel(int index, EnemiesManager* em);
 	void CenterRectangleShape(sf::Vector2f newPos);
 
 	Level* GetCurrentLevel();
@@ -23,7 +23,6 @@ private:
 	int activeLevelIndex;
 	Player* p;
 
-	//EnemiesManager* em;
 	std::map<int, sf::Texture*>* CreateTiles();
 	//sf::RectangleShape transitionScreen;
 	//sf::Vector2f transitionScale;

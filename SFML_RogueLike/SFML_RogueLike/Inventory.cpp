@@ -52,8 +52,6 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 			for (InventorySlot* slot : *slots)
 			{
 				OnClick(mousePos, slot);
-
-				//std::cout << std::endl;
 			}
 
 			int index = 0;
@@ -180,6 +178,31 @@ void Inventory::OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int
 		else
 			OnClick(mousePos, slot);
 	}
+}
+
+void Inventory::CheckifCanCombine()
+{
+	//TODO not priority
+
+	//std::vector<Item*> currentItems = std::vector<Item*>();
+	//for (InventorySlot* slot : *equipSlots)
+	//{
+	//	if(!slot->isSlotEmpty())
+	//		currentItems.push_back(slot->GetItem());
+	//}
+	//for (InventorySlot* slot : *slots)
+	//{
+	//	if (!slot->isSlotEmpty())
+	//		currentItems.push_back(slot->GetItem());
+	//}
+
+	//if (currentItems.size() < 3)
+	//	return;
+
+	//for (Item* currentItem : currentItems)
+	//{
+
+	//}
 }
 
 void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)

@@ -6,6 +6,7 @@
 #include "Wall.h"
 #include "LevelSwitcher.h"
 #include "Player.h"
+#include "EnemiesManager.h"
 
 class Level
 {
@@ -14,7 +15,7 @@ public:
 	Level(std::map<int, sf::Texture*>* tileSet, fs::path levelPath, std::function<void()> Changelevel);
 	~Level();
 
-	void Load(Player* p);
+	void Load(Player* p, EnemiesManager* em);
 	void Unload();
 	void Draw(sf::RenderWindow& window);
 
@@ -30,6 +31,8 @@ private:
 	fs::path levelPath;
 	bool doneLoading;
 	bool startLoading;
+
+	
 
 	std::vector<Ground> floors;
 	std::vector<Wall> walls;

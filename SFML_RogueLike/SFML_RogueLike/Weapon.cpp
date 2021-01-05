@@ -4,9 +4,10 @@ Weapon::Weapon(int ad, float at)
 	:	attackDamage(ad),
 		attackTimer(at),
 		attackTimerMax(at),
-		timesAttacked(0)
+		timesAttacked(0),
+		effectvalue(EffectValue())
 {
-	attackbox.setSize(sf::Vector2f(50, 50));
+	attackbox.setSize(sf::Vector2f(75, 75));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
 	attackbox.setTexture(nullptr);
 }
@@ -20,16 +21,15 @@ void Weapon::Attack()
 
 		for (auto target : inRange)
 		{
-			//target->OnHit(attackDamage);
+			target->OnHit(attackDamage);
 			
 			if (timesAttacked % 3 == 0)
 				target->GetEffectHandler()->SetBleed(effectvalue.bleedTimes, effectvalue.bleedDamage);
 
 			if (rand() % 100 < effectvalue.stunPercentage)
 				target->GetEffectHandler()->SetStunned(effectvalue.stunTime);
-
-			inRange.clear();
 		}
+		inRange.clear();
 		std::cout << "Player has attacked " << timesAttacked << " times\n";
 	}
 

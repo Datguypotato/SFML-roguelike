@@ -24,6 +24,7 @@ public:
 
 	SlotRegion GetSlotRegion() { return *slotRegion; }
 private:
+
 	bool isEmpty;
 	sf::Texture* emptySlotText;
 	Item* item;

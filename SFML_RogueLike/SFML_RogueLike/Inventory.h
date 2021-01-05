@@ -28,6 +28,8 @@ private:
 	void OnClick(sf::Vector2f mousePos, InventorySlot* slot);
 	void OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int index);
 
+	void CheckifCanCombine();
+
 	sf::RectangleShape* player;
 
 	bool canInteract;
