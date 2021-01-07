@@ -20,7 +20,7 @@ public:
 	void Draw(sf::RenderWindow& window);
 
 	void CheckCollision(Collider playerCollider);
-	void CheckTrigger(Collider playerCollider);
+	void CheckTrigger(Collider playerCollider, EnemiesManager em);
 
 	bool isDoneLoading() { return doneLoading; }
 	bool isStartLoading() { return startLoading; }
@@ -31,8 +31,6 @@ private:
 	fs::path levelPath;
 	bool doneLoading;
 	bool startLoading;
-
-	
 
 	std::vector<Ground> floors;
 	std::vector<Wall> walls;

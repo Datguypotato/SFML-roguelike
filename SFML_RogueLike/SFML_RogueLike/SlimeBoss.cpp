@@ -2,7 +2,7 @@
 
 SlimeBoss::SlimeBoss(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
 	:	SlimeBase(sf::Vector2f(180, 150), sf::Vector2f(120, 100), animations, player, 100, 10, 60),
-		patternTime(1.5f)
+		patternTime(2.5f)
 {
 	body.setPosition(spawnPosition);
 
@@ -15,15 +15,16 @@ SlimeBoss::SlimeBoss(std::vector<Animation*> animations, sf::Vector2f spawnPosit
 	jumpDir = sf::Vector2f();
 	activePattern = AttackPattern::Move;
 	projectiles = std::vector<SlimeBall*>();
+	attackBox = sf::RectangleShape(sf::Vector2f(100, 100));
 
-	events.push_back(new TimeEvent(std::bind(&SlimeBoss::SwitchPattern, this), patternTime));
-	events.push_back(new TimeEvent(std::bind(&SlimeBase::JumpToPlayer, this), jumpCooldown, true));
-	events.push_back(new TimeEvent(std::bind(&SlimeBoss::Bite, this), 1.0f, true));
-	events.push_back(new TimeEvent(std::bind(&SlimeBoss::Shoot, this), 0.5f));
+	events.push_back(new TimeEvent(std::bind(&SlimeBoss::SwitchPattern, this), patternTime, false, "Pattern"));
+	events.push_back(new TimeEvent(std::bind(&SlimeBase::JumpToPlayer, this), jumpCooldown, true, "Jump"));
+	events.push_back(new TimeEvent(std::bind(&SlimeBoss::Bite, this), 1.0f, true, "Bite"));
+	events.push_back(new TimeEvent(std::bind(&SlimeBoss::Shoot, this), 0.5f, false, "Shoot"));
 
-	events[2]->Pause();
-	events[3]->Pause();
-	events[4]->Pause();
+	GetEvent("Jump")->Pause();
+	GetEvent("Bite")->Pause();
+	GetEvent("Shoot")->Pause();
 }
 
 void SlimeBoss::Update(float deltaTime)
@@ -34,18 +35,22 @@ void SlimeBoss::Update(float deltaTime)
 	switch (activePattern)
 	{
 	case AttackPattern::Move:
-		events[1]->Play();
+		GetEvent("Pattern")->Play();
+		GetEvent("Shoot")->Pause();
 		break;
 	case AttackPattern::Bite:
-		events[2]->Play();
+		GetEvent("Bite")->Play();
+		GetEvent("Jump")->Pause();
+		GetEvent("Shoot")->Pause();
 		isJumping = true;
 		break;
 	case AttackPattern::Jump:
-		events[1]->Play();
+		GetEvent("Jump")->Play();
+		GetEvent("Shoot")->Pause();
 		break;
 	case AttackPattern::Projectile:
-		events[3]->Play();
-		events[1]->Pause();
+		GetEvent("Shoot")->Play();
+		GetEvent("Jump")->Pause();
 		isJumping = false;
 		break;
 	default:
@@ -60,16 +65,16 @@ void SlimeBoss::Update(float deltaTime)
 
 void SlimeBoss::SwitchPattern()
 {
-	activePattern = AttackPattern::Projectile; //static_cast<AttackPattern>(rand() % 4);
+	activePattern = AttackPattern::Bite; //static_cast<AttackPattern>(rand() % 4);
 
 	if (activePattern == AttackPattern::Move)
 	{
-		events[1]->SetInterval(jumpCooldown);
+		GetEvent("Jump")->SetInterval(jumpCooldown);
 		speed = jumpSpeed;
 	}
 	else if (activePattern == AttackPattern::Jump)
 	{
-		events[1]->SetInterval(bigJumpCoolDown);
+		GetEvent("Jump")->SetInterval(bigJumpCoolDown);
 		speed = bigJumpSpeed;
 	}
 
@@ -109,7 +114,9 @@ void SlimeBoss::OnHit(const int damage)
 
 void SlimeBoss::Draw(sf::RenderWindow& window)
 {
+	window.draw(attackBox);
 	Entity::Draw(window);
+		
 
 	for (SlimeBall* ball : projectiles)
 		ball->Draw(window);

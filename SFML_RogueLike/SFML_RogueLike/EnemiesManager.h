@@ -12,9 +12,9 @@
 
 enum class EnemyType
 {
-	Ghost,
-	Goblin,
 	Slime,
+	Goblin,
+	Ghost,
 	SlimeBoss
 };
 struct SpawnData
@@ -50,6 +50,7 @@ public:
 
 	std::vector<Enemy*> GetEnemies() { return enemies; }
 	void AddEnemyData(EnemyType et, float time, sf::Vector2f pos);
+	bool IsFinished();
 
 private:
 	std::vector<Animation*> LoadSlimeAnimation();

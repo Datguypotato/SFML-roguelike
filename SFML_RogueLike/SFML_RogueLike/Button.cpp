@@ -7,7 +7,7 @@ Button::Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::Recta
 	callbacks = callBack;
 	box.setTexture(buttonText);
 	
-	e = new TimeEvent(std::bind(&Button::SetClickable, this), 0.3f, true);
+	e = new TimeEvent(std::bind(&Button::SetClickable, this), 0.3f, true, "ClickAble");
 	e->Pause();
 	
 }

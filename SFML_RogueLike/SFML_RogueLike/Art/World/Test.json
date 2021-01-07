@@ -34,9 +34,14 @@
                  "point":true,
                  "properties":[
                         {
+                         "name":"EnemyType",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
                          "name":"SpawnTime",
                          "type":"float",
-                         "value":10
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -52,9 +57,14 @@
                  "point":true,
                  "properties":[
                         {
+                         "name":"EnemyType",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
                          "name":"SpawnTime",
                          "type":"float",
-                         "value":20
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",

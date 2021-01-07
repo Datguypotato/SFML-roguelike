@@ -1,24 +1,14 @@
 #include "TimeEvent.h"
 
-TimeEvent::TimeEvent(std::function<void()> callback, float interval)
+TimeEvent::TimeEvent(std::function<void()> callback, float interval, bool oneShot, std::string eventName)
 {
 	this->callback = callback;
 	this->interval = interval;
 	timer = interval;
 	isPaused = false;
-	isOneShot = false;
-}
-
-/// <summary>
-/// setting onshot to true will pause the TimeEvent after each completion
-/// </summary>
-/// <param name="callback"></param>
-/// <param name="interval"></param>
-/// <param name="oneShot"></param>
-TimeEvent::TimeEvent(std::function<void()> callback, float interval, bool oneShot)
-	:	TimeEvent::TimeEvent(callback, interval)
-{
 	isOneShot = oneShot;
+
+	name = eventName;
 }
 
 void TimeEvent::Tick(float deltaTime)

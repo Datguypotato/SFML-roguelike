@@ -12,7 +12,7 @@ Inventory::Inventory(sf::RectangleShape* p)
 	player = p;
 	SetupSlots();
 
-	timedEvent = new TimeEvent(std::bind(&Inventory::SetOpenable, this), 0.5f, true);
+	timedEvent = new TimeEvent(std::bind(&Inventory::SetOpenable, this), 0.5f, true, "Open");
 	timedEvent->Pause();
 }
 
@@ -32,7 +32,7 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 		{
 			float xPos = (slot->GetSize().x * (float)i) + 10 * (float)i;
 			slot->SetPosition(player->getPosition() - slotStartingPos + sf::Vector2f(xPos, 0));
-			slot->Update(*player);
+			slot->Update(mousePos);
 			i++;
 		}
 
@@ -41,7 +41,7 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 		{
 			float yPos = (slot->GetSize().y * (float)i) + 10 * (float)i;
 			slot->SetPosition(player->getPosition() - equipSlotStartingPos + sf::Vector2f(0, yPos));
-			slot->Update(*player);
+			slot->Update(mousePos);
 			i++;
 		}
 
@@ -100,7 +100,6 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 				
 		}
 
-
 		if (currItem != nullptr)
 			currItem->SetPosition(mousePos);
 
@@ -117,8 +116,6 @@ void Inventory::GetItem(Item* i)
 			slot->SetItem(i);
 			break;
 		}
-
-		std::cout << "inventory is full\n";
 	}
 }
 
@@ -207,7 +204,6 @@ void Inventory::CheckifCanCombine()
 
 void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
 {
-
 	if (slot->CursorIsInBox(mousePos))
 	{
 		if (!slot->isSlotEmpty() && currItem == nullptr)
@@ -224,6 +220,8 @@ void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
 			slot->SetItem(temp);
 			std::cout << "Swap Item\n";
 		}
+
+
 	}
 }
 
@@ -241,6 +239,12 @@ void Inventory::Draw(sf::RenderWindow& window)
 		{
 			slot->Draw(window);
 		}
+
+		for (InventorySlot* slot : *slots)
+			slot->DrawDescp(window);
+
+		for (InventorySlot* slot : *equipSlots)
+			slot->DrawDescp(window);
 
 		trashBin->Draw(window);
 	}

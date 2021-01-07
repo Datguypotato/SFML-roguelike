@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 #include "UIComponent.h"
 #include "Item.h"
 
@@ -11,9 +13,10 @@ public:
 	InventorySlot(SlotRegion* sr);
 	InventorySlot(Item* it);
 
-	void Update(sf::RectangleShape player) override;
+	void Update(sf::Vector2f mousePos);
 
 	void Draw(sf::RenderWindow& window);
+	void DrawDescp(sf::RenderWindow& window);
 
 	Item* GetItem() { return item; }
 	void SetItem(Item* i);
@@ -22,11 +25,13 @@ public:
 
 	bool isSlotEmpty() { return (isEmpty); }
 
+	std::string GetItemDescription();
 	SlotRegion GetSlotRegion() { return *slotRegion; }
 private:
-
 	bool isEmpty;
-	sf::Texture* emptySlotText;
+	bool cursorInBox;
+	sf::Texture* emptySlotTexture;
+	sf::Text* itemDescriptionText;
 	Item* item;
 	SlotRegion* slotRegion;
 };

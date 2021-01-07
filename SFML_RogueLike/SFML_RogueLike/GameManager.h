@@ -49,4 +49,6 @@ private:
 	Healthbar* healthbar;
 	Button* bagIcon;
 	std::vector<Collectable*> c;
+
+	sf::Text* testing;
 };

@@ -55,6 +55,11 @@ void Animation::Update(float deltaTime, bool faceRight)
 	}
 }
 
+bool Animation::GetLoopedOnce()
+{
+	return loopedOnce;
+}
+
 
 void Animation::UpdateFaceingDirection(bool faceRight)
 {

@@ -32,12 +32,23 @@ void EnemiesManager::Update(float deltaTime)
 				{
 				case EnemyType::Slime:
 					BuildSlime(enemiesData[i]->spawnPos);
-					delete enemiesData[i];
-					enemiesData[i] = nullptr;
+					break;
+				case EnemyType::Goblin:
+					BuildGoblin(enemiesData[i]->spawnPos);
+					break;
+				case EnemyType::Ghost:
+					BuildGhost(enemiesData[i]->spawnPos);
+					break;
+				case EnemyType::SlimeBoss:
+					BuildSlimeBoss(enemiesData[i]->spawnPos);
 					break;
 				default:
+					std::cout << "Unknowmn EnemyType: " << i << std::endl;
 					break;
 				}
+
+				delete enemiesData[i];
+				enemiesData[i] = nullptr;
 			}
 		}
 	}
@@ -139,8 +150,6 @@ Slime* EnemiesManager::BuildSlime(sf::Vector2f spawnPos)
 
 	Slime* temp = new Slime(slimeAnimations, spawnPos, player);
 	enemies.push_back(temp);
-	for (TimeEvent* event : temp->GetEvents())
-		timedEvents.push_back(event);
 
 	return temp;
 }
@@ -156,8 +165,6 @@ Goblin* EnemiesManager::BuildGoblin(sf::Vector2f spawnPos)
 
 	Goblin* temp = new Goblin(goblinAnimations, spawnPos, player);
 	enemies.push_back(temp);
-	for (TimeEvent* event : temp->GetEvents())
-		timedEvents.push_back(event);
 
 	return temp;
 }
@@ -179,8 +186,6 @@ Ghost* EnemiesManager::BuildGhost(sf::Vector2f spawnPos)
 
 	Ghost* temp = new Ghost(ghostAnimations, spawnPos, player);
 	enemies.push_back(temp);
-	for (TimeEvent* event : temp->GetEvents())
-		timedEvents.push_back(event);
 
 	return temp;
 }
@@ -192,15 +197,8 @@ SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos)
 	SlimeBoss* temp = new SlimeBoss(slimeAnimations, spawnPos, player);
 
 	boss = temp;
-	for (TimeEvent* event : temp->GetEvents())
-		timedEvents.push_back(event);
 
 	return nullptr;
-}
-
-void EnemiesManager::AddEnemyData(EnemyType et, float time, sf::Vector2f pos)
-{
-	enemiesData.push_back(new SpawnData(et, time, pos));
 }
 
 std::vector<Animation*> EnemiesManager::LoadSlimeAnimation()
@@ -223,4 +221,23 @@ std::vector<Animation*> EnemiesManager::LoadSlimeAnimation()
 	slimeAnimations.push_back(new Animation(slimeHit, 6, 0.2f, "Hit"));
 
 	return slimeAnimations;
+}
+
+void EnemiesManager::AddEnemyData(EnemyType et, float time, sf::Vector2f pos)
+{
+	enemiesData.push_back(new SpawnData(et, time, pos));
+}
+
+bool EnemiesManager::IsFinished()
+{
+	bool allDead = true;
+
+	for (Enemy* e : enemies)
+	{
+		if (e->GetAliveStatus())
+			allDead = false;
+	}
+
+	return allDead;
+
 }

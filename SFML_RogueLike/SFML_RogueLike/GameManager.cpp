@@ -44,6 +44,9 @@ void GameManager::Start()
 		temp.push_back(new Animation(fBroodje, 1, 1, "Default"));
 		c.push_back(new Collectable(temp, em->RandomPos(), ie));
 	}
+	sf::Font* font = new sf::Font();
+	font->loadFromFile("Fonts/04B_30.ttf");
+	//testing = new sf::Text(c[0]->GetItem()->GetItemStats(), *font, 30);
 }
 
 void GameManager::Update(float deltaTime)
@@ -70,6 +73,8 @@ void GameManager::Update(float deltaTime)
 	{
 		e->Tick(deltaTime);
 	}
+
+	//testing->setPosition(player->GetPosition());
 }
 
 void GameManager::CheckCollision()
@@ -105,7 +110,7 @@ void GameManager::CheckCollision()
 	em->CheckCollision(player);
 
 	levelmanager->GetCurrentLevel()->CheckCollision(pcoll);
-	levelmanager->GetCurrentLevel()->CheckTrigger(pcoll);
+	levelmanager->GetCurrentLevel()->CheckTrigger(pcoll, *em);
 }
 
 void GameManager::Draw()
@@ -118,10 +123,11 @@ void GameManager::Draw()
 		if (collect != nullptr)
 			collect->Draw(*window);
 	}
-	em->Draw(*window);
 	player->Draw(*window);
+	em->Draw(*window);
 	healthbar->Draw(*window);
 	bagIcon->Draw(*window);
+	//window->draw(*testing);
 
 
 	view->setCenter(player->GetPosition());

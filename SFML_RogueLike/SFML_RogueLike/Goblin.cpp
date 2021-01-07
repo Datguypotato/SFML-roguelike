@@ -1,7 +1,7 @@
 #include "Goblin.h"
 
 Goblin::Goblin(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
-	:	Enemy(sf::Vector2f(66,57), sf::Vector2f(60, 55), 20, animations, player, 120, 10),
+	:	Enemy(sf::Vector2f(66,57), sf::Vector2f(60, 55), 5, animations, player, 120, 10),
 		attackRange(100.0f),
 		isAttacking(false),
 		windupAttackTime(2.0f)
@@ -12,7 +12,7 @@ Goblin::Goblin(std::vector<Animation*> animations, sf::Vector2f spawnPosition, P
 	attackBox.setOrigin(attackBox.getSize() / 2.0f);
 	attackBox.setTexture(nullptr);
 
-	TimeEvent* attackEvent = new TimeEvent(std::bind(&Goblin::Attack, this), windupAttackTime, true);
+	TimeEvent* attackEvent = new TimeEvent(std::bind(&Goblin::Attack, this), windupAttackTime, true, "Attack");
 	attackEvent->Pause();
 	events.push_back(attackEvent);
 }
@@ -44,7 +44,7 @@ void Goblin::Action()
 	{
 		// player in range
 		isAttacking = true;
-		events[0]->Play();
+		GetEvent("Attack")->Play();
 	}
 
 	if (!isAttacking)

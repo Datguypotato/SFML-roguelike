@@ -29,6 +29,7 @@ public:
 	std::string GetName() { return itemName; }
 	EffectValue GetEffectValue() { return effectValue; }
 	SlotRegion GetSlotRegion() { return *slotRegion; }
+	std::string GetItemStats();
 
 protected:
 	sf::RectangleShape itemBox;

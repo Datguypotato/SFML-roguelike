@@ -29,7 +29,6 @@ public:
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
 
 	sf::Sound GetSound() { return sound; }
-	std::vector<TimeEvent*> GetEvents() { return events; }
 	EffectHandler* GetEffectHandler() { return effecthandler; }
 	AnimatorController GetAC() { return AC; }
 	int GetAttackDamage() { return attackDamage; }
@@ -39,6 +38,7 @@ public:
 
 protected:
 	void GetEffects();
+	TimeEvent* GetEvent(std::string n);
 
 	sf::RectangleShape TextureBody;
 	sf::RectangleShape body;

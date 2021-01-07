@@ -24,7 +24,7 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	sound = sf::Sound();
 	sound.setVolume(05.0f);
 
-	events.push_back(new TimeEvent(std::bind(&Entity::GetEffects, this), 1.0f));
+	events.push_back(new TimeEvent(std::bind(&Entity::GetEffects, this), 1.0f, false, "Effect"));
 }
 
 Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage)
@@ -81,6 +81,11 @@ void Entity::Update(float deltaTime)
 			faceRight = true;
 		else
 			faceRight = false;
+	}
+
+	for (TimeEvent* timeEvent : events)
+	{
+		timeEvent->Tick(deltaTime);
 	}
 
 	damageCooldown -= deltaTime;
@@ -152,6 +157,19 @@ void Entity::GetEffects()
 		OnHit(effecthandler->GetBleedDamage());
 
 
+}
+
+TimeEvent* Entity::GetEvent(std::string n)
+{
+	for (TimeEvent* e : events)
+	{
+		if (e->GetEventName() == n)
+		{
+			return e;
+		}
+	}
+
+	return nullptr;
 }
 
 void Entity::OnDeath()

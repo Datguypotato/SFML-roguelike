@@ -68,14 +68,17 @@ void Level::Load(Player* p, EnemiesManager* em)
 				{
 					if (it->isPoint())
 					{
+						sf::Vector2f spawnPos = sf::Vector2f(it->getPosition().x, it->getPosition().y);
+
 						if (it->getName() == "PlayerSpawn")
 						{
-							p->SetPosition(sf::Vector2f(it->getPosition().x, it->getPosition().y));
-							std::cout << "player start position = " << it->getPosition().x << " " << it->getPosition().y << std::endl;
+							p->SetPosition(spawnPos);
 						}
-						else if (it->getName() == "SlimeSpawn")
+						else
 						{
-							em->AddEnemyData(EnemyType::Slime, it->get<float>("SpawnTime"), sf::Vector2f(it->getPosition().x, it->getPosition().y));
+							EnemyType type = (EnemyType)it->get<int>("EnemyType");
+							float spawnTime = it->get<float>("SpawnTime");
+							em->AddEnemyData(type, spawnTime, spawnPos);
 						}
 					}
 				}
@@ -110,14 +113,24 @@ void Level::CheckCollision(Collider playerCollider)
 		wall.GetCollider().CheckCollision(playerCollider, 1);
 }
 
-void Level::CheckTrigger(Collider playerCollider)
+void Level::CheckTrigger(Collider playerCollider, EnemiesManager em)
 {
-	for (auto door : doors)
-		if (door.GetCollider().CheckTrigger(playerCollider) && Changelevel != nullptr)
+	if (em.IsFinished())
+	{
+		for (auto door : doors)
 		{
-			Changelevel();
-			startLoading = true;
+			if (door.GetCollider().CheckTrigger(playerCollider) && Changelevel != nullptr)
+			{
+				Changelevel();
+				startLoading = true;
+			}
 		}
+	}
+	else
+	{
+		for (auto door : doors)
+			door.GetCollider().CheckCollision(playerCollider, 1);
+	}
 }
 
 

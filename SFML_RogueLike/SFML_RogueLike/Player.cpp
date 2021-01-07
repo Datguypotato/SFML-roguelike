@@ -3,7 +3,8 @@
 Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
 	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage),
 		weapon(new Weapon(attackDamage, 1.0f)),
-		inventory(new Inventory(&body))
+		inventory(new Inventory(&body)),
+		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0))
 {
 	body.setPosition(sf::Vector2f(150, 150));
 }
@@ -27,26 +28,28 @@ void Player::Update(float deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		velocity.x -= speed;
-		weapon->SetAttackBoxPos(body.getPosition() - sf::Vector2f(body.getSize().x, 0));
+		attackBoxOffset = sf::Vector2f(body.getSize().x, 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		velocity.x += speed;
-		weapon->SetAttackBoxPos(body.getPosition() - sf::Vector2f(-body.getSize().x, 0));
+		attackBoxOffset = sf::Vector2f(-body.getSize().x, 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		velocity.y += speed;
-		weapon->SetAttackBoxPos(body.getPosition() - sf::Vector2f(0, -body.getSize().y));
+		attackBoxOffset = sf::Vector2f(0, -body.getSize().y);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		velocity.y -= speed;
-		weapon->SetAttackBoxPos(body.getPosition() - sf::Vector2f(0, body.getSize().y));
+		attackBoxOffset = sf::Vector2f(0, body.getSize().y);
 	}
+
+	weapon->SetAttackBoxPos(body.getPosition() - attackBoxOffset);
 
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && weapon->CanAttack())

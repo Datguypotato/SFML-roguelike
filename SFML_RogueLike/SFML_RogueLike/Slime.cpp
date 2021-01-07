@@ -11,7 +11,7 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Pla
 	isJumping = false;
 	jumpDir = sf::Vector2f();
 
-	events.push_back(new TimeEvent(std::bind(&SlimeBase::JumpToPlayer, this), jumpCooldown));
+	events.push_back(new TimeEvent(std::bind(&SlimeBase::JumpToPlayer, this), jumpCooldown, false, "Jump"));
 
 	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
 	sound.setBuffer(jumpSound);
@@ -52,9 +52,9 @@ void Slime::Update(float deltaTime)
 	SlimeBase::Update(deltaTime);
 
 	if (effecthandler->IsStunned())
-		events[1]->Pause();
+		GetEvent("Jump")->Pause();
 	else
-		events[1]->Play();
+		GetEvent("Jump")->Play();
 
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);

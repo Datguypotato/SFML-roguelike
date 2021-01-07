@@ -24,4 +24,6 @@ public:
 private:
 	Weapon* weapon;
 	Inventory* inventory;
+
+	sf::Vector2f attackBoxOffset;
 };

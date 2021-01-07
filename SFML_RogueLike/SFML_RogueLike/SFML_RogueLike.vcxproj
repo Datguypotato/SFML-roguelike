@@ -40,6 +40,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelSwitcher.cpp" />
+    <ClCompile Include="LootManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelSwitcher.h" />
+    <ClInclude Include="LootManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="SlimeBall.h" />

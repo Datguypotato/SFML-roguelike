@@ -9,8 +9,8 @@ Ghost::Ghost(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Pla
 		attackCooldown(1.5f),
 		isDashing(false)
 {
-	events.push_back(new TimeEvent(std::bind(&Ghost::Action, this), actionTime, false));
-	events.push_back(new TimeEvent(std::bind(&Ghost::StopDash, this), dashTime, true));
+	events.push_back(new TimeEvent(std::bind(&Ghost::Action, this), actionTime, false, "Action"));
+	events.push_back(new TimeEvent(std::bind(&Ghost::StopDash, this), dashTime, true, "StopDash"));
 
 	body.setPosition(spawnPosition);
 }
@@ -51,7 +51,7 @@ void Ghost::Action()
 			TextureBody.setFillColor(sf::Color::White);
 			isDashing = true;
 			dashDir = GetPlayerDir();
-			events[1]->Play();
+			GetEvent("StopDash")->Play();
 		}
 		else
 		{

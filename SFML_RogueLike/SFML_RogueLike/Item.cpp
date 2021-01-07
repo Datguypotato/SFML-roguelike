@@ -44,3 +44,13 @@ void Item::Draw(sf::RenderWindow& window)
 {
 	window.draw(itemBox);
 }
+
+std::string Item::GetItemStats()
+{	
+	std::string temp = "";
+	temp += "bleedDamage: " + std::to_string(effectValue.bleedDamage) + "\n";
+	temp += "Bleed time: " + std::to_string(effectValue.bleedTimes) + "\n";
+	temp += "stun%: " + std::to_string(effectValue.stunPercentage) + "%\n";
+	temp += "stun Time: " + std::to_string(effectValue.stunTime) + "\n";
+	return temp;
+}
