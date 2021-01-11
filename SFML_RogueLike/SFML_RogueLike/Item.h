@@ -1,13 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <iostream>
 
-#include "BleedEffect.h"
+#include "Entity.h"
 
 enum class SlotRegion
 {
 	none,
-	head,
+	Weapon,
 	body,
 	legs
 };
@@ -17,23 +18,29 @@ class Item
 public:
 	Item(sf::Texture* itemText);
 	Item(sf::Texture* itemText, std::string name);
-	Item(sf::Texture* itemText, std::string name, EffectValue e, SlotRegion* sr);
+	Item(sf::Texture* itemText, std::string name, SlotRegion* sr);
+	Item(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrade);
+
+	//TODO virtual Copy constructor
+	virtual Item* Clone() { return new Item(*this); }
 
 	~Item();
 
-	void SetPosition(sf::Vector2f pos);
+	virtual int OnAttack(Entity* entity) { return 0; }
 
 	void Draw(sf::RenderWindow& window);
+	void SetPosition(sf::Vector2f pos);
 
 	sf::RectangleShape GetItemBox() { return itemBox; }
 	std::string GetName() { return itemName; }
-	EffectValue GetEffectValue() { return effectValue; }
 	SlotRegion GetSlotRegion() { return *slotRegion; }
-	std::string GetItemStats();
+	Item* GetUpgrade() { return upgradeItem; }
+	virtual std::string GetItemStats();
 
 protected:
 	sf::RectangleShape itemBox;
 	std::string itemName;
-	EffectValue effectValue;
 	SlotRegion* slotRegion;
+
+	Item* upgradeItem;
 };

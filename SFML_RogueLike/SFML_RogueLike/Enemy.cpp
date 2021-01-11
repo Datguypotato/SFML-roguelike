@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, Player* player, float speed, int attackDamage)
-	:	Entity(textureSize, bodySize, health, animations, speed, attackDamage)
+Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, Player* player, float speed, int attackDamage, std::string n)
+	:	Entity(textureSize, bodySize, health, animations, speed, attackDamage, n)
 {
 	this->playerBody = player->GetBody();
 	this->player = player;

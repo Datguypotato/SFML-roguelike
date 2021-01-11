@@ -6,6 +6,7 @@
 #include "TimeEvent.h"
 #include "LevelManager.h"
 #include "EnemiesManager.h"
+#include "LootManager.h"
 #include "Healthbar.h"
 #include "Button.h"
 
@@ -44,11 +45,11 @@ private:
 
 	LevelManager* levelmanager;
 	EnemiesManager* em;
+	LootManager* lm;
 
 	Player* player;
 	Healthbar* healthbar;
 	Button* bagIcon;
-	std::vector<Collectable*> c;
 
 	sf::Text* testing;
 };

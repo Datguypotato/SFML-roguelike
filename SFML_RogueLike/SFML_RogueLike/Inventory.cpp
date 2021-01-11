@@ -59,8 +59,6 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 			{
 				OnClickEquipment(mousePos, slot, index);
 				index++;
-				if(slot->CursorIsInBox(mousePos))
-					weapon->UpdateItems(GetCurrEquipItem());
 			}
 			canInteract = false;
 			timedEvent->Play();
@@ -74,7 +72,7 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 				case SlotRegion::none:
 					region = "None";
 					break;
-				case SlotRegion::head:
+				case SlotRegion::Weapon:
 					region = "Head";
 					break;
 				case SlotRegion::body:
@@ -103,6 +101,7 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 		if (currItem != nullptr)
 			currItem->SetPosition(mousePos);
 
+		weapon->UpdateItems(GetCurrEquipItem());
 		isDrawing = false;
 	}
 }
@@ -117,6 +116,7 @@ void Inventory::GetItem(Item* i)
 			break;
 		}
 	}
+	CheckifCanCombine();
 }
 
 bool Inventory::isFull()
@@ -153,7 +153,7 @@ void Inventory::SetupSlots()
 	trashBin = new InventorySlot();
 
 	std::vector<SlotRegion> slotregions;
-	slotregions.push_back(SlotRegion::head);
+	slotregions.push_back(SlotRegion::Weapon);
 	slotregions.push_back(SlotRegion::body);
 	slotregions.push_back(SlotRegion::legs);
 	for (int i = 0; i < slotCount; i++)
@@ -181,25 +181,73 @@ void Inventory::CheckifCanCombine()
 {
 	//TODO not priority
 
-	//std::vector<Item*> currentItems = std::vector<Item*>();
-	//for (InventorySlot* slot : *equipSlots)
-	//{
-	//	if(!slot->isSlotEmpty())
-	//		currentItems.push_back(slot->GetItem());
-	//}
-	//for (InventorySlot* slot : *slots)
-	//{
-	//	if (!slot->isSlotEmpty())
-	//		currentItems.push_back(slot->GetItem());
-	//}
+	// put all items in one single vector
+	std::vector<InventorySlot*> currentItems = std::vector<InventorySlot*>();
+	for (InventorySlot* slot : *equipSlots)
+	{
+		if(!slot->isSlotEmpty())
+			currentItems.push_back(slot);
+	}
+	for (InventorySlot* slot : *slots)
+	{
+		if (!slot->isSlotEmpty())
+			currentItems.push_back(slot);
+	}
 
-	//if (currentItems.size() < 3)
-	//	return;
+	if (currentItems.size() < 3)
+		return;
 
-	//for (Item* currentItem : currentItems)
-	//{
+	std::vector<std::pair<InventorySlot*, int>> itemPairs = std::vector<std::pair<InventorySlot*, int>>();
 
-	//}
+	//std::vector<std::pair<std::string, int>> itemPairs = std::vector<std::pair<std::string, int>>();
+	for (InventorySlot* currentSlots : currentItems)
+	{
+		if (itemPairs.size() == 0)
+			itemPairs.push_back(std::pair<InventorySlot*, int>(currentSlots, 0));
+
+		for (std::pair<InventorySlot*, int>& pair : itemPairs)
+		{
+			if (currentSlots->GetItem()->GetName() == pair.first->GetItem()->GetName())
+			{
+				++pair.second;
+				std::cout << pair.second << std::endl;
+			}
+			else
+				itemPairs.push_back(std::pair<InventorySlot*, int>(currentSlots, 1));
+		}
+	}
+
+	for (std::pair<InventorySlot*, int> pair : itemPairs)
+	{
+		if (pair.second >= 3)
+		{
+			Item* upgrade = nullptr;
+			std::string targetItem;
+
+			if (upgrade == nullptr) // check lootmanager for spelling mistakes
+			{
+				upgrade = pair.first->GetItem()->GetUpgrade();
+				targetItem = pair.first->GetItem()->GetName();
+			}
+
+			for (InventorySlot* slot : currentItems)
+			{
+				if (slot->GetItem()->GetName() == targetItem)
+					slot->Deleteitem();
+			}
+
+			bool found = false;
+			for (InventorySlot* slot : *equipSlots)
+			{
+				if (!found && slot->GetSlotRegion() == upgrade->GetSlotRegion())
+				{
+					slot->SetItem(upgrade);
+					
+					found = true;
+				}
+			}
+		}
+	}
 }
 
 void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
@@ -210,18 +258,16 @@ void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
 			currItem = slot->GrabItem();
 		else if (slot->isSlotEmpty() && currItem != nullptr)
 		{
-			slot->SetItem(new Item(*currItem));
+			slot->SetItem(currItem->Clone());
+			delete currItem;
 			currItem = nullptr;
 		}
 		else if (!slot->isSlotEmpty() && currItem != nullptr)
 		{
-			Item* temp = new Item(*currItem);
+			Item* temp = currItem->Clone();
 			currItem = slot->GetItem();
 			slot->SetItem(temp);
-			std::cout << "Swap Item\n";
 		}
-
-
 	}
 }
 

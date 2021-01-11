@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
-	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage),
+	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage, "Player"),
 		weapon(new Weapon(attackDamage, 1.0f)),
 		inventory(new Inventory(&body)),
 		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0))

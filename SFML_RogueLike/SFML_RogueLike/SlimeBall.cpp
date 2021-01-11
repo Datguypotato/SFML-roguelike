@@ -1,7 +1,7 @@
 #include "SlimeBall.h"
 
 SlimeBall::SlimeBall(std::vector<Animation*> animations, sf::Vector2f dir)
-	:	Entity(sf::Vector2f(50,50), sf::Vector2f(50,50), 1, animations, 200, 10)
+	:	Entity(sf::Vector2f(50,50), sf::Vector2f(50,50), 1, animations, 200, 10, "SlimeBall")
 {
 	direction = dir;
 }

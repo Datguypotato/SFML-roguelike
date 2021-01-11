@@ -18,6 +18,7 @@ public:
 	void Draw(sf::RenderWindow& window);
 	void DrawDescp(sf::RenderWindow& window);
 
+	void Deleteitem();
 	Item* GetItem() { return item; }
 	void SetItem(Item* i);
 	Item* GrabItem();

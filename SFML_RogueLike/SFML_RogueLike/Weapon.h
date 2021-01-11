@@ -29,7 +29,8 @@ private:
 	float attackTimer;
 	float attackTimerMax;
 
-	EffectValue effectvalue;
+	std::vector<Item*> activeitems;
+	//EffectValue effectvalue;
 
 	int timesAttacked;
 };

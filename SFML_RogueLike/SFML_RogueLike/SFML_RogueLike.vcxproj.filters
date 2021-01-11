@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Effects">
       <UniqueIdentifier>{1c0df86c-00dc-4b51-9707-d2ca0c282730}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Inventory\Items">
+      <UniqueIdentifier>{8fa9b949-5dcb-4036-95eb-16f1d59781f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inventory\Items">
+      <UniqueIdentifier>{e729b470-a828-4cbb-a7ee-42a965983abe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp">
@@ -90,9 +96,6 @@
     <ClCompile Include="SlimeBoss.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="TimeEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -104,9 +107,6 @@
     </ClCompile>
     <ClCompile Include="SlimeBase.cpp">
       <Filter>Source Files\Entities\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="InventorySlot.cpp">
       <Filter>Source Files\Inventory</Filter>
@@ -147,14 +147,26 @@
     <ClCompile Include="BleedEffect.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>Source Files\manager</Filter>
-    </ClCompile>
     <ClCompile Include="EnemiesManager.cpp">
       <Filter>Source Files\manager</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Knife.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BloodKnife.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeEvent.cpp">
+      <Filter>Source Files\manager</Filter>
     </ClCompile>
     <ClCompile Include="LootManager.cpp">
       <Filter>Source Files\manager</Filter>
@@ -212,9 +224,6 @@
     <ClInclude Include="InventorySlot.h">
       <Filter>Header Files\Inventory</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files\Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="Healthbar.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
@@ -248,14 +257,23 @@
     <ClInclude Include="EnemiesManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="TimeEvent.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Knife.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodKnife.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="LootManager.h">
       <Filter>Header Files\Managers</Filter>

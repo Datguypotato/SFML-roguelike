@@ -14,6 +14,7 @@ GameManager::GameManager()
 	sf::Texture* btext = new sf::Texture();
 	btext->loadFromFile("Art/UI/BagIcon.png");
 	bagIcon = new Button(sf::Vector2f(100, 100), sf::Vector2f(500, -300), std::bind(&Inventory::OpenClose, player->GetInventory()), btext);
+	lm = new LootManager();
 
 	timedEvents.push_back(bagIcon->GetEvent());
 	timedEvents.push_back(player->GetInventory()->GetEvent());
@@ -32,21 +33,10 @@ void GameManager::Start()
 
 	for (int i = 0; i < 4; i++)
 	{
-		sf::Texture* fBroodje = new sf::Texture();
-		fBroodje->loadFromFile("Art/UI/Frikandelbroodje.png");
-		EffectValue ev = EffectValue();
-		ev.bleedDamage = 0;
-		ev.bleedTimes = 0;
-		ev.stunPercentage = 100;
-		ev.stunTime = 1;
-		Item* ie = new Item(fBroodje, "Frikandelbroodje", ev, new SlotRegion(SlotRegion::head));
-		std::vector<Animation*> temp;
-		temp.push_back(new Animation(fBroodje, 1, 1, "Default"));
-		c.push_back(new Collectable(temp, em->RandomPos(), ie));
+		lm->BuildKnife(em->RandomPos());
 	}
 	sf::Font* font = new sf::Font();
-	font->loadFromFile("Fonts/04B_30.ttf");
-	//testing = new sf::Text(c[0]->GetItem()->GetItemStats(), *font, 30);
+	font->loadFromFile("Fonts/04B_30.ttf");;
 }
 
 void GameManager::Update(float deltaTime)
@@ -62,19 +52,12 @@ void GameManager::Update(float deltaTime)
 
 	player->GetInventory()->Update(mousepos, player->GetWeapon());
 	em->Update(deltaTime);
-
-	for (Collectable* collect : c)
-	{
-		if(collect != nullptr)
-			collect->Update(deltaTime);
-	}
+	lm->Update(deltaTime);
 
 	for (TimeEvent* e : timedEvents)
 	{
 		e->Tick(deltaTime);
 	}
-
-	//testing->setPosition(player->GetPosition());
 }
 
 void GameManager::CheckCollision()
@@ -96,18 +79,9 @@ void GameManager::CheckCollision()
 
 
 	Collider pcoll = player->GetCollider();
-	for (Collectable* collect : c)
-	{
-		if (collect->GetCollider().CheckTrigger(pcoll) && collect->GetAliveStatus())
-		{
-			if (!player->GetInventory()->isFull())
-			{
-				player->CollectItem(collect);
-			}
-		}
-	}
+	lm->CheckTrigger(player);
 
-	em->CheckCollision(player);
+	//em->CheckCollision(player);
 
 	levelmanager->GetCurrentLevel()->CheckCollision(pcoll);
 	levelmanager->GetCurrentLevel()->CheckTrigger(pcoll, *em);
@@ -118,11 +92,7 @@ void GameManager::Draw()
 	window->clear();
 
 	levelmanager->GetCurrentLevel()->Draw(*window);
-	for (Collectable* collect : c)
-	{
-		if (collect != nullptr)
-			collect->Draw(*window);
-	}
+	lm->Draw(*window);
 	player->Draw(*window);
 	em->Draw(*window);
 	healthbar->Draw(*window);

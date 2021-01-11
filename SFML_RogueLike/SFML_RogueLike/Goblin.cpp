@@ -1,7 +1,7 @@
 #include "Goblin.h"
 
 Goblin::Goblin(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
-	:	Enemy(sf::Vector2f(66,57), sf::Vector2f(60, 55), 5, animations, player, 120, 10),
+	:	Enemy(sf::Vector2f(66,57), sf::Vector2f(60, 55), 5, animations, player, 120, 10, "Goblin"),
 		attackRange(100.0f),
 		isAttacking(false),
 		windupAttackTime(2.0f)

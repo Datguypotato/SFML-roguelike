@@ -24,7 +24,7 @@ InventorySlot::InventorySlot(SlotRegion* sr)
 		slotRegion(new SlotRegion(*sr)),
 		itemDescriptionText(new sf::Text()),
 		cursorInBox(false)
-{
+{	
 	emptySlotTexture = new sf::Texture();
 	emptySlotTexture->loadFromFile("Art/UI/EmptySlot.png");
 	box.setTexture(emptySlotTexture);
@@ -80,22 +80,28 @@ void InventorySlot::DrawDescp(sf::RenderWindow& window)
 
 }
 
+void InventorySlot::Deleteitem()
+{
+	delete item; 
+	item = nullptr;
+	isEmpty = true;
+}
 
 void InventorySlot::SetItem(Item* i)
 {
 	item = i;
 	isEmpty = false;
 	itemDescriptionText->setString(item->GetItemStats());
-	std::cout << item->GetItemStats();
 }
 
 Item* InventorySlot::GrabItem()
 {
 	item->GetItemBox().setTexture(nullptr);
 	isEmpty = true;
-	Item* temp = new Item(*item);
+	Item* temp = item->Clone();
 	delete item;
 	item = nullptr;
+	itemDescriptionText->setString("");
 
 	return temp;
 }

@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage)
+Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n)
 	:	faceRight(true),
 		isAlive(true),
 		AC(animations),
@@ -9,7 +9,8 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 		playName("Default"),
 		attackDamage(attackDamage),
 		effecthandler(new EffectHandler()),
-		events(std::vector<TimeEvent*>())
+		events(std::vector<TimeEvent*>()),
+		name(n)
 {
 	TextureBody.setSize(textureSize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
@@ -27,7 +28,7 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	events.push_back(new TimeEvent(std::bind(&Entity::GetEffects, this), 1.0f, false, "Effect"));
 }
 
-Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage)
+Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n)
 	:	faceRight(true),
 		isAlive(true),
 		damageCooldown(1.0f),
@@ -36,7 +37,8 @@ Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animat
 		attackDamage(attackDamage),
 		AC(animations),
 		effecthandler(new EffectHandler()),
-		events(std::vector<TimeEvent*>())
+		events(std::vector<TimeEvent*>()),
+		name(n)
 {
 	TextureBody.setSize(bodySize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
@@ -140,14 +142,14 @@ void Entity::OnHit(const int damage)
 		{
 			health = 0;
 			isAlive = false;
+			std::cout << "Lost " << damage << " hp " << name << " has " << health << " hp left\n";
 			OnDeath();
 		}
 		else
 		{
 			health -= damage;
+			std::cout << "Lost " << damage << " hp " << name << " has " << health << " hp left\n";
 		}
-
-		std::cout << "Lost " << damage << " hp it has " << health << " hp left\n";
 	}
 }
 

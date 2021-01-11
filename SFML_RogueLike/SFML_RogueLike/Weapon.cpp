@@ -5,7 +5,7 @@ Weapon::Weapon(int ad, float at)
 		attackTimer(at),
 		attackTimerMax(at),
 		timesAttacked(0),
-		effectvalue(EffectValue())
+		activeitems(std::vector<Item*>())
 {
 	attackbox.setSize(sf::Vector2f(75, 75));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
@@ -20,17 +20,19 @@ void Weapon::Attack()
 		timesAttacked++;
 
 		for (auto target : inRange)
-		{
-			target->OnHit(attackDamage);
-			
-			if (timesAttacked % 3 == 0)
-				target->GetEffectHandler()->SetBleed(effectvalue.bleedTimes, effectvalue.bleedDamage);
+		{	
+			int extra = 0;
+			for (Item* i : activeitems)
+			{
+				if(i != nullptr)
+					extra += i->OnAttack(target);
+			}
 
-			if (rand() % 100 < effectvalue.stunPercentage)
-				target->GetEffectHandler()->SetStunned(effectvalue.stunTime);
+
+			target->OnHit(attackDamage + extra);
 		}
 		inRange.clear();
-		std::cout << "Player has attacked " << timesAttacked << " times\n";
+		//std::cout << "Player has attacked " << timesAttacked << " times\n";
 	}
 
 }
@@ -42,19 +44,21 @@ void Weapon::Update(float deltaTime)
 
 void Weapon::UpdateItems(std::vector<Item*> items)
 {
-	effectvalue = EffectValue();
+	activeitems = items;
 
-	for (Item* item : items)
-	{
-		if (item != nullptr)
-		{
-			EffectValue temp = item->GetEffectValue();
-			effectvalue.bleedDamage += temp.bleedDamage;
-			effectvalue.bleedTimes += temp.bleedTimes;
-			effectvalue.stunPercentage += temp.stunPercentage;
-			effectvalue.stunTime += temp.stunTime;
-		}
-	}
+	//effectvalue = EffectValue();
+
+	//for (Item* item : items)
+	//{
+	//	if (item != nullptr)
+	//	{
+	//		EffectValue temp = item->GetEffectValue();
+	//		effectvalue.bleedDamage += temp.bleedDamage;
+	//		effectvalue.bleedTimes += temp.bleedTimes;
+	//		effectvalue.stunPercentage += temp.stunPercentage;
+	//		effectvalue.stunTime += temp.stunTime;
+	//	}
+	//}
 }
 
 void Weapon::Draw(sf::RenderWindow& window)

@@ -4,7 +4,7 @@
 class SlimeBase : public Enemy
 {
 public:
-	SlimeBase(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Animation*> animations, Player* player, int health, int attackDamage, float speed);
+	SlimeBase(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Animation*> animations, Player* player, int health, int attackDamage, float speed, std::string n);
 
 	void Update(float deltaTime) override;
 

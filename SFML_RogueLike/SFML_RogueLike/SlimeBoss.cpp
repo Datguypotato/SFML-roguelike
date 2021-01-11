@@ -1,7 +1,7 @@
 #include "SlimeBoss.h"
 
 SlimeBoss::SlimeBoss(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
-	:	SlimeBase(sf::Vector2f(180, 150), sf::Vector2f(120, 100), animations, player, 100, 10, 60),
+	:	SlimeBase(sf::Vector2f(180, 150), sf::Vector2f(120, 100), animations, player, 100, 10, 60, "SlimeBoss"),
 		patternTime(2.5f)
 {
 	body.setPosition(spawnPosition);
@@ -78,7 +78,7 @@ void SlimeBoss::SwitchPattern()
 		speed = bigJumpSpeed;
 	}
 
-	std::cout << (int)activePattern << std::endl;
+	//std::cout << (int)activePattern << std::endl;
 }
 
 void SlimeBoss::Bite()

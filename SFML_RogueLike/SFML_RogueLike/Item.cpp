@@ -3,32 +3,29 @@
 Item::Item(sf::Texture* itemText)
 	:	itemBox(sf::Vector2f(100, 100)),
 		itemName("Default"),
-		slotRegion(new SlotRegion(SlotRegion::none))
+		slotRegion(new SlotRegion(SlotRegion::none)),
+		upgradeItem(nullptr)
 {
 	itemBox.setTexture(itemText);
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
-
-	effectValue = EffectValue();
 }
 
 Item::Item(sf::Texture* itemText, std::string name)
-	:	itemBox(sf::Vector2f(100, 100)),
-		itemName(name),
-		slotRegion(new SlotRegion(SlotRegion::none))
+	:	Item(itemText)
 {
-	itemBox.setTexture(itemText);
-	itemBox.setOrigin(itemBox.getSize() / 2.0f);
-	effectValue = EffectValue();
+	itemName = name;
 }
 
-Item::Item(sf::Texture* itemText, std::string name, EffectValue e, SlotRegion* sr)
-	:	effectValue(e),
-		itemBox(sf::Vector2f(100, 100)),
-		itemName(name),
-		slotRegion(new SlotRegion(*sr))
+Item::Item(sf::Texture* itemText, std::string name, SlotRegion* sr)
+	:	Item(itemText, name)
 {
-	itemBox.setTexture(itemText);
-	itemBox.setOrigin(itemBox.getSize() / 2.0f);
+	slotRegion = sr;
+}
+
+Item::Item(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrade)
+	:	Item(itemText, name, sr)
+{
+	upgradeItem = upgrade;
 }
 
 Item::~Item()
@@ -47,10 +44,8 @@ void Item::Draw(sf::RenderWindow& window)
 
 std::string Item::GetItemStats()
 {	
-	std::string temp = "";
-	temp += "bleedDamage: " + std::to_string(effectValue.bleedDamage) + "\n";
-	temp += "Bleed time: " + std::to_string(effectValue.bleedTimes) + "\n";
-	temp += "stun%: " + std::to_string(effectValue.stunPercentage) + "%\n";
-	temp += "stun Time: " + std::to_string(effectValue.stunTime) + "\n";
-	return temp;
+	std::string stats = std::string();
+	stats += itemName + "\n";
+
+	return stats;
 }

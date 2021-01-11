@@ -1,7 +1,7 @@
 #include "Ghost.h"
 
 Ghost::Ghost(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
-	:	Enemy(sf::Vector2f(60, 60), sf::Vector2f(30, 30), 50, animations, player, 150.0f, 10),
+	:	Enemy(sf::Vector2f(60, 60), sf::Vector2f(30, 30), 50, animations, player, 150.0f, 10, "Ghost"),
 		blinkDistance(100.0f),
 		attackRange(200),
 		dashTime(2.0f),

@@ -10,8 +10,8 @@
 class Entity
 {
 public:
-	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage);
-	Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage);
+	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n);
+	Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n);
 	virtual ~Entity();
 	Entity(const Entity& rhs);
 
@@ -42,6 +42,7 @@ protected:
 
 	sf::RectangleShape TextureBody;
 	sf::RectangleShape body;
+	std::string name;
 
 	std::string playName;
 	AnimatorController AC;

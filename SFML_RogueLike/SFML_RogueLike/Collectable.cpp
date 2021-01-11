@@ -1,7 +1,7 @@
 #include "Collectable.h"
 
 Collectable::Collectable(std::vector<Animation*> animations, sf::Vector2f pos, Item* i)
-	:	Entity(sf::Vector2f(100, 100), 1, animations, 0, 0),
+	:	Entity(sf::Vector2f(100, 100), 1, animations, 0, 0, "Collectable"),
 		item(i)
 {
 	body.setPosition(pos);
