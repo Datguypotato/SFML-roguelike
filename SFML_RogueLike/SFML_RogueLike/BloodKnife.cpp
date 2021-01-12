@@ -5,7 +5,7 @@ BloodKnife::BloodKnife(sf::Texture* itemText, std::string name, SlotRegion* sr)
 {
 }
 
-int BloodKnife::OnAttack(Entity* entity)
+int BloodKnife::OnHit(Entity* entity)
 {
 	if (attacks % 3 == 0)
 	{

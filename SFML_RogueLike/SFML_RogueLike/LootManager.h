@@ -7,6 +7,8 @@
 
 #include "Knife.h"
 #include "BloodKnife.h"
+#include "FanSword.h"
+#include "WindSlasher.h"
 
 class LootManager
 {
@@ -19,10 +21,16 @@ public:
 	void Draw(sf::RenderWindow& window);
 
 	Item* GetRandomLoot();
+
 	Collectable* BuildKnife(sf::Vector2f pos);
 	Collectable* BuildUpgradeKnife(sf::Vector2f pos);
 	Item* UpgradeKnife();
 
+	Collectable* BuildFanSword(sf::Vector2f pos);
+	Item* UpgradeFanSword();
+
 private:
+	sf::Texture* LoadTexture(std::string path);
+
 	std::vector<Collectable*> loots;
 };

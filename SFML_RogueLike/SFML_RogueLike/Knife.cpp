@@ -12,7 +12,7 @@ Knife::Knife(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgr
 {
 }
 
-int Knife::OnAttack(Entity* entity)
+int Knife::OnHit(Entity* entity)
 {
 	attacks++;
 

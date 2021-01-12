@@ -171,6 +171,12 @@
     <ClCompile Include="LootManager.cpp">
       <Filter>Source Files\manager</Filter>
     </ClCompile>
+    <ClCompile Include="FanSword.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WindSlasher.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h">
@@ -277,6 +283,12 @@
     </ClInclude>
     <ClInclude Include="LootManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="FanSword.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WindSlasher.h">
+      <Filter>Header Files\Inventory\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

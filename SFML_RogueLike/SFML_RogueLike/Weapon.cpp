@@ -12,12 +12,18 @@ Weapon::Weapon(int ad, float at)
 	attackbox.setTexture(nullptr);
 }
 
-void Weapon::Attack()
+void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 {
 	if (CanAttack())
 	{
 		attackTimer = attackTimerMax;
 		timesAttacked++;
+
+		for (Item* i : activeitems)
+		{
+			if(i != nullptr)
+				i->OnAttack(startingPos, facingDir);
+		}
 
 		for (auto target : inRange)
 		{	
@@ -25,7 +31,7 @@ void Weapon::Attack()
 			for (Item* i : activeitems)
 			{
 				if(i != nullptr)
-					extra += i->OnAttack(target);
+					extra += i->OnHit(target);
 			}
 
 
@@ -40,6 +46,12 @@ void Weapon::Attack()
 void Weapon::Update(float deltaTime)
 {
 	attackTimer -= deltaTime;
+
+	for (Item* i : activeitems)
+	{
+		if (i != nullptr)
+			i->Update(deltaTime);
+	}
 }
 
 void Weapon::UpdateItems(std::vector<Item*> items)

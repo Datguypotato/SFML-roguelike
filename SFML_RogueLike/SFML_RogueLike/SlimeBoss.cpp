@@ -89,10 +89,10 @@ void SlimeBoss::Bite()
 
 void SlimeBoss::Shoot()
 {
-	projectiles.push_back(BuildSlimeBall());
+	projectiles.push_back(BuildSlimeBall(body.getPosition()));
 }
 
-SlimeBall* SlimeBoss::BuildSlimeBall()
+SlimeBall* SlimeBoss::BuildSlimeBall(sf::Vector2f startPos)
 {
 	std::vector<Animation*>* slimeballAnimations = new std::vector<Animation*>();
 	sf::Texture* ballTexture = new sf::Texture();
@@ -101,7 +101,7 @@ SlimeBall* SlimeBoss::BuildSlimeBall()
 	slimeballAnimations->push_back(new Animation(ballTexture, 1, 1, "Default"));
 
 	SlimeBall* b = new SlimeBall(*slimeballAnimations, GetPlayerDir());
-	b->SetPosition(body.getPosition());
+	b->SetPosition(startPos);
 
 	return b;
 }

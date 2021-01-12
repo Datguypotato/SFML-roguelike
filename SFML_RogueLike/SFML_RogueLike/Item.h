@@ -26,9 +26,12 @@ public:
 
 	~Item();
 
-	virtual int OnAttack(Entity* entity) { return 0; }
+	virtual void Update(float deltaTime) {}
 
-	void Draw(sf::RenderWindow& window);
+	virtual int OnHit(Entity* entity) { return 0; }
+	virtual int OnAttack(sf::Vector2f startingPos, sf::Vector2f direction) { return 0; }
+
+	virtual void Draw(sf::RenderWindow& window);
 	void SetPosition(sf::Vector2f pos);
 
 	sf::RectangleShape GetItemBox() { return itemBox; }

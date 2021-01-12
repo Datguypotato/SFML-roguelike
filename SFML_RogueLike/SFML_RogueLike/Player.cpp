@@ -4,7 +4,8 @@ Player::Player(std::vector<Animation*> animations, float speed, int attackDamage
 	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage, "Player"),
 		weapon(new Weapon(attackDamage, 1.0f)),
 		inventory(new Inventory(&body)),
-		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0))
+		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0)),
+		facingDirection(sf::Vector2f(0,0))
 {
 	body.setPosition(sf::Vector2f(150, 150));
 }
@@ -25,29 +26,38 @@ void Player::Update(float deltaTime)
 
 	std::string playName;
 
+	facingDirection = sf::Vector2f(0, 0);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		velocity.x -= speed;
 		attackBoxOffset = sf::Vector2f(body.getSize().x, 0);
+		facingDirection += sf::Vector2f(-1, 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		velocity.x += speed;
 		attackBoxOffset = sf::Vector2f(-body.getSize().x, 0);
+		facingDirection += sf::Vector2f(1, 0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		velocity.y += speed;
 		attackBoxOffset = sf::Vector2f(0, -body.getSize().y);
+		facingDirection += sf::Vector2f(0, 1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		velocity.y -= speed;
 		attackBoxOffset = sf::Vector2f(0, body.getSize().y);
+		facingDirection += sf::Vector2f(0, -1);
 	}
+
+	if (facingDirection == sf::Vector2f(0, 0))
+		facingDirection = faceRight ? sf::Vector2f(1, 0) : sf::Vector2f(-1, 0);
 
 	weapon->SetAttackBoxPos(body.getPosition() - attackBoxOffset);
 
@@ -55,7 +65,7 @@ void Player::Update(float deltaTime)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && weapon->CanAttack())
 	{
 		AC.PlayNoInterupt("Attack", faceRight);
-		weapon->Attack();
+		weapon->Attack(body.getPosition(), facingDirection);
 	}
 
 	if (velocity.x != 0.0f || velocity.y != 0.0f)

@@ -28,7 +28,7 @@ private:
 	void Bite();
 	void Shoot();
 
-	SlimeBall* BuildSlimeBall();
+	SlimeBall* BuildSlimeBall(sf::Vector2f startPos);
 
 	std::vector<SlimeBall*> projectiles;
 	float jumpCooldown;

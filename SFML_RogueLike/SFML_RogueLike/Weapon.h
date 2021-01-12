@@ -11,7 +11,7 @@ class Weapon
 public:
 	Weapon(int ad, float at);
 
-	void Attack();
+	void Attack(sf::Vector2f startingPos, sf::Vector2f facingDir);
 	void Update(float deltaTime);
 	void UpdateItems(std::vector<Item*> items);
 	void Draw(sf::RenderWindow& window);
@@ -30,7 +30,6 @@ private:
 	float attackTimerMax;
 
 	std::vector<Item*> activeitems;
-	//EffectValue effectvalue;
 
 	int timesAttacked;
 };

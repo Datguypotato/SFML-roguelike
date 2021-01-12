@@ -25,5 +25,6 @@ private:
 	Weapon* weapon;
 	Inventory* inventory;
 
+	sf::Vector2f facingDirection;
 	sf::Vector2f attackBoxOffset;
 };

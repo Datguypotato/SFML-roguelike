@@ -7,7 +7,7 @@ public:
 	BloodKnife(sf::Texture* itemText, std::string name, SlotRegion* sr);
 
 	BloodKnife* Clone() override { return new BloodKnife(*this); }
-	int OnAttack(Entity* entity) override;
+	int OnHit(Entity* entity) override;
 	std::string GetItemStats() override;
 
 private:

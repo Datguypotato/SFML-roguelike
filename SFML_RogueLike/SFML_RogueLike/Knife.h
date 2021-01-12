@@ -8,9 +8,8 @@ public:
 	Knife(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrade);
 
 	Knife* Clone() override { return new Knife(*this); };
-	// create upgrade function
 
-	int OnAttack(Entity* entity) override;
+	int OnHit(Entity* entity) override;
 	std::string GetItemStats() override;
 	
 

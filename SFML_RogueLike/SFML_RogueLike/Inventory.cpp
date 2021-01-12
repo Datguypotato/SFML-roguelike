@@ -293,7 +293,9 @@ void Inventory::Draw(sf::RenderWindow& window)
 			slot->DrawDescp(window);
 
 		trashBin->Draw(window);
+
+		if (currItem != nullptr)
+			currItem->Draw(window);
 	}
-	if (currItem != nullptr)
-		currItem->Draw(window);
+
 }

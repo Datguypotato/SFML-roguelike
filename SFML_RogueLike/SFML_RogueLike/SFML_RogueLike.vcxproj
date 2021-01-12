@@ -31,6 +31,7 @@
     <ClCompile Include="EnemiesManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FanSword.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Goblin.cpp" />
@@ -55,6 +56,7 @@
     <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WindSlasher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -69,6 +71,7 @@
     <ClInclude Include="EnemiesManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FanSword.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Goblin.h" />
@@ -92,6 +95,7 @@
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WindSlasher.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

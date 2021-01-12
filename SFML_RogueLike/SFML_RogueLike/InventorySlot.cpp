@@ -68,8 +68,6 @@ void InventorySlot::Draw(sf::RenderWindow& window)
 	{
 		item->Draw(window);
 	}
-
-
 }
 
 void InventorySlot::DrawDescp(sf::RenderWindow& window)

@@ -33,7 +33,7 @@ void GameManager::Start()
 
 	for (int i = 0; i < 4; i++)
 	{
-		lm->BuildKnife(em->RandomPos());
+		lm->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, 0));
 	}
 	sf::Font* font = new sf::Font();
 	font->loadFromFile("Fonts/04B_30.ttf");;
