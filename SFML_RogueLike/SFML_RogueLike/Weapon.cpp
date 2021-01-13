@@ -5,7 +5,7 @@ Weapon::Weapon(int ad, float at)
 		attackTimer(at),
 		attackTimerMax(at),
 		timesAttacked(0),
-		activeitems(std::vector<Item*>())
+		activeWeapon(nullptr)
 {
 	attackbox.setSize(sf::Vector2f(75, 75));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
@@ -19,20 +19,14 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 		attackTimer = attackTimerMax;
 		timesAttacked++;
 
-		for (Item* i : activeitems)
-		{
-			if(i != nullptr)
-				i->OnAttack(startingPos, facingDir);
-		}
+		if (activeWeapon != nullptr)
+			activeWeapon->OnAttack(startingPos, facingDir);
 
 		for (auto target : inRange)
-		{	
+		{
 			int extra = 0;
-			for (Item* i : activeitems)
-			{
-				if(i != nullptr)
-					extra += i->OnHit(target);
-			}
+			if (activeWeapon != nullptr)
+				extra += activeWeapon->OnHit(target);
 
 
 			target->OnHit(attackDamage + extra);
@@ -40,46 +34,41 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 		inRange.clear();
 		//std::cout << "Player has attacked " << timesAttacked << " times\n";
 	}
-
 }
 
 void Weapon::Update(float deltaTime)
 {
 	attackTimer -= deltaTime;
 
-	for (Item* i : activeitems)
-	{
-		if (i != nullptr)
-			i->Update(deltaTime);
-	}
+	if (activeWeapon != nullptr)
+		activeWeapon->Update(deltaTime);
 }
 
-void Weapon::UpdateItems(std::vector<Item*> items)
+void Weapon::SetWeapon(Item* item)
 {
-	activeitems = items;
+	activeWeapon = static_cast<WeaponItem*>(item);
 
-	//effectvalue = EffectValue();
-
-	//for (Item* item : items)
-	//{
-	//	if (item != nullptr)
-	//	{
-	//		EffectValue temp = item->GetEffectValue();
-	//		effectvalue.bleedDamage += temp.bleedDamage;
-	//		effectvalue.bleedTimes += temp.bleedTimes;
-	//		effectvalue.stunPercentage += temp.stunPercentage;
-	//		effectvalue.stunTime += temp.stunTime;
-	//	}
-	//}
+	//activeWeapon = (WeaponItem)items[0];
 }
 
 void Weapon::Draw(sf::RenderWindow& window)
 {
 	if (CanAttack())
 		window.draw(attackbox);
+
+	if (activeWeapon != nullptr)
+	{
+		activeWeapon->DrawProjectiles(window);
+	}
 }
 
 Collider Weapon::GetAttackBox()
 {
 	return Collider(attackbox);
+}
+
+void Weapon::CheckCollision(Entity* enemy)
+{
+	if (activeWeapon != nullptr)
+		activeWeapon->CheckCollision(enemy);
 }

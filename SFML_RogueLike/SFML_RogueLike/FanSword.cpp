@@ -1,13 +1,13 @@
 #include "FanSword.h"
 
-FanSword::FanSword(sf::Texture* itemText, std::string name, SlotRegion* sr)
-	:	Item(itemText, name, sr)
+FanSword::FanSword(sf::Texture* itemText, std::string name)
+	:	WeaponItem(itemText, name)
 {
 	damage = 2;
 }
 
-FanSword::FanSword(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrade)
-	:	 Item(itemText, name, sr, upgrade)
+FanSword::FanSword(sf::Texture* itemText, std::string name, Item* upgrade)
+	:	 WeaponItem(itemText, name, upgrade)
 {
 	damage = 2;
 }
@@ -20,32 +20,36 @@ void FanSword::Update(float deltaTime)
 	}
 }
 
-void FanSword::Draw(sf::RenderWindow& window)
+void FanSword::CheckCollision(Entity* entity)
 {
-	Item::Draw(window);
+	Collider coll = entity->GetCollider();
+	for (SlimeBall* projectile : projectiles)
+	{
+		if (projectile->GetCollider().CheckCollision(coll, 0.0f) && projectile->GetAliveStatus())
+		{
+			OnHit(entity, projectile);
+		}
+	}
+}
 
+void FanSword::OnHit(Entity* e, SlimeBall* projectile)
+{
+	e->OnHit(damage);
+	projectile->SetAliveStatus(false);
+}
+
+void FanSword::DrawProjectiles(sf::RenderWindow& window)
+{
 	for (SlimeBall* projectile : projectiles)
 	{
 		projectile->Draw(window);
 	}
 }
 
-int FanSword::OnAttack(sf::Vector2f startingPos, sf::Vector2f direction)
+
+void FanSword::OnAttack(sf::Vector2f startingPos, sf::Vector2f direction)
 {
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	//	direction = sf::Vector2f(-1, 0);
-
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	//	direction = sf::Vector2f(1, 0);
-
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	//	direction = sf::Vector2f(0, 1);
-
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	//	direction = sf::Vector2f(0, -1);
-
-	projectiles.push_back(BuildWindSlash(direction, startingPos));
-	return 0;
+	projectiles.push_back(BuildWindSlash(direction, startingPos + (direction * 10.0f)));
 }
 
 std::string FanSword::GetItemStats()

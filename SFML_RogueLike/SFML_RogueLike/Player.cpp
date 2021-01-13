@@ -2,8 +2,8 @@
 
 Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
 	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage, "Player"),
-		weapon(new Weapon(attackDamage, 1.0f)),
-		inventory(new Inventory(&body)),
+		weapon(new Weapon(attackDamage, 2.0f)),
+		inventory(new Inventory(&body, weapon)),
 		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0)),
 		facingDirection(sf::Vector2f(0,0))
 {
@@ -85,13 +85,24 @@ void Player::Draw(sf::RenderWindow& window)
 {
 	Entity::Draw(window);
 
-	if(weapon->CanAttack())
-		weapon->Draw(window);
-
+	weapon->Draw(window);
 	inventory->Draw(window);
 }
 
 void Player::CollectItem(Collectable* c)
 {
 	inventory->GetItem(c->GetItem());
+}
+
+void Player::OnHit(const int damage)
+{
+	if (weapon->ShieldActive())
+	{
+		Entity::OnHit(damage / 2);
+		weapon->GetActiveWeapon()->SetEmpowerAttack(true);
+		weapon->SetShield(false);
+		std::cout << "Empowered attack " << weapon->GetActiveWeapon()->GetEmpowerAttack();
+	}
+	else
+		Entity::OnHit(damage);
 }

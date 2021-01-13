@@ -49,6 +49,7 @@ public:
 	SlimeBoss* BuildSlimeBoss(sf::Vector2f spawnPos);
 
 	std::vector<Enemy*> GetEnemies() { return enemies; }
+	SlimeBoss* GetBoss() { return boss; }
 	void AddEnemyData(EnemyType et, float time, sf::Vector2f pos);
 	bool IsFinished();
 

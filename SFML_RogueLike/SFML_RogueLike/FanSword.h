@@ -1,19 +1,22 @@
 #pragma once
-#include "Item.h"
+#include "WeaponItem.h"
 #include "SlimeBall.h"
 
-class FanSword : public Item
+class FanSword : public WeaponItem
 {
 public:
-	FanSword(sf::Texture* itemText, std::string name, SlotRegion* sr);
-	FanSword(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrade);
+	FanSword(sf::Texture* itemText, std::string name);
+	FanSword(sf::Texture* itemText, std::string name, Item* upgrade);
 
 	FanSword* Clone() override { return new FanSword(*this); };
 
+	void OnAttack(sf::Vector2f startingPos, sf::Vector2f direction) override;
 	void Update(float deltaTime) override;
-	void Draw(sf::RenderWindow& window) override;
+	void CheckCollision(Entity* entity);
 
-	int OnAttack(sf::Vector2f startingPos, sf::Vector2f direction) override;
+	virtual void OnHit(Entity* e, SlimeBall* projectile);
+
+	void DrawProjectiles(sf::RenderWindow& window) override;
 	std::string GetItemStats() override;
 
 protected:
@@ -23,4 +26,3 @@ protected:
 
 	int damage;
 };
-

@@ -1,13 +1,13 @@
 #include "Knife.h"
 
-Knife::Knife(sf::Texture* itemText, std::string name, SlotRegion* sr)
-	:	Item(itemText, name, sr),
+Knife::Knife(sf::Texture* itemText, std::string name)
+	:	WeaponItem(itemText, name),
 		attacks(0)
 {
 }
 
-Knife::Knife(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrade)
-	:	Item(itemText, name, sr, upgrade),
+Knife::Knife(sf::Texture* itemText, std::string name, Item* upgrade)
+	:	WeaponItem(itemText, name, upgrade),
 		attacks(0)
 {
 }

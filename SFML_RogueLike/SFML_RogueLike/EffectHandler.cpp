@@ -56,7 +56,6 @@ int EffectHandler::GetBleedDamage()
 	return totalDamage;
 }
 
-// TODO WIP
 bool EffectHandler::IsStunned()
 {
 	return (stunTimer > 0);

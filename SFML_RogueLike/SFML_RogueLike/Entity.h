@@ -24,6 +24,7 @@ public:
 
 	Collider GetCollider() { return Collider(body); }
 	sf::RectangleShape* GetBody() { return &body; };
+	sf::RectangleShape* GetTextureBody() { return &TextureBody; };
 
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
@@ -35,6 +36,7 @@ public:
 	int GetHealth() { return health; }
 
 	bool GetAliveStatus() { return isAlive; }
+	void SetAliveStatus(bool b) { isAlive = b; }
 
 protected:
 	void GetEffects();

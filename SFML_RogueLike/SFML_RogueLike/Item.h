@@ -21,17 +21,12 @@ public:
 	Item(sf::Texture* itemText, std::string name, SlotRegion* sr);
 	Item(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrade);
 
-	//TODO virtual Copy constructor
-	virtual Item* Clone() { return new Item(*this); }
 
-	~Item();
+	virtual Item* Clone() { return new Item(*this); }
 
 	virtual void Update(float deltaTime) {}
 
-	virtual int OnHit(Entity* entity) { return 0; }
-	virtual int OnAttack(sf::Vector2f startingPos, sf::Vector2f direction) { return 0; }
-
-	virtual void Draw(sf::RenderWindow& window);
+	void Draw(sf::RenderWindow& window);
 	void SetPosition(sf::Vector2f pos);
 
 	sf::RectangleShape GetItemBox() { return itemBox; }

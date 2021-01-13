@@ -61,6 +61,15 @@
     <Filter Include="Header Files\Inventory\Items">
       <UniqueIdentifier>{e729b470-a828-4cbb-a7ee-42a965983abe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Inventory\Items\Weapons">
+      <UniqueIdentifier>{4f319777-cd9a-451b-b45f-500447f973e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inventory\Items\Armour">
+      <UniqueIdentifier>{1fcfcabc-af35-4099-9950-c8bbcbe36420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inventory\Items\Weapons">
+      <UniqueIdentifier>{d332119b-1cdd-4fd5-93e0-7b184fdefcca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp">
@@ -153,15 +162,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Knife.cpp">
-      <Filter>Source Files\Inventory\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="BloodKnife.cpp">
-      <Filter>Source Files\Inventory\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files\Inventory\Items</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>Source Files\manager</Filter>
     </ClCompile>
@@ -171,11 +171,29 @@
     <ClCompile Include="LootManager.cpp">
       <Filter>Source Files\manager</Filter>
     </ClCompile>
+    <ClCompile Include="BloodKnife.cpp">
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
+    </ClCompile>
     <ClCompile Include="FanSword.cpp">
-      <Filter>Source Files\Inventory\Items</Filter>
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Knife.cpp">
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponItem.cpp">
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="WindSlasher.cpp">
-      <Filter>Source Files\Inventory\Items</Filter>
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Shield.cpp">
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="ShieldSword.cpp">
+      <Filter>Source Files\Inventory\Items\Weapons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,26 +287,35 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files\Inventory\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Knife.h">
-      <Filter>Header Files\Inventory\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="BloodKnife.h">
-      <Filter>Header Files\Inventory\Items</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="LootManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="BloodKnife.h">
+      <Filter>Header Files\Inventory\Items\Weapons</Filter>
+    </ClInclude>
     <ClInclude Include="FanSword.h">
-      <Filter>Header Files\Inventory\Items</Filter>
+      <Filter>Header Files\Inventory\Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Inventory\Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Knife.h">
+      <Filter>Header Files\Inventory\Items\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="WindSlasher.h">
-      <Filter>Header Files\Inventory\Items</Filter>
+      <Filter>Header Files\Inventory\Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>Header Files\Inventory\Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponItem.h">
+      <Filter>Header Files\Inventory\Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="ShieldSword.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,11 +10,11 @@
 class Inventory
 {
 public: 
-	Inventory(sf::RectangleShape* p);
+	Inventory(sf::RectangleShape* p, Weapon* w);
 
 	void OpenClose();
 
-	void Update(sf::Vector2f mousePos, Weapon* weapon);
+	void Update(sf::Vector2f mousePos);
 	void GetItem(Item* i);
 	bool isFull();
 	void Draw(sf::RenderWindow& window);
@@ -31,6 +31,7 @@ private:
 	void CheckifCanCombine();
 
 	sf::RectangleShape* player;
+	Weapon* weapon;
 
 	bool canInteract;
 	bool isOpen;

@@ -4,7 +4,7 @@
 class BloodKnife : public Knife
 {
 public:
-	BloodKnife(sf::Texture* itemText, std::string name, SlotRegion* sr);
+	BloodKnife(sf::Texture* itemText, std::string name);
 
 	BloodKnife* Clone() override { return new BloodKnife(*this); }
 	int OnHit(Entity* entity) override;

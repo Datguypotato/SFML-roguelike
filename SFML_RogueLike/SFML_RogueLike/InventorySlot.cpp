@@ -80,6 +80,7 @@ void InventorySlot::DrawDescp(sf::RenderWindow& window)
 
 void InventorySlot::Deleteitem()
 {
+	itemDescriptionText->setString("");
 	delete item; 
 	item = nullptr;
 	isEmpty = true;

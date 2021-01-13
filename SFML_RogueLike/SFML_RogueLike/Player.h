@@ -19,6 +19,8 @@ public:
 	void Draw(sf::RenderWindow& window);
 	void CollectItem(Collectable* c);
 
+	void OnHit(const int damage) override;
+
 	Weapon* GetWeapon() { return weapon; }
 	Inventory* GetInventory() { return inventory; }
 private:

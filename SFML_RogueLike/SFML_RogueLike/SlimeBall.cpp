@@ -9,8 +9,8 @@
 SlimeBall::SlimeBall(std::vector<Animation*> animations, sf::Vector2f dir)
 	:	Entity(sf::Vector2f(50,50), sf::Vector2f(50,50), 1, animations, 200, 10, "SlimeBall")
 {
+	size = sf::Vector2f(50, 50);
 	direction = dir;
-	HitDamage = 10;
 }
 
 /// <summary>
@@ -30,6 +30,8 @@ void SlimeBall::Update(float deltaTime)
 	Entity::Update(deltaTime);
 	velocity = direction * speed;
 
+	body.setSize(size);
+	TextureBody.setSize(size);
 
 	AC.Play("Default", faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
@@ -57,4 +59,11 @@ void SlimeBall::OnHit(const int damage)
 
 void SlimeBall::OnDeath()
 {
+}
+
+void SlimeBall::SetSize(sf::Vector2f v)
+{
+	size = v;
+	body.setSize(size);
+	TextureBody.setSize(size);
 }

@@ -10,6 +10,9 @@
 #include "FanSword.h"
 #include "WindSlasher.h"
 
+#include "Shield.h"
+#include "ShieldSword.h"
+
 class LootManager
 {
 public:
@@ -29,8 +32,10 @@ public:
 	Collectable* BuildFanSword(sf::Vector2f pos);
 	Item* UpgradeFanSword();
 
+	Collectable* BuildShield(sf::Vector2f pos);
+	Item* UpgradeShield();
+
 private:
 	sf::Texture* LoadTexture(std::string path);
-
 	std::vector<Collectable*> loots;
 };

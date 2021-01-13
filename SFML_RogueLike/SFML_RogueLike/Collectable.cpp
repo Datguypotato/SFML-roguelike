@@ -15,8 +15,7 @@ void Collectable::Update(float deltaTime)
 	if (isAlive)
 	{
 		randomStartingPoint += deltaTime;
-		Hover(3.5f, 0.05f);
-
+		Hover();
 
 		AC.Play("Default", faceRight);
 		AC.UpdateAnimation(deltaTime, faceRight);
@@ -25,7 +24,7 @@ void Collectable::Update(float deltaTime)
 	}
 }
 
-void Collectable::Hover(float verticalSpeed, float amplitude)
+void Collectable::Hover()
 {
 	tempPos.y += sin(randomStartingPoint * verticalSpeed) * amplitude;
 	body.setPosition(tempPos);

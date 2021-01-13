@@ -1,7 +1,7 @@
 #include "BloodKnife.h"
 
-BloodKnife::BloodKnife(sf::Texture* itemText, std::string name, SlotRegion* sr)
-	:	Knife(itemText, name, sr)
+BloodKnife::BloodKnife(sf::Texture* itemText, std::string name)
+	:	Knife(itemText, name)
 {
 }
 

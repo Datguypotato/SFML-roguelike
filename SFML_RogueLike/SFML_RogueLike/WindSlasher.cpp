@@ -1,8 +1,9 @@
 #include "WindSlasher.h"
 
-WindSlasher::WindSlasher(sf::Texture* itemText, std::string name, SlotRegion* sr)
-	:	FanSword(itemText, name, sr)
+WindSlasher::WindSlasher(sf::Texture* itemText, std::string name)
+	:	FanSword(itemText, name)
 {
+
 }
 
 void WindSlasher::Update(float deltaTime)
@@ -11,8 +12,18 @@ void WindSlasher::Update(float deltaTime)
 
 	for (SlimeBall* projectile : projectiles)
 	{
-		projectile->GetBody()->setScale(sf::Vector2f(deltaTime, deltaTime));
+		if (projectile->GetAliveStatus())
+		{
+			projectile->SetSize(sf::Vector2f(deltaTime * 100, deltaTime * 100) + projectile->GetBody()->getSize());
+		}
 	}
+}
+
+void WindSlasher::OnHit(Entity* e, SlimeBall* projectile)
+{
+	sf::Vector2f originalSize = sf::Vector2f(50, 50);
+	e->OnHit(damage *= projectile->GetSize().x / originalSize.x);
+	projectile->SetAliveStatus(false);
 }
 
 std::string WindSlasher::GetItemStats()

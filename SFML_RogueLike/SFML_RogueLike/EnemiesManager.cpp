@@ -106,7 +106,7 @@ void EnemiesManager::CheckCollision(Entity* player)
 			if (ball->GetCollider().CheckCollision(pcoll, 0.0f) && ball->GetAliveStatus())
 			{
 				player->OnHit(ball->GetAttackDamage());
-				ball->OnHit(1);
+				ball->SetAliveStatus(false);
 			}
 		}
 	}

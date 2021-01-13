@@ -4,7 +4,7 @@
 #include "UIComponent.h"
 #include "Item.h"
 
-// TODO: inherit from button instead?
+// TODO: 
 
 class InventorySlot : public UIComponent
 {

@@ -28,10 +28,6 @@ Item::Item(sf::Texture* itemText, std::string name, SlotRegion* sr, Item* upgrad
 	upgradeItem = upgrade;
 }
 
-Item::~Item()
-{
-}
-
 void Item::SetPosition(sf::Vector2f pos)
 {
 	itemBox.setPosition(pos);

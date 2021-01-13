@@ -31,9 +31,11 @@ void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player, em);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		lm->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, 0));
+		lm->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, 100));
+		lm->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -100));
 	}
 	sf::Font* font = new sf::Font();
 	font->loadFromFile("Fonts/04B_30.ttf");;
@@ -50,7 +52,7 @@ void GameManager::Update(float deltaTime)
 	if (bagIcon->CursorIsInBox(mousepos))
 		bagIcon->OnClick();
 
-	player->GetInventory()->Update(mousepos, player->GetWeapon());
+	player->GetInventory()->Update(mousepos);
 	em->Update(deltaTime);
 	lm->Update(deltaTime);
 
@@ -77,9 +79,17 @@ void GameManager::CheckCollision()
 		}
 	}
 
-
 	Collider pcoll = player->GetCollider();
 	lm->CheckTrigger(player);
+
+	if(em->GetBoss() != nullptr)
+		player->GetWeapon()->CheckCollision(em->GetBoss());
+	for (Enemy* enemy : enemies)
+	{
+		if(enemy->GetAliveStatus())
+			player->GetWeapon()->CheckCollision(enemy);
+	}
+
 
 	//em->CheckCollision(player);
 
@@ -97,7 +107,6 @@ void GameManager::Draw()
 	em->Draw(*window);
 	healthbar->Draw(*window);
 	bagIcon->Draw(*window);
-	//window->draw(*testing);
 
 
 	view->setCenter(player->GetPosition());

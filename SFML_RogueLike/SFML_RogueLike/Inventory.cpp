@@ -1,13 +1,14 @@
 #include "Inventory.h"
 
-Inventory::Inventory(sf::RectangleShape* p)
+Inventory::Inventory(sf::RectangleShape* p, Weapon* w)
 :	isOpen(false),
 	isDrawing(false),
 	slotCount(3),
 	slotStartingPos(sf::Vector2f(500, 200)),
 	equipSlotStartingPos(sf::Vector2f(-500, 200)),
 	currItem(nullptr),
-	canInteract(true)
+	canInteract(true),
+	weapon(w)
 {
 	player = p;
 	SetupSlots();
@@ -23,7 +24,7 @@ void Inventory::OpenClose()
 	std::cout << "The inventory is now " << isOpen << std::endl;
 }
 
-void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
+void Inventory::Update(sf::Vector2f mousePos)
 {
 	if (isDrawing)
 	{
@@ -101,7 +102,7 @@ void Inventory::Update(sf::Vector2f mousePos, Weapon* weapon)
 		if (currItem != nullptr)
 			currItem->SetPosition(mousePos);
 
-		weapon->UpdateItems(GetCurrEquipItem());
+		weapon->SetWeapon(GetCurrEquipItem()[0]);
 		isDrawing = false;
 	}
 }
@@ -179,7 +180,6 @@ void Inventory::OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int
 
 void Inventory::CheckifCanCombine()
 {
-	//TODO not priority
 
 	// put all items in one single vector
 	std::vector<InventorySlot*> currentItems = std::vector<InventorySlot*>();

@@ -15,8 +15,11 @@ public:
 	void OnHit(const int damage) override;
 	void OnDeath() override;
 
+	sf::Vector2f GetSize() { return size; }
+	void SetSize(sf::Vector2f v);
+
 private:
 	sf::Vector2f direction;
-	int HitDamage;
+	sf::Vector2f size;
 };
 

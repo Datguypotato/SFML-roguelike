@@ -47,6 +47,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Shield.cpp" />
+    <ClCompile Include="ShieldSword.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="SlimeBall.cpp" />
     <ClCompile Include="SlimeBase.cpp" />
@@ -56,6 +58,7 @@
     <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponItem.cpp" />
     <ClCompile Include="WindSlasher.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +89,8 @@
     <ClInclude Include="LevelSwitcher.h" />
     <ClInclude Include="LootManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shield.h" />
+    <ClInclude Include="ShieldSword.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="SlimeBall.h" />
     <ClInclude Include="SlimeBase.h" />
@@ -95,6 +100,7 @@
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponItem.h" />
     <ClInclude Include="WindSlasher.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
