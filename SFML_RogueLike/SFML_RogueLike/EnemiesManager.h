@@ -48,7 +48,8 @@ public:
 	Ghost* BuildGhost(sf::Vector2f spawnPos);
 	SlimeBoss* BuildSlimeBoss(sf::Vector2f spawnPos);
 
-	std::vector<Enemy*> GetEnemies() { return enemies; }
+	std::vector<Entity*> GetEnemies() { return enemies; }
+	std::vector<Entity*>* GetEnemiesPointer() { return &enemies; }
 	SlimeBoss* GetBoss() { return boss; }
 	void AddEnemyData(EnemyType et, float time, sf::Vector2f pos);
 	bool IsFinished();
@@ -58,7 +59,7 @@ private:
 	std::vector<TimeEvent*> timedEvents;
 
 	std::vector<SpawnData*> enemiesData;
-	std::vector<Enemy*> enemies;
+	std::vector<Entity*> enemies;
 	SlimeBoss* boss;
 	Player* player;
 	sf::RectangleShape* playerBody;

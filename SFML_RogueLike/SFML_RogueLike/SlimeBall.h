@@ -12,7 +12,6 @@ public:
 	void Update(float deltaTime) override;
 	void OnCollision(sf::Vector2f direction) override { delete this; };
 
-	void OnHit(const int damage) override;
 	void OnDeath() override;
 
 	sf::Vector2f GetSize() { return size; }

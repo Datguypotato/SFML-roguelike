@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "Entity.h"
 #include "Weapon.h"
+#include "Armour.h"
 #include "Inventory.h"
 #include "Collectable.h"
 
@@ -19,14 +20,17 @@ public:
 	void Draw(sf::RenderWindow& window);
 	void CollectItem(Collectable* c);
 
-	void OnHit(const int damage) override;
+	void OnHit(const int damage, Entity* damageDealer) override;
 
 	Weapon* GetWeapon() { return weapon; }
+	Armour* GetArmour() { return armour; }
 	Inventory* GetInventory() { return inventory; }
 private:
 	Weapon* weapon;
+	Armour* armour;
 	Inventory* inventory;
 
 	sf::Vector2f facingDirection;
+	sf::Vector2f lastFacingDir;
 	sf::Vector2f attackBoxOffset;
 };

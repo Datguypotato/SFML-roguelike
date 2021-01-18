@@ -19,6 +19,7 @@ public:
 	virtual void Draw(sf::RenderWindow& window);
 
 	virtual void OnCollision(sf::Vector2f direction);
+	virtual void OnHit(const int damage, Entity* damageDealer);
 	virtual void OnHit(const int damage);
 	virtual void OnDeath();
 

@@ -5,7 +5,7 @@ EnemiesManager::EnemiesManager(Player* player)
 		playerBody(player->GetBody()),
 		boss(nullptr),
 		enemiesData(std::vector<SpawnData*>()),
-		enemies(std::vector<Enemy*>())
+		enemies(std::vector<Entity*>())
 {
 }
 
@@ -53,7 +53,7 @@ void EnemiesManager::Update(float deltaTime)
 		}
 	}
 
-	for (Enemy* enemy : enemies)
+	for (Entity* enemy : enemies)
 	{
 		if (enemy->GetAliveStatus() && !enemy->GetEffectHandler()->IsStunned())
 		{
@@ -86,26 +86,26 @@ void EnemiesManager::Update(float deltaTime)
 void EnemiesManager::CheckCollision(Entity* player)
 {
 	Collider pcoll = player->GetCollider();
-	for (Enemy* enemy : enemies)
+	for (Entity* enemy : enemies)
 	{
 		if (enemy->GetAliveStatus())
 		{
 			if (enemy->GetCollider().CheckCollision(pcoll, 0.8f))
-				player->OnHit(enemy->GetAttackDamage());
+				player->OnHit(enemy->GetAttackDamage(), enemy);
 		}
 	}
 
 	if (boss != nullptr)
 	{
 		if (boss->GetCollider().CheckCollision(pcoll, 1.0f))
-			player->OnHit(boss->GetAttackDamage());
+			player->OnHit(boss->GetAttackDamage(), boss);
 
 		std::vector<SlimeBall*> p = boss->GetProjectiles();
 		for (SlimeBall* ball : p)
 		{
 			if (ball->GetCollider().CheckCollision(pcoll, 0.0f) && ball->GetAliveStatus())
 			{
-				player->OnHit(ball->GetAttackDamage());
+				player->OnHit(ball->GetAttackDamage(), ball);
 				ball->SetAliveStatus(false);
 			}
 		}
@@ -114,7 +114,7 @@ void EnemiesManager::CheckCollision(Entity* player)
 
 void EnemiesManager::Draw(sf::RenderWindow& window)
 {
-	for (Enemy* enemy : enemies)
+	for (Entity* enemy : enemies)
 	{
 		if(enemy->GetAliveStatus())
 			enemy->Draw(window);
@@ -197,6 +197,7 @@ SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos)
 	SlimeBoss* temp = new SlimeBoss(slimeAnimations, spawnPos, player);
 
 	boss = temp;
+	enemies.push_back(boss);
 
 	return nullptr;
 }
@@ -232,7 +233,7 @@ bool EnemiesManager::IsFinished()
 {
 	bool allDead = true;
 
-	for (Enemy* e : enemies)
+	for (Entity* e : enemies)
 	{
 		if (e->GetAliveStatus())
 			allDead = false;

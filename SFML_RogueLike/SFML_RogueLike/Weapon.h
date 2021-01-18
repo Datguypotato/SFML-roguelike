@@ -6,6 +6,9 @@
 #include "Item.h"
 #include "WeaponItem.h"
 
+/// <summary>
+/// Handels all weapon item functions
+/// </summary>
 class Weapon
 {
 public:
@@ -24,13 +27,14 @@ public:
 	void CheckCollision(Entity* enemy);
 
 	bool CanAttack() { return (attackTimer <= 0); }
-	void SetShield(bool b) { activeWeapon->SetShield(b); }
-	bool ShieldActive() { return activeWeapon->GetShield(); }
+	void SetBlock(bool b) { activeWeapon->SetBlock(b); }
+	bool GetBlock() { return activeWeapon->GetBlock(); }
 	std::vector<Entity*>* GetInRange() { return &inRange; }
-
+	int GetRecentDead();
 
 private:
 	std::vector<Entity*> inRange;
+	int recentDead;
 	sf::RectangleShape attackbox;
 
 	int attackDamage;

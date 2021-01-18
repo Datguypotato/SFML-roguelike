@@ -70,6 +70,9 @@
     <Filter Include="Header Files\Inventory\Items\Weapons">
       <UniqueIdentifier>{d332119b-1cdd-4fd5-93e0-7b184fdefcca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Inventory\Items\Armour">
+      <UniqueIdentifier>{1d7fb4eb-2ea9-474f-b274-b6b793d8be35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp">
@@ -141,9 +144,6 @@
     <ClCompile Include="Collectable.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EffectHandler.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
@@ -177,9 +177,6 @@
     <ClCompile Include="FanSword.cpp">
       <Filter>Source Files\Inventory\Items\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files\Inventory\Items\Weapons</Filter>
-    </ClCompile>
     <ClCompile Include="Knife.cpp">
       <Filter>Source Files\Inventory\Items\Weapons</Filter>
     </ClCompile>
@@ -195,15 +192,51 @@
     <ClCompile Include="ShieldSword.cpp">
       <Filter>Source Files\Inventory\Items\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Armour.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmourItem.cpp">
+      <Filter>Source Files\Inventory\Items\Armour</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RedShirt.cpp">
+      <Filter>Source Files\Inventory\Items\Armour</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponBuilder.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmourBuilder.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="RedSpikes.cpp">
+      <Filter>Source Files\Inventory\Items\Armour</Filter>
+    </ClCompile>
+    <ClCompile Include="ThiefRobe.cpp">
+      <Filter>Source Files\Inventory\Items\Armour</Filter>
+    </ClCompile>
+    <ClCompile Include="KevlarVest.cpp">
+      <Filter>Source Files\Inventory\Items\Armour</Filter>
+    </ClCompile>
+    <ClCompile Include="Armourbar.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MagicRobe.cpp">
+      <Filter>Source Files\Inventory\Items\Armour</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatedArmour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Slime.h">
@@ -263,9 +296,6 @@
     <ClInclude Include="Collectable.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>Header Files\Effects</Filter>
     </ClInclude>
@@ -311,11 +341,50 @@
     <ClInclude Include="Shield.h">
       <Filter>Header Files\Inventory\Items\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponItem.h">
+    <ClInclude Include="ShieldSword.h">
       <Filter>Header Files\Inventory\Items\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="ShieldSword.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="RedShirt.h">
+      <Filter>Header Files\Inventory\Items\Armour</Filter>
+    </ClInclude>
+    <ClInclude Include="RedSpikes.h">
+      <Filter>Header Files\Inventory\Items\Armour</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponBuilder.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmourBuilder.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmourItem.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponItem.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ThiefRobe.h">
+      <Filter>Header Files\Inventory\Items\Armour</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files\Inventory\Items\Armour</Filter>
+    </ClInclude>
+    <ClInclude Include="Armourbar.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Armour.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MagicRobe.h">
+      <Filter>Header Files\Inventory\Items\Armour</Filter>
+    </ClInclude>
+    <ClInclude Include="KevlarVest.h">
+      <Filter>Header Files\Inventory\Items\Armour</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatedArmour.h">
+      <Filter>Header Files\Inventory\Items\Armour</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Inventory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

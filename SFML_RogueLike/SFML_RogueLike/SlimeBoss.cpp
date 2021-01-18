@@ -106,12 +106,6 @@ SlimeBall* SlimeBoss::BuildSlimeBall(sf::Vector2f startPos)
 	return b;
 }
 
-void SlimeBoss::OnHit(const int damage)
-{
-	std::cout << "SlimeBoss: ";
-	Entity::OnHit(damage);
-}
-
 void SlimeBoss::Draw(sf::RenderWindow& window)
 {
 	window.draw(attackBox);

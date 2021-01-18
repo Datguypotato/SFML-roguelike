@@ -1,15 +1,17 @@
 #include "GameManager.h"
 
 GameManager::GameManager()
-	:	player(BuildPlayer()),
-		totalTime(0),
+	:	totalTime(0),
 		timedEvents()
 {
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
 	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this),  player);
-	em = new EnemiesManager(player); 
+	Player* temp = BuildPlayer();
+	em = new EnemiesManager(temp); 
+	player = temp;
 	healthbar = new Healthbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
+	armourbar = new Armourbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
 
 	sf::Texture* btext = new sf::Texture();
 	btext->loadFromFile("Art/UI/BagIcon.png");
@@ -33,19 +35,25 @@ void GameManager::Start()
 
 	for (int i = 0; i < 3; i++)
 	{
-		lm->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, 0));
-		lm->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, 100));
-		lm->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -100));
+		lm->GetWeaponb()->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, -600));
+		lm->GetArmourb()->BuildKevlarVest(player->GetPosition() + sf::Vector2f(i * 100 + 100, -400));
+		lm->GetWeaponb()->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -200));
 	}
-	sf::Font* font = new sf::Font();
-	font->loadFromFile("Fonts/04B_30.ttf");;
+	//sf::Font* font = new sf::Font();
+	//font->loadFromFile("Fonts/04B_30.ttf");;
 }
 
 void GameManager::Update(float deltaTime)
 {
 	totalTime += deltaTime;
 	player->Update(deltaTime);
-	healthbar->Update(player);
+	healthbar->Update(*player->GetBody(), player->GetHealth());
+	if (player->GetArmour()->GetActiveArmour() != nullptr)
+	{
+		armourbar->Update(*player->GetBody(), player->GetArmour()->GetActiveArmour()->GetShield());
+		//std::cout << "Shield value: " << std::to_string(player->GetArmour()->GetActiveArmour()->GetShield()) << std::endl;
+	}
+		
 	bagIcon->CanUpdate(*player->GetBody());
 
 	sf::Vector2f mousepos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -64,34 +72,47 @@ void GameManager::Update(float deltaTime)
 
 void GameManager::CheckCollision()
 {
-	std::vector<Enemy*> enemies = em->GetEnemies();
+	std::vector<Entity*> enemies = em->GetEnemies();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && player->GetWeapon()->CanAttack())
 	{
-		std::vector<Enemy*> enemies = em->GetEnemies();
-		for (Enemy* enemy : enemies)
+		for (Entity* enemy : enemies)
 		{
-			Collider eColl = enemy->GetCollider();
-			if (player->GetWeapon()->GetAttackBox().CheckTrigger(eColl))
+			if (enemy->GetAliveStatus())
 			{
-				player->GetWeapon()->GetInRange()->push_back(enemy);
+				// normal hit
+				Collider eColl = enemy->GetCollider();
+				if (player->GetWeapon()->GetAttackBox().CheckTrigger(eColl))
+				{
+					player->GetWeapon()->GetInRange()->push_back(enemy);
+				}
+
+				// weapon projectile
+				player->GetWeapon()->CheckCollision(enemy);
 			}
 		}
+
+		Collider boss = em->GetBoss()->GetCollider();
+		if (player->GetWeapon()->GetAttackBox().CheckTrigger(boss))
+			player->GetWeapon()->GetInRange()->push_back(em->GetBoss());
 	}
+
+	player->GetArmour()->CheckCollision(enemies);
 
 	Collider pcoll = player->GetCollider();
 	lm->CheckTrigger(player);
 
 	if(em->GetBoss() != nullptr)
 		player->GetWeapon()->CheckCollision(em->GetBoss());
-	for (Enemy* enemy : enemies)
+
+	for (Entity* enemy : enemies)
 	{
 		if(enemy->GetAliveStatus())
 			player->GetWeapon()->CheckCollision(enemy);
 	}
 
 
-	//em->CheckCollision(player);
+	em->CheckCollision(player);
 
 	levelmanager->GetCurrentLevel()->CheckCollision(pcoll);
 	levelmanager->GetCurrentLevel()->CheckTrigger(pcoll, *em);
@@ -105,7 +126,8 @@ void GameManager::Draw()
 	lm->Draw(*window);
 	player->Draw(*window);
 	em->Draw(*window);
-	healthbar->Draw(*window);
+	//healthbar->Draw(*window);
+	armourbar->Draw(*window);
 	bagIcon->Draw(*window);
 
 

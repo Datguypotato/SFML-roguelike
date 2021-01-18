@@ -12,7 +12,6 @@ public:
 
 	void Update(float deltaTime) override;
 	void OnCollision(sf::Vector2f direction);
-	void OnHit(const int damage) override;
 
 	float GetJumpCooldown() { return jumpCooldown; }
 

@@ -16,9 +16,8 @@ public:
 	virtual bool SetEmpowerAttack(bool b) { return isEmpowered = b; }
 	virtual bool GetEmpowerAttack() { return isEmpowered; }
 
-	void SetShield(bool b) { isShielded = b; }
-	bool GetShield() { return isShielded; }
-	bool ShieldActive() { return isShielded; }
+	void SetBlock(bool b) { isBlocking = b; }
+	bool GetBlock() { return isBlocking; }
 
 	std::string GetItemStats() override;
 
@@ -26,6 +25,6 @@ public:
 	void Draw(sf::RenderWindow& window);
 
 protected:
-	bool isShielded;
+	bool isBlocking;
 	bool isEmpowered;
 };

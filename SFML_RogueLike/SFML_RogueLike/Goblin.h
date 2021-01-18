@@ -13,7 +13,6 @@ public:
 
 	void Draw(sf::RenderWindow& window) override;
 
-	void OnHit(const int damage);
 
 private:
 

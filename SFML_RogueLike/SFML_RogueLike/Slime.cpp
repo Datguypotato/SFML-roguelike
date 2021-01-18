@@ -1,7 +1,7 @@
 #include "Slime.h"
 
 Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player)
-	:	SlimeBase(sf::Vector2f(59, 59), sf::Vector2f(60, 51), animations, player, 5, 1, 50, "Slime")
+	:	SlimeBase(sf::Vector2f(59, 59), sf::Vector2f(60, 51), animations, player, 2, 1, 50, "Slime")
 {
 	body.setPosition(spawnPosition);
 
@@ -85,10 +85,4 @@ void Slime::OnCollision(sf::Vector2f direction)
 		// collision up
 		velocity.y *= 0.2f;
 	}
-}
-
-void Slime::OnHit(const int damage)
-{
-	std::cout << "Slime: ";
-	Entity::OnHit(damage);
 }

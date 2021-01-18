@@ -32,6 +32,7 @@ void FanSword::CheckCollision(Entity* entity)
 	}
 }
 
+// projectile damage dealer
 void FanSword::OnHit(Entity* e, SlimeBall* projectile)
 {
 	e->OnHit(damage);

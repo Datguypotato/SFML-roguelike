@@ -18,7 +18,6 @@ public:
 	SlimeBoss(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Player* player);
 
 	void Update(float deltaTime);
-	void OnHit(const int damage) override;
 
 	void Draw(sf::RenderWindow& window) override;
 	std::vector<SlimeBall*> GetProjectiles() { return projectiles; }

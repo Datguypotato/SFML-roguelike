@@ -2,14 +2,14 @@
 
 WeaponItem::WeaponItem(sf::Texture* itemText, std::string name)
 	:	Item(itemText, name, new SlotRegion(SlotRegion::Weapon)),
-		isShielded(false),
+		isBlocking(false),
 		isEmpowered(false)
 {
 }
 
 WeaponItem::WeaponItem(sf::Texture* itemText, std::string name, Item* upgrade)
 	:	Item(itemText, name, new SlotRegion(SlotRegion::Weapon), upgrade),
-		isShielded(false),
+		isBlocking(false),
 		isEmpowered(false)
 {
 }

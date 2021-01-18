@@ -133,11 +133,19 @@ void Entity::OnCollision(sf::Vector2f direction)
 	}
 }
 
+void Entity::OnHit(const int damage, Entity* damageDealer)
+{
+	OnHit(damage);
+}
+
 void Entity::OnHit(const int damage)
 {
 	if (damageCooldown <= 0)
 	{
 		damageCooldown = damageCooldownMax;
+
+		std::cout << name << ": ";
+
 		if (health - damage <= 0)
 		{
 			health = 0;
@@ -156,7 +164,7 @@ void Entity::OnHit(const int damage)
 void Entity::GetEffects()
 {
 	if(effecthandler->hasEffects())
-		OnHit(effecthandler->GetBleedDamage());
+		OnHit(effecthandler->GetBleedDamage(), nullptr);
 
 
 }

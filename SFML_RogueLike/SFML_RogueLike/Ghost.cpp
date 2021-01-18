@@ -72,9 +72,3 @@ void Ghost::StopDash()
 {
 	isDashing = false;
 }
-
-void Ghost::OnHit(const int damage)
-{
-	std::cout << "Ghost: ";
-	Entity::OnHit(damage);
-}

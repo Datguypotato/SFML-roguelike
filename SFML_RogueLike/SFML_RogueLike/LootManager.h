@@ -1,17 +1,8 @@
 #pragma once
 #include <vector>
 
-#include "Collectable.h"
-#include "Animation.h"
-#include "Player.h"
-
-#include "Knife.h"
-#include "BloodKnife.h"
-#include "FanSword.h"
-#include "WindSlasher.h"
-
-#include "Shield.h"
-#include "ShieldSword.h"
+#include "WeaponBuilder.h"
+#include "ArmourBuilder.h"
 
 class LootManager
 {
@@ -24,18 +15,12 @@ public:
 	void Draw(sf::RenderWindow& window);
 
 	Item* GetRandomLoot();
-
-	Collectable* BuildKnife(sf::Vector2f pos);
-	Collectable* BuildUpgradeKnife(sf::Vector2f pos);
-	Item* UpgradeKnife();
-
-	Collectable* BuildFanSword(sf::Vector2f pos);
-	Item* UpgradeFanSword();
-
-	Collectable* BuildShield(sf::Vector2f pos);
-	Item* UpgradeShield();
+	WeaponBuilder* GetWeaponb() { return weaponb; }
+	ArmourBuilder* GetArmourb() { return armourb; }
 
 private:
-	sf::Texture* LoadTexture(std::string path);
-	std::vector<Collectable*> loots;
+	std::vector<Collectable*> Getloots();
+
+	WeaponBuilder* weaponb;
+	ArmourBuilder* armourb;
 };

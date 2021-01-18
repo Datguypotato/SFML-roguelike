@@ -21,6 +21,10 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimatorController.cpp" />
+    <ClCompile Include="Armour.cpp" />
+    <ClCompile Include="Armourbar.cpp" />
+    <ClCompile Include="ArmourBuilder.cpp" />
+    <ClCompile Include="ArmourItem.cpp" />
     <ClCompile Include="BleedEffect.cpp" />
     <ClCompile Include="BloodKnife.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -39,14 +43,19 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventorySlot.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="KevlarVest.cpp" />
     <ClCompile Include="Knife.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelSwitcher.cpp" />
     <ClCompile Include="LootManager.cpp" />
+    <ClCompile Include="MagicRobe.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="PlatedArmour.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RedShirt.cpp" />
+    <ClCompile Include="RedSpikes.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="ShieldSword.cpp" />
     <ClCompile Include="Slime.cpp" />
@@ -54,16 +63,22 @@
     <ClCompile Include="SlimeBase.cpp" />
     <ClCompile Include="SlimeBoss.cpp" />
     <ClCompile Include="StunEffect.cpp" />
+    <ClCompile Include="ThiefRobe.cpp" />
     <ClCompile Include="TimeEvent.cpp" />
     <ClCompile Include="UIComponent.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponBuilder.cpp" />
     <ClCompile Include="WeaponItem.cpp" />
     <ClCompile Include="WindSlasher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimatorController.h" />
+    <ClInclude Include="Armour.h" />
+    <ClInclude Include="Armourbar.h" />
+    <ClInclude Include="ArmourBuilder.h" />
+    <ClInclude Include="ArmourItem.h" />
     <ClInclude Include="BleedEffect.h" />
     <ClInclude Include="BloodKnife.h" />
     <ClInclude Include="Button.h" />
@@ -83,12 +98,17 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventorySlot.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="KevlarVest.h" />
     <ClInclude Include="Knife.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelSwitcher.h" />
     <ClInclude Include="LootManager.h" />
+    <ClInclude Include="MagicRobe.h" />
+    <ClInclude Include="PlatedArmour.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RedShirt.h" />
+    <ClInclude Include="RedSpikes.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="ShieldSword.h" />
     <ClInclude Include="Slime.h" />
@@ -96,10 +116,12 @@
     <ClInclude Include="SlimeBase.h" />
     <ClInclude Include="SlimeBoss.h" />
     <ClInclude Include="StunEffect.h" />
+    <ClInclude Include="ThiefRobe.h" />
     <ClInclude Include="TimeEvent.h" />
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponBuilder.h" />
     <ClInclude Include="WeaponItem.h" />
     <ClInclude Include="WindSlasher.h" />
   </ItemGroup>

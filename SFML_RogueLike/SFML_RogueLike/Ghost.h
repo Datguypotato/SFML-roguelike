@@ -11,8 +11,6 @@ public:
 
     void Update(float deltaTime);
 
-    void OnHit(const int damage) override;
-
 private:
     void Action();
     void BlinkToPlayer();

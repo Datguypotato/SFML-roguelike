@@ -67,9 +67,3 @@ void Goblin::Draw(sf::RenderWindow& window)
 	if(isAttacking)
 		window.draw(attackBox);
 }
-
-void Goblin::OnHit(const int damage)
-{
-	std::cout << "Goblin: ";
-	Entity::OnHit(damage);
-}

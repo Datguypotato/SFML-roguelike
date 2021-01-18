@@ -39,23 +39,6 @@ void SlimeBall::Update(float deltaTime)
 	TextureBody.setPosition(body.getPosition());
 }
 
-void SlimeBall::OnHit(const int damage)
-{
-	if (damageCooldown <= 0)
-	{
-		damageCooldown = damageCooldownMax;
-		if (health - damage <= 0)
-		{
-			health = 0;
-			isAlive = false;
-			OnDeath();
-		}
-		else
-		{
-			health -= damage;
-		}
-	}
-}
 
 void SlimeBall::OnDeath()
 {

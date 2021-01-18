@@ -9,18 +9,18 @@ Healthbar::Healthbar(sf::Vector2f size, sf::Vector2f pos, int playerHealth)
 	healthbarTex->loadFromFile("Art/UI/HealthBar.png");
 	box.setTexture(healthbarTex);
 
-	healthbarFill = sf::RectangleShape(size);
-	healthbarFill.setOrigin(healthbarFill.getSize() / 2.0f);
+	fill = sf::RectangleShape(size);
+	fill.setOrigin(fill.getSize() / 2.0f);
 	sf::Texture* healthbarFillTex = new sf::Texture();
 	healthbarFillTex->loadFromFile("Art/UI/HealthBarFill.png");
-	healthbarFill.setTexture(healthbarFillTex);
+	fill.setTexture(healthbarFillTex);
 }
 
-void Healthbar::Update(Player* player)
+void Healthbar::Update(sf::RectangleShape player, float value)
 {
-	UIComponent::CanUpdate(*player->GetBody());
-	healthbarFill.setScale((float)player->GetHealth() / maxHealth, 1);
-	healthbarFill.setPosition(box.getPosition());
+	UIComponent::CanUpdate(player);
+	fill.setScale(value / maxHealth, 1);
+	fill.setPosition(box.getPosition());
 
 	//std::cout << player->GetHealth() << std::endl;
 }
@@ -28,5 +28,5 @@ void Healthbar::Update(Player* player)
 void Healthbar::Draw(sf::RenderWindow& window)
 {
 	UIComponent::Draw(window);
-	window.draw(healthbarFill);
+	window.draw(fill);
 }

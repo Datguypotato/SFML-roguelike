@@ -22,7 +22,7 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 		if (activeWeapon != nullptr)
 			activeWeapon->OnAttack(startingPos, facingDir);
 
-		for (auto target : inRange)
+		for (Entity* target : inRange)
 		{
 			int extra = 0;
 			if (activeWeapon != nullptr)
@@ -30,7 +30,11 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 
 
 			target->OnHit(attackDamage + extra);
+
+			if (!target->GetAliveStatus())
+				recentDead++;
 		}
+
 		inRange.clear();
 		//std::cout << "Player has attacked " << timesAttacked << " times\n";
 	}
@@ -72,3 +76,11 @@ void Weapon::CheckCollision(Entity* enemy)
 	if (activeWeapon != nullptr)
 		activeWeapon->CheckCollision(enemy);
 }
+
+int Weapon::GetRecentDead()
+{
+	int temp = recentDead;
+	recentDead = 0;
+	return temp;
+}
+

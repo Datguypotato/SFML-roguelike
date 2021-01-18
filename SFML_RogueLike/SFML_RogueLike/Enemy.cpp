@@ -55,5 +55,5 @@ void Enemy::AttackPlayer()
 {
 	Collider pcoll = Collider(*playerBody);
 	if(Collider(attackBox).CheckTrigger(pcoll))
-		player->OnHit(attackDamage);
+		player->OnHit(attackDamage, this);
 }

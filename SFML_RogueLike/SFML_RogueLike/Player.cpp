@@ -3,9 +3,11 @@
 Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
 	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage, "Player"),
 		weapon(new Weapon(attackDamage, 2.0f)),
-		inventory(new Inventory(&body, weapon)),
+		armour(new Armour(weapon)),
+		inventory(new Inventory(&body, weapon, armour)),
 		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0)),
-		facingDirection(sf::Vector2f(0,0))
+		facingDirection(sf::Vector2f(0,0)),
+		lastFacingDir(sf::Vector2f(0,0))
 {
 	body.setPosition(sf::Vector2f(150, 150));
 }
@@ -23,6 +25,7 @@ void Player::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
 	weapon->Update(deltaTime);
+	armour->Update(deltaTime);
 
 	std::string playName;
 
@@ -56,9 +59,17 @@ void Player::Update(float deltaTime)
 		facingDirection += sf::Vector2f(0, -1);
 	}
 
-	if (facingDirection == sf::Vector2f(0, 0))
-		facingDirection = faceRight ? sf::Vector2f(1, 0) : sf::Vector2f(-1, 0);
 
+	if (facingDirection == sf::Vector2f(0, 0))
+		facingDirection = lastFacingDir;
+
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+	{
+		armour->SetRoll();
+	}
+
+	armour->OnRoll(this, facingDirection);
 	weapon->SetAttackBoxPos(body.getPosition() - attackBoxOffset);
 
 
@@ -66,6 +77,8 @@ void Player::Update(float deltaTime)
 	{
 		AC.PlayNoInterupt("Attack", faceRight);
 		weapon->Attack(body.getPosition(), facingDirection);
+		armour->SetArmourValue();
+		lastFacingDir = facingDirection;
 	}
 
 	if (velocity.x != 0.0f || velocity.y != 0.0f)
@@ -94,15 +107,24 @@ void Player::CollectItem(Collectable* c)
 	inventory->GetItem(c->GetItem());
 }
 
-void Player::OnHit(const int damage)
+void Player::OnHit(const int damage, Entity* damageDealer)
 {
-	if (weapon->ShieldActive())
+	if (damageCooldown <= 0)
 	{
-		Entity::OnHit(damage / 2);
-		weapon->GetActiveWeapon()->SetEmpowerAttack(true);
-		weapon->SetShield(false);
-		std::cout << "Empowered attack " << weapon->GetActiveWeapon()->GetEmpowerAttack();
+		int dmg = damage; // so i can edit the value is going to be important later
+
+		if (weapon->GetActiveWeapon() != nullptr)
+		{
+			if (weapon->GetBlock())
+			{
+				dmg /= 2;
+				weapon->GetActiveWeapon()->SetEmpowerAttack(true);
+				weapon->SetBlock(false);
+				std::cout << "Empowered attack " << weapon->GetActiveWeapon()->GetEmpowerAttack() << "\n";
+			}
+		}
+
+		dmg = armour->OnHit(damage, damageDealer, GetPosition());
+		Entity::OnHit(dmg, damageDealer);
 	}
-	else
-		Entity::OnHit(damage);
 }

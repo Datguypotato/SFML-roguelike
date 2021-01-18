@@ -1,0 +1,48 @@
+#include "ThiefRobe.h"
+
+ThiefRobe::ThiefRobe(sf::Texture* itemText, std::string name, Item* upgrade)
+	:	ArmourItem(itemText, "ThiefRobe", upgrade)
+{
+}
+
+ThiefRobe::ThiefRobe(sf::Texture* itemText, std::string name)
+	:	ArmourItem(itemText, "ThiefRobe")
+{
+}
+
+void ThiefRobe::Update(float deltaTime)
+{
+	rollTimer -= deltaTime;
+
+	if (rollTimer <= 0)
+	{
+		CanRoll = true;
+	}
+
+	if (IsRolling)
+	{
+		rollingTimer -= deltaTime;
+		if (rollingTimer <= 0)
+			IsRolling = false;
+	}
+}
+
+void ThiefRobe::OnRoll(Entity* player, sf::Vector2f dir)
+{
+	if (IsRolling)
+	{
+		player->GetBody()->move(dir * rollPower);
+	}
+}
+
+void ThiefRobe::SetRoll()
+{
+	if (CanRoll)
+	{
+		CanRoll = false;
+		rollTimer = rollTimerMax;
+		rollingTimer = rollingTimerMax;
+		IsRolling = true;
+		std::cout << "Set Roll\n";
+	}
+}

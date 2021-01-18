@@ -1,6 +1,6 @@
 #include "Inventory.h"
 
-Inventory::Inventory(sf::RectangleShape* p, Weapon* w)
+Inventory::Inventory(sf::RectangleShape* p, Weapon* w, Armour* a)
 :	isOpen(false),
 	isDrawing(false),
 	slotCount(3),
@@ -8,7 +8,8 @@ Inventory::Inventory(sf::RectangleShape* p, Weapon* w)
 	equipSlotStartingPos(sf::Vector2f(-500, 200)),
 	currItem(nullptr),
 	canInteract(true),
-	weapon(w)
+	weapon(w),
+	armour(a)
 {
 	player = p;
 	SetupSlots();
@@ -103,12 +104,22 @@ void Inventory::Update(sf::Vector2f mousePos)
 			currItem->SetPosition(mousePos);
 
 		weapon->SetWeapon(GetCurrEquipItem()[0]);
+		armour->SetArmour(GetCurrEquipItem()[1]);
 		isDrawing = false;
 	}
 }
 
 void Inventory::GetItem(Item* i)
 {
+	for (InventorySlot* slot : *equipSlots)
+	{
+		if (i->GetSlotRegion() == slot->GetSlotRegion() && slot->isSlotEmpty())
+		{
+			slot->SetItem(i);
+			return;
+		}
+	}
+
 	for (InventorySlot* slot : *slots)
 	{
 		if (slot->isSlotEmpty())
@@ -248,6 +259,9 @@ void Inventory::CheckifCanCombine()
 			}
 		}
 	}
+
+	weapon->SetWeapon(GetCurrEquipItem()[0]);
+	armour->SetArmour(GetCurrEquipItem()[1]);
 }
 
 void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)

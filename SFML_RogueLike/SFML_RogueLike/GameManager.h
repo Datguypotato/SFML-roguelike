@@ -8,6 +8,7 @@
 #include "EnemiesManager.h"
 #include "LootManager.h"
 #include "Healthbar.h"
+#include "Armourbar.h"
 #include "Button.h"
 
 #include "Player.h"
@@ -49,6 +50,7 @@ private:
 
 	Player* player;
 	Healthbar* healthbar;
+	Armourbar* armourbar;
 	Button* bagIcon;
 
 	sf::Text* testing;
