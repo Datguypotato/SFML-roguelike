@@ -29,6 +29,7 @@ private:
 	void OnClick(sf::Vector2f mousePos, InventorySlot* slot);
 	void OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int index);
 
+	void AddNewItem(Item* i);
 	void CheckifCanCombine();
 
 	sf::RectangleShape* player;
@@ -44,6 +45,7 @@ private:
 	std::vector<InventorySlot*>* slots;
 	std::vector<InventorySlot*>* equipSlots;
 	InventorySlot* trashBin;
+	std::vector<std::pair<Item*, int>> itemPairs;
 
 	bool isDrawing;
 	TimeEvent* timedEvent;

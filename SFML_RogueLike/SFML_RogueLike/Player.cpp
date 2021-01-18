@@ -111,7 +111,7 @@ void Player::OnHit(const int damage, Entity* damageDealer)
 {
 	if (damageCooldown <= 0)
 	{
-		int dmg = damage; // so i can edit the value is going to be important later
+		int dmg = damage; // so i can edit the value 
 
 		if (weapon->GetActiveWeapon() != nullptr)
 		{
