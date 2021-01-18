@@ -16,18 +16,18 @@ public:
 	ArmourBuilder();
 
 	Collectable* BuildRedShirt(sf::Vector2f pos);
-	Item* BuildRedShirtUpgrade();
-
 	Collectable* BuildThiefRobe(sf::Vector2f pos);
-	Item* BuildUpgradeThiefRobe();
-
 	Collectable* BuildKevlarVest(sf::Vector2f pos);
-	Item* BuildUpgradeKevelarVest();
+
 
 
 	std::vector<Collectable*> GetLoot() { return loots; }
 
 private:
+	Item* BuildRedShirtUpgrade();
+	Item* BuildUpgradeThiefRobe();
+	Item* BuildUpgradeKevelarVest();
+
 	sf::Texture* LoadTexture(std::string path);
 
 	std::vector<Collectable*> loots;

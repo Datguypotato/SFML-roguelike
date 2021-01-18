@@ -384,7 +384,7 @@
       <Filter>Header Files\Inventory\Items\Armour</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Header Files\Inventory</Filter>
+      <Filter>Header Files\Inventory\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

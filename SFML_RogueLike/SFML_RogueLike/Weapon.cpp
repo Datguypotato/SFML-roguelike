@@ -3,9 +3,12 @@
 Weapon::Weapon(int ad, float at)
 	:	attackDamage(ad),
 		attackTimer(at),
+		baseAttackDamage(ad),
+		baseAttackTimerMax(at),
 		attackTimerMax(at),
 		timesAttacked(0),
-		activeWeapon(nullptr)
+		activeWeapon(nullptr),
+		recentDead(0)
 {
 	attackbox.setSize(sf::Vector2f(75, 75));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
@@ -50,7 +53,12 @@ void Weapon::Update(float deltaTime)
 
 void Weapon::SetWeapon(Item* item)
 {
+	if (item == nullptr)
+		return;
+
 	activeWeapon = static_cast<WeaponItem*>(item);
+	attackDamage = baseAttackDamage + activeWeapon->GetAttackDamage();
+	attackTimerMax = baseAttackTimerMax - activeWeapon->GetAttackTimerMax();
 
 	//activeWeapon = (WeaponItem)items[0];
 }
@@ -71,10 +79,15 @@ Collider Weapon::GetAttackBox()
 	return Collider(attackbox);
 }
 
-void Weapon::CheckCollision(Entity* enemy)
+void Weapon::CheckCollision(std::vector<Entity*> enemies)
 {
 	if (activeWeapon != nullptr)
-		activeWeapon->CheckCollision(enemy);
+	{
+		for(Entity* e : enemies)
+			activeWeapon->CheckCollision(e);
+
+	}
+		
 }
 
 int Weapon::GetRecentDead()

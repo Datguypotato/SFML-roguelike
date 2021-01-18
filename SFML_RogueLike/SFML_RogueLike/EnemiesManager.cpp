@@ -202,6 +202,18 @@ SlimeBoss* EnemiesManager::BuildSlimeBoss(sf::Vector2f spawnPos)
 	return nullptr;
 }
 
+std::vector<Entity*> EnemiesManager::GetAliveEnemies()
+{
+	std::vector<Entity*> alive = std::vector<Entity*>();
+
+	for (Entity* e : enemies)
+	{
+		if (e->GetAliveStatus())
+			alive.push_back(e);
+	}
+	return alive;
+}
+
 std::vector<Animation*> EnemiesManager::LoadSlimeAnimation()
 {
 	std::vector<Animation*> slimeAnimations;

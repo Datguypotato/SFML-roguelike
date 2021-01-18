@@ -20,6 +20,8 @@ public:
 	bool GetBlock() { return isBlocking; }
 
 	std::string GetItemStats() override;
+	int GetAttackDamage() { return attackDamage; }
+	float GetAttackTimerMax() { return minusAttackTimerMax; }
 
 	virtual void DrawProjectiles(sf::RenderWindow& window) {};
 	void Draw(sf::RenderWindow& window);
@@ -27,4 +29,7 @@ public:
 protected:
 	bool isBlocking;
 	bool isEmpowered;
+
+	int attackDamage = 0;
+	float minusAttackTimerMax = 0;
 };

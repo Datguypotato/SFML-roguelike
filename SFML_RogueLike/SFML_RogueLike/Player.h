@@ -20,6 +20,7 @@ public:
 	void Draw(sf::RenderWindow& window);
 	void CollectItem(Collectable* c);
 
+	void CheckCollision(std::vector<Entity*> enemies);
 	void OnHit(const int damage, Entity* damageDealer) override;
 
 	Weapon* GetWeapon() { return weapon; }

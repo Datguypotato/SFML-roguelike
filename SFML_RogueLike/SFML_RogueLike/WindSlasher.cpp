@@ -22,7 +22,7 @@ void WindSlasher::Update(float deltaTime)
 void WindSlasher::OnHit(Entity* e, SlimeBall* projectile)
 {
 	sf::Vector2f originalSize = sf::Vector2f(50, 50);
-	e->OnHit(damage *= projectile->GetSize().x / originalSize.x);
+	e->OnHit(attackDamage *= projectile->GetSize().x / originalSize.x);
 	projectile->SetAliveStatus(false);
 }
 
@@ -30,5 +30,6 @@ std::string WindSlasher::GetItemStats()
 {
 	std::string temp = FanSword::GetItemStats();
 	temp += "*Slashing increasing size over time\n";
+	temp += "*Dealing more damage the bigger it grows";
 	return temp;
 }

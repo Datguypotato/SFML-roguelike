@@ -17,14 +17,13 @@ public:
 	void Attack(sf::Vector2f startingPos, sf::Vector2f facingDir);
 	void Update(float deltaTime);
 	void SetWeapon(Item* item);
-	WeaponItem* GetWeapon() { return activeWeapon; };
 	void Draw(sf::RenderWindow& window);
 
 	void SetAttackBoxPos(sf::Vector2f newPos) { attackbox.setPosition(newPos); }
 	Collider GetAttackBox();
 	WeaponItem* GetActiveWeapon() { return activeWeapon; }
 
-	void CheckCollision(Entity* enemy);
+	void CheckCollision(std::vector<Entity*> enemies);
 
 	bool CanAttack() { return (attackTimer <= 0); }
 	void SetBlock(bool b) { activeWeapon->SetBlock(b); }
@@ -37,8 +36,10 @@ private:
 	int recentDead;
 	sf::RectangleShape attackbox;
 
+	int baseAttackDamage;
 	int attackDamage;
 	float attackTimer;
+	float baseAttackTimerMax;
 	float attackTimerMax;
 
 	WeaponItem* activeWeapon;

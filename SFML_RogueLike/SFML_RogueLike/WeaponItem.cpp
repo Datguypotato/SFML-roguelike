@@ -16,7 +16,9 @@ WeaponItem::WeaponItem(sf::Texture* itemText, std::string name, Item* upgrade)
 
 std::string WeaponItem::GetItemStats()
 {
-	return "Type: Weapon\n";
+	return	"Type: Weapon\n"
+			"Attack Damage: " + std::to_string(attackDamage) + "\n"
+			"Attack Speed: " + std::to_string(2.0f - minusAttackTimerMax) + "\n";
 }
 
 void WeaponItem::Draw(sf::RenderWindow& window)

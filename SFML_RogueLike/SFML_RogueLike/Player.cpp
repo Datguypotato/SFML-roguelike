@@ -107,6 +107,12 @@ void Player::CollectItem(Collectable* c)
 	inventory->GetItem(c->GetItem());
 }
 
+void Player::CheckCollision(std::vector<Entity*> enemies)
+{
+	weapon->CheckCollision(enemies);
+	armour->CheckCollision(enemies);
+}
+
 void Player::OnHit(const int damage, Entity* damageDealer)
 {
 	if (damageCooldown <= 0)
@@ -115,6 +121,7 @@ void Player::OnHit(const int damage, Entity* damageDealer)
 
 		if (weapon->GetActiveWeapon() != nullptr)
 		{
+			//TODO: Put this in weapon class
 			if (weapon->GetBlock())
 			{
 				dmg /= 2;

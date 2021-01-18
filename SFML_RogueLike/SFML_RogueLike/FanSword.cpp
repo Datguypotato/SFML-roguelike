@@ -3,13 +3,15 @@
 FanSword::FanSword(sf::Texture* itemText, std::string name)
 	:	WeaponItem(itemText, name)
 {
-	damage = 2;
+	attackDamage = 2;
+	minusAttackTimerMax = 0.5f;
 }
 
 FanSword::FanSword(sf::Texture* itemText, std::string name, Item* upgrade)
 	:	 WeaponItem(itemText, name, upgrade)
 {
-	damage = 2;
+	attackDamage = 2;
+	minusAttackTimerMax = 0.3f;
 }
 
 void FanSword::Update(float deltaTime)
@@ -35,7 +37,7 @@ void FanSword::CheckCollision(Entity* entity)
 // projectile damage dealer
 void FanSword::OnHit(Entity* e, SlimeBall* projectile)
 {
-	e->OnHit(damage);
+	e->OnHit(attackDamage / 2);
 	projectile->SetAliveStatus(false);
 }
 
@@ -56,7 +58,7 @@ void FanSword::OnAttack(sf::Vector2f startingPos, sf::Vector2f direction)
 std::string FanSword::GetItemStats()
 {
 	std::string temp = Item::GetItemStats();
-	temp += "WindSlash damage: " + std::to_string(damage) + "\n";
+	temp += "WindSlash damage: " + std::to_string(attackDamage / 2) + "\n";
 	return temp;
 }
 
@@ -67,7 +69,7 @@ SlimeBall* FanSword::BuildWindSlash(sf::Vector2f dir, sf::Vector2f startingPos)
 	texture->loadFromFile("Art/WindSlash.png");
 	temp.push_back(new Animation(texture, 1, 1, "Default"));
 
-	SlimeBall* ball = new SlimeBall(temp, dir, damage);
+	SlimeBall* ball = new SlimeBall(temp, dir, attackDamage / 2);
 	ball->SetPosition(startingPos);
 	projectiles.push_back(ball);
 

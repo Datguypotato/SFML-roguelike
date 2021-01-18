@@ -6,8 +6,8 @@ GameManager::GameManager()
 {
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
-	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this),  player);
 	Player* temp = BuildPlayer();
+	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this), temp);
 	em = new EnemiesManager(temp); 
 	player = temp;
 	healthbar = new Healthbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
@@ -36,11 +36,13 @@ void GameManager::Start()
 	for (int i = 0; i < 3; i++)
 	{
 		lm->GetWeaponb()->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, -600));
-		lm->GetArmourb()->BuildKevlarVest(player->GetPosition() + sf::Vector2f(i * 100 + 100, -400));
+		lm->GetWeaponb()->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, -400));
 		lm->GetWeaponb()->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -200));
+
+		lm->GetArmourb()->BuildKevlarVest(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -200));
+		lm->GetArmourb()->BuildRedShirt(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -400));
+		lm->GetArmourb()->BuildThiefRobe(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -600));
 	}
-	//sf::Font* font = new sf::Font();
-	//font->loadFromFile("Fonts/04B_30.ttf");;
 }
 
 void GameManager::Update(float deltaTime)
@@ -51,7 +53,6 @@ void GameManager::Update(float deltaTime)
 	if (player->GetArmour()->GetActiveArmour() != nullptr)
 	{
 		armourbar->Update(*player->GetBody(), player->GetArmour()->GetActiveArmour()->GetShield());
-		//std::cout << "Shield value: " << std::to_string(player->GetArmour()->GetActiveArmour()->GetShield()) << std::endl;
 	}
 		
 	bagIcon->CanUpdate(*player->GetBody());
@@ -72,7 +73,7 @@ void GameManager::Update(float deltaTime)
 
 void GameManager::CheckCollision()
 {
-	std::vector<Entity*> enemies = em->GetEnemies();
+	std::vector<Entity*> enemies = em->GetAliveEnemies();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && player->GetWeapon()->CanAttack())
 	{
@@ -87,30 +88,15 @@ void GameManager::CheckCollision()
 					player->GetWeapon()->GetInRange()->push_back(enemy);
 				}
 
-				// weapon projectile
-				player->GetWeapon()->CheckCollision(enemy);
 			}
 		}
 
-		Collider boss = em->GetBoss()->GetCollider();
-		if (player->GetWeapon()->GetAttackBox().CheckTrigger(boss))
-			player->GetWeapon()->GetInRange()->push_back(em->GetBoss());
 	}
 
-	player->GetArmour()->CheckCollision(enemies);
+	player->CheckCollision(enemies);
 
 	Collider pcoll = player->GetCollider();
 	lm->CheckTrigger(player);
-
-	if(em->GetBoss() != nullptr)
-		player->GetWeapon()->CheckCollision(em->GetBoss());
-
-	for (Entity* enemy : enemies)
-	{
-		if(enemy->GetAliveStatus())
-			player->GetWeapon()->CheckCollision(enemy);
-	}
-
 
 	em->CheckCollision(player);
 
@@ -126,7 +112,7 @@ void GameManager::Draw()
 	lm->Draw(*window);
 	player->Draw(*window);
 	em->Draw(*window);
-	//healthbar->Draw(*window);
+	healthbar->Draw(*window);
 	armourbar->Draw(*window);
 	bagIcon->Draw(*window);
 

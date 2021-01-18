@@ -4,6 +4,8 @@ Knife::Knife(sf::Texture* itemText, std::string name)
 	:	WeaponItem(itemText, name),
 		attacks(0)
 {
+	attackDamage = 0;
+	minusAttackTimerMax = 0.5f;
 }
 
 Knife::Knife(sf::Texture* itemText, std::string name, Item* upgrade)
@@ -26,7 +28,7 @@ int Knife::OnHit(Entity* entity)
 std::string Knife::GetItemStats()
 {
 	std::string temp = Item::GetItemStats();
-	temp += "Attack Damage: " + std::to_string(extraDamage) + "\n";
+	temp += "*Every third hit will deal " + std::to_string(extraDamage) + "extra damage\n";
 
 	return temp;
 }

@@ -3,6 +3,8 @@
 BloodKnife::BloodKnife(sf::Texture* itemText, std::string name)
 	:	Knife(itemText, name)
 {
+	attackDamage = 1;
+	minusAttackTimerMax = 1.0;
 }
 
 int BloodKnife::OnHit(Entity* entity)

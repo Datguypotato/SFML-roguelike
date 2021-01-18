@@ -23,6 +23,4 @@ protected:
 	SlimeBall* BuildWindSlash(sf::Vector2f dir, sf::Vector2f startingPos);
 
 	std::vector<SlimeBall*> projectiles;
-
-	int damage;
 };
