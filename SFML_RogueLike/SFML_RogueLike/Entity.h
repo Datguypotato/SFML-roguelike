@@ -30,6 +30,9 @@ public:
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	void SetPosition(sf::Vector2f pos) { body.setPosition(pos); }
 
+	sf::Vector2f GetBodySize() { return body.getSize(); }
+	void SetBodySize(sf::Vector2f size) { return body.setSize(size); }
+
 	sf::Sound GetSound() { return sound; }
 	EffectHandler* GetEffectHandler() { return effecthandler; }
 	AnimatorController GetAC() { return AC; }

@@ -1,14 +1,15 @@
 #include "Level.h"
 
-Level::Level(std::map<int, sf::Texture*>* tileSet, fs::path levelPath)
+Level::Level(std::vector<sf::Texture*> tileSet, fs::path levelPath)
 	:	doneLoading(false),
 		startLoading(false)
 {
 	this->tileSet = tileSet;
 	this->levelPath = levelPath;
+	textSigns = CreateTextSigns();
 }
 
-Level::Level(std::map<int, sf::Texture*>* tileSet, fs::path levelPath, std::function<void()> Changelevel)
+Level::Level(std::vector<sf::Texture*> tileSet, fs::path levelPath, std::function<void()> Changelevel)
 	:	Level::Level(tileSet, levelPath)
 {
 	this->Changelevel = Changelevel;
@@ -18,43 +19,54 @@ Level::~Level()
 {
 }
 
-void Level::Load(Player* p, EnemiesManager* em)
+void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 {
 	tson::Tileson t;
 	map = t.parse(levelPath);
 	doneLoading = false;
-
+	// TODO: Make sign working or just find a different solution
 	if (map->getStatus() == tson::ParseStatus::OK)
 	{
+		int multiplier = 4;
 		for (auto& layer : map->getLayers())
 		{
 
 			if (layer.getType() == tson::LayerType::TileLayer)
 			{
 				// [id, obj]
-				for (const auto& tileObject : layer.getTileObjects())
+				for (const auto& tileObject : layer.getTileData())
 				{
-					tson::TileObject obj = tileObject.second;
-					int blockID = (int)obj.getTile()->get<int>("Order");
+					tson::Tile obj = *tileObject.second;
+					int blockID = obj.getId() - 1;
 
 					if (blockID == 2)
 					{
 						std::cout << "ä";
 					}
 
-					sf::Vector2f Pos = sf::Vector2f(obj.getPosition().x, obj.getPosition().y);
-					sf::Vector2f size = sf::Vector2f(obj.getTile()->getTileSize().x, obj.getTile()->getTileSize().y);
+					sf::Vector2f pos = sf::Vector2f(obj.getPosition(tileObject.first).x * multiplier, obj.getPosition(tileObject.first).y * multiplier);//offset since the sprite are too small
+					sf::Vector2f size = sf::Vector2f(32 * multiplier, 32 * multiplier);
+					int blockType = obj.get<int>("BlockType");
+					std::string interactableText;
 
-					switch (blockID)
+					switch (blockType)
 					{
-					case(0):
-						floors.push_back(Ground(tileSet->operator[](blockID), size, Pos));
+					case 0:
+						floors.push_back(Ground(tileSet[blockID], size, pos));
 						break;
-					case(1):
-						walls.push_back(Wall(tileSet->operator[](blockID), size, Pos));
+					case 1:
+						walls.push_back(Wall(tileSet[blockID], size, pos));
 						break;
-					case(2):
-						doors.push_back(LevelSwitcher(tileSet->operator[](blockID), size, Pos));
+					case 2:
+						doors.push_back(LevelSwitcher(tileSet[blockID], size, pos));
+						break;
+					case 3:
+						interactableText = textSigns[0];
+						textSigns.erase(textSigns.begin());
+						interactables.push_back(new Interactable(tileSet[blockID], size, pos, interactableText));
+						break;
+					case 4:
+						invisibleWalls.push_back(Wall(nullptr, size, pos));
 						break;
 					default:
 						break;
@@ -68,11 +80,17 @@ void Level::Load(Player* p, EnemiesManager* em)
 				{
 					if (it->isPoint())
 					{
-						sf::Vector2f spawnPos = sf::Vector2f(it->getPosition().x, it->getPosition().y);
+						std::string name = it->getName();
+						sf::Vector2f tempPos = sf::Vector2f(it->getPosition().x * multiplier, it->getPosition().y * multiplier); //offset since the sprite are too small
+						sf::Vector2f spawnPos = tempPos;
 
 						if (it->getName() == "PlayerSpawn")
 						{
 							p->SetPosition(spawnPos);
+						}
+						else if (it->getName() == "SpawnWeapon")
+						{
+							lm->GetWeaponb()->BuildWeapon(it->get<int>("id"), spawnPos);
 						}
 						else
 						{
@@ -130,7 +148,26 @@ void Level::CheckTrigger(Collider playerCollider, EnemiesManager em)
 	{
 		for (auto door : doors)
 			door.GetCollider().CheckCollision(playerCollider, 1);
+
+		for (auto iWalls : invisibleWalls)
+			iWalls.GetCollider().CheckCollision(playerCollider, 1);
 	}
+
+	for (auto interact : interactables)
+	{
+		interact->CheckTrigger(playerCollider);
+	}
+}
+
+std::vector<std::string> Level::CreateTextSigns()
+{
+	std::vector<std::string> texts = std::vector<std::string>();
+
+	texts.push_back("Items can be picked by walking over it\nItems give special bonuses");
+	texts.push_back("Press z to attack \n(remember that you have a\n small cooldown when attacking)");
+	texts.push_back("You can Move around\n with you arrows keys");
+
+	return texts;
 }
 
 
@@ -144,4 +181,10 @@ void Level::Draw(sf::RenderWindow& window)
 
 	for (auto door : doors)
 		door.Draw(window);
+}
+
+void Level::LateDraw(sf::RenderWindow& window)
+{
+	for (auto interact : interactables)
+		interact->Draw(window);
 }

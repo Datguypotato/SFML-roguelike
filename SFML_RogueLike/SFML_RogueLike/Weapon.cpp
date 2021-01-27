@@ -48,17 +48,25 @@ void Weapon::Update(float deltaTime)
 	attackTimer -= deltaTime;
 
 	if (activeWeapon != nullptr)
+	{
 		activeWeapon->Update(deltaTime);
+		weaponProjectiles = activeWeapon->GetProjectiles();
+	}
+		
 }
 
 void Weapon::SetWeapon(Item* item)
 {
-	if (item == nullptr)
-		return;
+	if (WeaponItem* w = dynamic_cast<WeaponItem*>(item))
+	{
+		activeWeapon = static_cast<WeaponItem*>(item);
+		attackDamage = baseAttackDamage + activeWeapon->GetAttackDamage();
+		attackTimerMax = baseAttackTimerMax - activeWeapon->GetAttackTimerMax();
+	}
+	else
+		activeWeapon = nullptr;
 
-	activeWeapon = static_cast<WeaponItem*>(item);
-	attackDamage = baseAttackDamage + activeWeapon->GetAttackDamage();
-	attackTimerMax = baseAttackTimerMax - activeWeapon->GetAttackTimerMax();
+
 
 	//activeWeapon = (WeaponItem)items[0];
 }
@@ -68,10 +76,8 @@ void Weapon::Draw(sf::RenderWindow& window)
 	if (CanAttack())
 		window.draw(attackbox);
 
-	if (activeWeapon != nullptr)
-	{
-		activeWeapon->DrawProjectiles(window);
-	}
+	for (Entity* projectiles : weaponProjectiles)
+		projectiles->Draw(window);
 }
 
 Collider Weapon::GetAttackBox()
@@ -85,7 +91,6 @@ void Weapon::CheckCollision(std::vector<Entity*> enemies)
 	{
 		for(Entity* e : enemies)
 			activeWeapon->CheckCollision(e);
-
 	}
 		
 }

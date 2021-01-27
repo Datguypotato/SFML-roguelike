@@ -14,9 +14,20 @@ FanSword::FanSword(sf::Texture* itemText, std::string name, Item* upgrade)
 	minusAttackTimerMax = 0.3f;
 }
 
+FanSword::~FanSword()
+{
+	for (Entity* projectile : projectiles)
+	{
+		delete projectile;
+		projectile = nullptr;
+	}
+
+	projectiles.clear();
+}
+
 void FanSword::Update(float deltaTime)
 {
-	for (SlimeBall* projectile : projectiles)
+	for (Entity* projectile : projectiles)
 	{
 		projectile->Update(deltaTime);
 	}
@@ -25,7 +36,7 @@ void FanSword::Update(float deltaTime)
 void FanSword::CheckCollision(Entity* entity)
 {
 	Collider coll = entity->GetCollider();
-	for (SlimeBall* projectile : projectiles)
+	for (Entity* projectile : projectiles)
 	{
 		if (projectile->GetCollider().CheckCollision(coll, 0.0f) && projectile->GetAliveStatus())
 		{
@@ -35,24 +46,20 @@ void FanSword::CheckCollision(Entity* entity)
 }
 
 // projectile damage dealer
-void FanSword::OnHit(Entity* e, SlimeBall* projectile)
+void FanSword::OnHit(Entity* e, Entity* projectile)
 {
 	e->OnHit(attackDamage / 2);
 	projectile->SetAliveStatus(false);
 }
 
-void FanSword::DrawProjectiles(sf::RenderWindow& window)
-{
-	for (SlimeBall* projectile : projectiles)
-	{
-		projectile->Draw(window);
-	}
-}
-
-
 void FanSword::OnAttack(sf::Vector2f startingPos, sf::Vector2f direction)
 {
 	projectiles.push_back(BuildWindSlash(direction, startingPos + (direction * 10.0f)));
+}
+
+std::vector<Entity*> FanSword::GetProjectiles()
+{
+	return projectiles;
 }
 
 std::string FanSword::GetItemStats()

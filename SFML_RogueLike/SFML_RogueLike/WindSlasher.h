@@ -9,7 +9,7 @@ public:
 	WindSlasher* Clone() override { return new WindSlasher(*this); };
 
 	void Update(float deltaTime) override;
-	void OnHit(Entity* e, SlimeBall* projectile) override;
+	void OnHit(Entity* e, Entity* projectile) override;
 
 	std::string GetItemStats() override;
 

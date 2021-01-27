@@ -6,6 +6,36 @@ ArmourBuilder::ArmourBuilder()
 
 }
 
+/// <summary>
+/// 0 = KevlarVest
+/// 1 = RedShirt
+/// 2 = ThiefRobe
+/// </summary>
+/// <param name="id"></param>
+/// <param name="position"></param>
+/// <returns></returns>
+Collectable* ArmourBuilder::BuildArmour(int id, sf::Vector2f position)
+{
+	switch (id)
+	{
+	case 0:
+		return BuildKevlarVest(position);
+		break;
+	case 1:
+		return BuildRedShirt(position);
+		break;
+	case 2:
+		return BuildThiefRobe(position);
+		break;
+	default:
+		std::cout << "Error armour ID: " << id << " not found\n";
+		return nullptr;
+		break;
+	}
+
+	return nullptr;
+}
+
 Collectable* ArmourBuilder::BuildRedShirt(sf::Vector2f pos)
 {
 	sf::Texture* texture = LoadTexture("RedShirt");

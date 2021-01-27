@@ -43,6 +43,7 @@ private:
 	float attackTimerMax;
 
 	WeaponItem* activeWeapon;
+	std::vector<Entity*> weaponProjectiles;
 
 	int timesAttacked;
 };

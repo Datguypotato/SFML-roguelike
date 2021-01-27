@@ -229,7 +229,10 @@
       <Filter>Source Files\Inventory\Items\Armour</Filter>
     </ClCompile>
     <ClCompile Include="PlatedArmour.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Inventory\Items\Armour</Filter>
+    </ClCompile>
+    <ClCompile Include="Interactable.cpp">
+      <Filter>Source Files\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Interactable.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

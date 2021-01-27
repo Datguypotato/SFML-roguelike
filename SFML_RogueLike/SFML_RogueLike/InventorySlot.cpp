@@ -88,9 +88,12 @@ void InventorySlot::Deleteitem()
 
 void InventorySlot::SetItem(Item* i)
 {
-	item = i;
-	isEmpty = false;
-	itemDescriptionText->setString(item->GetItemStats());
+	if (i != nullptr)
+	{
+		item = i;
+		isEmpty = false;
+		itemDescriptionText->setString(item->GetItemStats());
+	}
 }
 
 Item* InventorySlot::GrabItem()

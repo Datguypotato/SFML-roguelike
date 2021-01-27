@@ -6,6 +6,8 @@ class WeaponItem : public Item
 public:
 	WeaponItem(sf::Texture* itemText, std::string name);
 	WeaponItem(sf::Texture* itemText, std::string name, Item* upgrade);
+	virtual ~WeaponItem() {}
+
 	virtual WeaponItem* Clone() { return new WeaponItem(*this); }
 
 	virtual void Update(float deltaTime) {}
@@ -23,7 +25,7 @@ public:
 	int GetAttackDamage() { return attackDamage; }
 	float GetAttackTimerMax() { return minusAttackTimerMax; }
 
-	virtual void DrawProjectiles(sf::RenderWindow& window) {};
+	virtual std::vector<Entity*> GetProjectiles() { return std::vector<Entity*>(); }
 	void Draw(sf::RenderWindow& window);
 
 protected:

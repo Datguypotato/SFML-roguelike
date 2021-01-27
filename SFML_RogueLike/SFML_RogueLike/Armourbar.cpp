@@ -11,7 +11,12 @@ Armourbar::Armourbar(sf::Vector2f size, sf::Vector2f pos, int playerHealth)
 void Armourbar::Update(sf::RectangleShape player, float value)
 {
 	Healthbar::Update(player, value);
-	fill.setPosition(player.getPosition() - position);
+	Update(player.getPosition(), value);
+}
+
+void Armourbar::Update(sf::Vector2f player, float value)
+{
+	fill.setPosition(player - position);
 }
 
 void Armourbar::Draw(sf::RenderWindow& window)

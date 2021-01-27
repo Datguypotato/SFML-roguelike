@@ -5,6 +5,35 @@ WeaponBuilder::WeaponBuilder()
 {
 }
 
+/// <summary>
+/// 0 = Knife
+/// 1 = FanSword
+/// 2 = Shield
+/// </summary>
+/// <param name="id"></param>
+/// <param name="position"></param>
+/// <returns></returns>
+void WeaponBuilder::BuildWeapon(int id, sf::Vector2f position)
+{
+	Collectable* c;
+
+	switch (id)
+	{
+	case 0:
+		BuildKnife(position);
+		break;
+	case 1:
+		BuildFanSword(position);
+		break;
+	case 2:
+		BuildShield(position);
+		break;
+	default:
+		std::cout << "Error Weapon ID: " << id << " not found\n";
+		break;
+	}
+}
+
 Collectable* WeaponBuilder::BuildKnife(sf::Vector2f pos)
 {
 	sf::Texture* texture = LoadTexture("Knife");

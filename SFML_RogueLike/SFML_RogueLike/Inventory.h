@@ -45,7 +45,7 @@ private:
 	std::vector<InventorySlot*>* slots;
 	std::vector<InventorySlot*>* equipSlots;
 	InventorySlot* trashBin;
-	std::vector<std::pair<Item*, int>> itemPairs;
+	std::vector<std::pair<Item*, int>*> itemPairs;
 
 	bool isDrawing;
 	TimeEvent* timedEvent;
