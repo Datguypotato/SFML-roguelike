@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <cmath>
+#include <filesystem>
 
 #include "Level.h"
 #include "EnemiesManager.h"
@@ -12,8 +13,8 @@ public:
 	LevelManager(std::function<void()> Changelevel, Player* p);
 	~LevelManager();
 
-	void NextLevel(EnemiesManager* em);
-	void SwitchLevel(int index, EnemiesManager* em);
+	void NextLevel(EnemiesManager* em, LootManager* lm);
+	void SwitchLevel(int index, EnemiesManager* em, LootManager* lm);
 	void CenterRectangleShape(sf::Vector2f newPos);
 
 	Level* GetCurrentLevel();
@@ -23,9 +24,7 @@ private:
 	int activeLevelIndex;
 	Player* p;
 
-	std::map<int, sf::Texture*>* CreateTiles();
-	//sf::RectangleShape transitionScreen;
-	//sf::Vector2f transitionScale;
+	std::vector<sf::Texture*> CreateTiles();
 
 	float Lerp(float a, float b, float t);
 	float lerpTime;

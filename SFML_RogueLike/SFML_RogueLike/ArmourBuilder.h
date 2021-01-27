@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 #include "Collectable.h"
 #include "RedShirt.h"
@@ -15,11 +16,11 @@ class ArmourBuilder
 public:
 	ArmourBuilder();
 
+	Collectable* BuildArmour(int ID, sf::Vector2f position);
+
 	Collectable* BuildRedShirt(sf::Vector2f pos);
 	Collectable* BuildThiefRobe(sf::Vector2f pos);
 	Collectable* BuildKevlarVest(sf::Vector2f pos);
-
-
 
 	std::vector<Collectable*> GetLoot() { return loots; }
 

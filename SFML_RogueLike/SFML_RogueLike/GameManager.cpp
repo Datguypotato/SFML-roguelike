@@ -31,17 +31,17 @@ void GameManager::ResizeView()
 
 void GameManager::Start()
 {
-	levelmanager->GetCurrentLevel()->Load(player, em);
+	levelmanager->GetCurrentLevel()->Load(player, em, lm);
 
 	for (int i = 0; i < 3; i++)
 	{
-		lm->GetWeaponb()->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, -600));
-		lm->GetWeaponb()->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, -400));
-		lm->GetWeaponb()->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -200));
+		//lm->GetWeaponb()->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, -600));
+		//lm->GetWeaponb()->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, -400));
+		//lm->GetWeaponb()->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -200));
 
-		lm->GetArmourb()->BuildKevlarVest(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -200));
-		lm->GetArmourb()->BuildRedShirt(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -400));
-		lm->GetArmourb()->BuildThiefRobe(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -600));
+		//lm->GetArmourb()->BuildKevlarVest(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -200));
+		//lm->GetArmourb()->BuildRedShirt(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -400));
+		//lm->GetArmourb()->BuildThiefRobe(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -600));
 	}
 }
 
@@ -51,10 +51,9 @@ void GameManager::Update(float deltaTime)
 	player->Update(deltaTime);
 	healthbar->Update(*player->GetBody(), player->GetHealth());
 	if (player->GetArmour()->GetActiveArmour() != nullptr)
-	{
 		armourbar->Update(*player->GetBody(), player->GetArmour()->GetActiveArmour()->GetShield());
-	}
-		
+	else
+		armourbar->Update(sf::Vector2f(99999, 9999), 0);
 	bagIcon->CanUpdate(*player->GetBody());
 
 	sf::Vector2f mousepos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -113,6 +112,9 @@ void GameManager::Draw()
 	player->Draw(*window);
 	em->Draw(*window);
 	healthbar->Draw(*window);
+	levelmanager->GetCurrentLevel()->LateDraw(*window);
+
+	//if(player->GetArmour()->GetActiveArmour() != nullptr && player->GetArmour()->GetActiveArmour()->GetName() == "Plated Armour" || player->GetArmour()->GetActiveArmour()->GetName() == "KevlarVest")
 	armourbar->Draw(*window);
 	bagIcon->Draw(*window);
 
@@ -146,7 +148,7 @@ Player* GameManager::BuildPlayer()
 
 void GameManager::NextLevel()
 {
-	levelmanager->NextLevel(em);
+	levelmanager->NextLevel(em, lm);
 	std::cout << "Player in door\n";
 }
 

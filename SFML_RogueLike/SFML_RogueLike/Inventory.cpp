@@ -10,7 +10,7 @@ Inventory::Inventory(sf::RectangleShape* p, Weapon* w, Armour* a)
 	canInteract(true),
 	weapon(w),
 	armour(a),
-	itemPairs(std::vector<std::pair<Item*, int>>())
+	itemPairs(std::vector<std::pair<Item*, int>*>())
 {
 	player = p;
 	SetupSlots();
@@ -104,8 +104,8 @@ void Inventory::Update(sf::Vector2f mousePos)
 		if (currItem != nullptr)
 			currItem->SetPosition(mousePos);
 
-		weapon->SetWeapon(GetCurrEquipItem()[0]);
-		armour->SetArmour(GetCurrEquipItem()[1]);
+		//weapon->SetWeapon(GetCurrEquipItem()[0]);
+		//armour->SetArmour(GetCurrEquipItem()[1]);
 		isDrawing = false;
 	}
 }
@@ -130,12 +130,17 @@ void Inventory::GetItem(Item* i)
 			if (slot->isSlotEmpty())
 			{
 				slot->SetItem(i);
+				itemSet = true;
 				break;
 			}
 		}
 	}
-	AddNewItem(i);
-	CheckifCanCombine();
+
+	if (itemSet)
+	{
+		AddNewItem(i);
+		CheckifCanCombine();
+	}
 }
 
 bool Inventory::isFull()
@@ -196,45 +201,59 @@ void Inventory::OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int
 	}
 }
 
+void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
+{
+	if (slot->CursorIsInBox(mousePos))
+	{
+		if (!slot->isSlotEmpty() && currItem == nullptr)
+		{
+			currItem = slot->GrabItem();
+		}
+		else if (slot->isSlotEmpty() && currItem != nullptr)
+		{
+			slot->SetItem(currItem->Clone());
+			delete currItem;
+			currItem = nullptr;
+		}
+		else if (!slot->isSlotEmpty() && currItem != nullptr)
+		{
+			Item* temp = currItem->Clone();
+			delete currItem;
+			currItem = slot->GetItem();
+			slot->SetItem(temp);
+		}
+
+		weapon->SetWeapon(GetCurrEquipItem()[0]);
+		armour->SetArmour(GetCurrEquipItem()[1]);
+	}
+}
+
 void Inventory::AddNewItem(Item* i)
 {
 	if(itemPairs.size() == 0)
-		itemPairs.push_back(std::pair<Item*, int>(i, 0));
+		itemPairs.push_back(new std::pair<Item*, int>(i, 0));
 
 	bool found = false;
-	for (std::pair<Item*, int>& pair : itemPairs)
+	for (std::pair<Item*, int>* pair : itemPairs)
 	{
-		if (pair.first->GetName() == i->GetName())
+		if (pair->first->GetName() == i->GetName())
 		{
-			pair.second++;
+			pair->second++;
 			found = true;
 		}
 	}
 
 	if (!found)
-		itemPairs.push_back(std::make_pair(i, 1));
+		itemPairs.push_back(new std::pair<Item*, int>(i, 1));
 
 }
 
 void Inventory::CheckifCanCombine()
 {
-	// put all items in one single vector
-	std::vector<InventorySlot*> currentItems = std::vector<InventorySlot*>();
-	for (InventorySlot* slot : *equipSlots)
-	{
-		if(!slot->isSlotEmpty())
-			currentItems.push_back(slot);
-	}
-	for (InventorySlot* slot : *slots)
-	{
-		if (!slot->isSlotEmpty())
-			currentItems.push_back(slot);
-	}
-
 	bool canCombine = false;
-	for (std::pair<Item*, int>& pair : itemPairs)
+	for (std::pair<Item*, int>* pair : itemPairs)
 	{
-		if (pair.second >= 3)
+		if (pair->second >= 3)
 		{
 			canCombine = true;
 			break;
@@ -245,39 +264,49 @@ void Inventory::CheckifCanCombine()
 		return;
 
 
-	std::vector<std::pair<Item*, int>>::iterator iterator = itemPairs.begin();
-	for (std::pair<Item*, int> pair : itemPairs)
+	std::vector<std::pair<Item*, int>*>::iterator iterator = itemPairs.begin();
+	for (std::pair<Item*, int>* pair : itemPairs)
 	{
-		if (pair.second >= 3)
+		if (pair->second >= 3)
 		{
-			Item* upgrade = pair.first->GetUpgrade();
-			std::string targetItem = pair.first->GetName();
+			Item* upgrade = pair->first->GetUpgrade();
+			std::string targetItem = pair->first->GetName();
 
-			for (InventorySlot* slot : currentItems)
+			for (InventorySlot* slot : *slots)
 			{
-				if (slot->GetItem()->GetName() == targetItem)
+				if (slot->GetItem() != nullptr && slot->GetItem()->GetName() == targetItem)
+					slot->Deleteitem();
+			}
+			for (InventorySlot* slot : *equipSlots)
+			{
+				if (slot->GetItem() != nullptr && slot->GetItem()->GetName() == targetItem)
 					slot->Deleteitem();
 			}
 
 			for (InventorySlot* slot : *equipSlots)
 			{
-				if (slot->GetSlotRegion() == upgrade->GetSlotRegion() && slot->isSlotEmpty())
+				if (slot->GetSlotRegion() == upgrade->GetSlotRegion())
 				{
-					slot->SetItem(upgrade);
-					break;
-				}
-				else
-				{
-					for (InventorySlot* slot : *slots)
+					if (slot->isSlotEmpty())
 					{
-						if (slot->isSlotEmpty())
+						slot->SetItem(upgrade);
+						break;
+					}
+					else
+					{
+						for (InventorySlot* slot : *slots)
 						{
-							slot->SetItem(upgrade);
-							break;
+							if (slot->isSlotEmpty())
+							{
+								slot->SetItem(upgrade);
+								break;
+							}
 						}
 					}
 				}
-			}
+				}
+
+
 
 			itemPairs.erase(iterator);
 		}
@@ -289,27 +318,6 @@ void Inventory::CheckifCanCombine()
 
 	weapon->SetWeapon(GetCurrEquipItem()[0]);
 	armour->SetArmour(GetCurrEquipItem()[1]);
-}
-
-void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
-{
-	if (slot->CursorIsInBox(mousePos))
-	{
-		if (!slot->isSlotEmpty() && currItem == nullptr)
-			currItem = slot->GrabItem();
-		else if (slot->isSlotEmpty() && currItem != nullptr)
-		{
-			slot->SetItem(currItem->Clone());
-			delete currItem;
-			currItem = nullptr;
-		}
-		else if (!slot->isSlotEmpty() && currItem != nullptr)
-		{
-			Item* temp = currItem->Clone();
-			currItem = slot->GetItem();
-			slot->SetItem(temp);
-		}
-	}
 }
 
 void Inventory::Draw(sf::RenderWindow& window)

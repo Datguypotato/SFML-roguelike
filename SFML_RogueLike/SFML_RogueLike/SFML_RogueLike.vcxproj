@@ -40,6 +40,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Healthbar.cpp" />
+    <ClCompile Include="Interactable.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventorySlot.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Healthbar.h" />
+    <ClInclude Include="Interactable.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventorySlot.h" />
     <ClInclude Include="Item.h" />

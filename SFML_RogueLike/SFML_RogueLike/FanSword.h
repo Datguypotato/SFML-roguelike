@@ -7,6 +7,7 @@ class FanSword : public WeaponItem
 public:
 	FanSword(sf::Texture* itemText, std::string name);
 	FanSword(sf::Texture* itemText, std::string name, Item* upgrade);
+	~FanSword() override;
 
 	FanSword* Clone() override { return new FanSword(*this); };
 
@@ -14,13 +15,13 @@ public:
 	void Update(float deltaTime) override;
 	void CheckCollision(Entity* entity);
 
-	virtual void OnHit(Entity* e, SlimeBall* projectile);
+	virtual void OnHit(Entity* e, Entity* projectile);
 
-	void DrawProjectiles(sf::RenderWindow& window) override;
+	std::vector<Entity*> GetProjectiles() override;
 	std::string GetItemStats() override;
 
 protected:
 	SlimeBall* BuildWindSlash(sf::Vector2f dir, sf::Vector2f startingPos);
 
-	std::vector<SlimeBall*> projectiles;
+	std::vector<Entity*> projectiles;
 };

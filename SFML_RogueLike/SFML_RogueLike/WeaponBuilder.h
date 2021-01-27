@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 #include "Collectable.h"
 
 #include "Knife.h"
@@ -13,6 +15,8 @@ class WeaponBuilder
 {
 public:
 	WeaponBuilder();
+
+	void BuildWeapon(int id, sf::Vector2f position);
 
 	Collectable* BuildKnife(sf::Vector2f pos);
 	Collectable* BuildUpgradeKnife(sf::Vector2f pos);

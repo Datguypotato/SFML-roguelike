@@ -10,19 +10,19 @@ void WindSlasher::Update(float deltaTime)
 {
 	FanSword::Update(deltaTime);
 
-	for (SlimeBall* projectile : projectiles)
+	for (Entity* projectile : projectiles)
 	{
 		if (projectile->GetAliveStatus())
 		{
-			projectile->SetSize(sf::Vector2f(deltaTime * 100, deltaTime * 100) + projectile->GetBody()->getSize());
+			projectile->SetBodySize(sf::Vector2f(deltaTime * 100, deltaTime * 100) + projectile->GetBody()->getSize());
 		}
 	}
 }
 
-void WindSlasher::OnHit(Entity* e, SlimeBall* projectile)
+void WindSlasher::OnHit(Entity* e, Entity* projectile)
 {
 	sf::Vector2f originalSize = sf::Vector2f(50, 50);
-	e->OnHit(attackDamage *= projectile->GetSize().x / originalSize.x);
+	e->OnHit(attackDamage *= projectile->GetBodySize().x / originalSize.x);
 	projectile->SetAliveStatus(false);
 }
 

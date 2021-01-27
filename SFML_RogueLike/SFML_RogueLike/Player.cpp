@@ -97,14 +97,14 @@ void Player::Update(float deltaTime)
 void Player::Draw(sf::RenderWindow& window)
 {
 	Entity::Draw(window);
-
-	weapon->Draw(window);
 	inventory->Draw(window);
+	weapon->Draw(window);
 }
 
 void Player::CollectItem(Collectable* c)
 {
-	inventory->GetItem(c->GetItem());
+	if(!inventory->isFull())
+		inventory->GetItem(c->GetItem());
 }
 
 void Player::CheckCollision(std::vector<Entity*> enemies)
