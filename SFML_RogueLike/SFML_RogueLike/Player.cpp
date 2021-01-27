@@ -121,14 +121,7 @@ void Player::OnHit(const int damage, Entity* damageDealer)
 
 		if (weapon->GetActiveWeapon() != nullptr)
 		{
-			//TODO: Put this in weapon class
-			if (weapon->GetBlock())
-			{
-				dmg /= 2;
-				weapon->GetActiveWeapon()->SetEmpowerAttack(true);
-				weapon->SetBlock(false);
-				std::cout << "Empowered attack " << weapon->GetActiveWeapon()->GetEmpowerAttack() << "\n";
-			}
+			weapon->OnHit(dmg);
 		}
 
 		dmg = armour->OnHit(damage, damageDealer, GetPosition());

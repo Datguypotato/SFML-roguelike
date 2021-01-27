@@ -95,6 +95,17 @@ void Weapon::CheckCollision(std::vector<Entity*> enemies)
 		
 }
 
+void Weapon::OnHit(int damage)
+{
+	if (GetBlock())
+	{
+		damage /= 2;
+		GetActiveWeapon()->SetEmpowerAttack(true);
+		SetBlock(false);
+		//std::cout << "Empowered attack " << GetActiveWeapon()->GetEmpowerAttack() << "\n";
+	}
+}
+
 int Weapon::GetRecentDead()
 {
 	int temp = recentDead;

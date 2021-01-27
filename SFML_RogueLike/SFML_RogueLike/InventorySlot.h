@@ -4,8 +4,6 @@
 #include "UIComponent.h"
 #include "Item.h"
 
-// TODO: 
-
 class InventorySlot : public UIComponent
 {
 public:
