@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Animation*> animations, std::string n)
+Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Animation*> animations, std::string n, int health, float speed, int attackDamage)
 	: faceRight(true),
 	isAlive(true),
 	AC(animations),
@@ -29,12 +29,12 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Anim
 }
 
 Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n)
-	:	Entity(textureSize, bodySize, animations, n)
+	:	Entity(textureSize, bodySize, animations, n, health, speed, attackDamage)
 {
 }
 
 Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n)
-	:	Entity(bodySize, bodySize, animations, n)
+	:	Entity(bodySize, bodySize, animations, n, health, speed, attackDamage)
 {
 }
 

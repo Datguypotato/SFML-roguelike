@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include <string.h>;
+#include <string.h>
 
 
 class UIComponent

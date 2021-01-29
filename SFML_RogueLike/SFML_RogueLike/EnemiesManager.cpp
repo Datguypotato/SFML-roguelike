@@ -19,7 +19,7 @@ void EnemiesManager::Update(float deltaTime)
 		timeEvent->Tick(deltaTime);
 
 
-	for (int i = 0; i < enemiesData.size(); i++)
+	for (unsigned int i = 0; i < enemiesData.size(); i++)
 	{
 
 		if (enemiesData[i] != nullptr)
