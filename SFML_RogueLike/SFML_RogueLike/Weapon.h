@@ -24,7 +24,6 @@ public:
 	WeaponItem* GetActiveWeapon() { return activeWeapon; }
 
 	void CheckCollision(std::vector<Entity*> enemies);
-	void OnHit(int damage);
 
 	bool CanAttack() { return (attackTimer <= 0); }
 	void SetBlock(bool b) { activeWeapon->SetBlock(b); }

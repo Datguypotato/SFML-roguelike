@@ -86,25 +86,10 @@ void Player::Update(float deltaTime)
 	else
 		playName = "Default";
 	
-	//std::cout << "Curr player position: X" << body.getPosition().x << " y" << body.getPosition().y << std::endl;
-
 	AC.Play(playName, faceRight);
 	AC.UpdateAnimation(deltaTime, faceRight);
 	body.move(velocity * deltaTime);
 	TextureBody.setPosition(body.getPosition());
-}
-
-void Player::UpdateAttack(std::vector<Entity*> enemies)
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z), weapon->CanAttack())
-	{
-		for (Entity* enemy : enemies)
-		{
-			Collider eColl = enemy->GetCollider();
-			if (weapon->GetAttackBox().CheckTrigger(eColl))
-				weapon->GetInRange()->push_back(enemy);
-		}
-	}
 }
 
 
@@ -136,7 +121,14 @@ void Player::OnHit(const int damage, Entity* damageDealer)
 
 		if (weapon->GetActiveWeapon() != nullptr)
 		{
-			weapon->OnHit(dmg);
+			//TODO: Put this in weapon class
+			if (weapon->GetBlock())
+			{
+				dmg /= 2;
+				weapon->GetActiveWeapon()->SetEmpowerAttack(true);
+				weapon->SetBlock(false);
+				std::cout << "Empowered attack " << weapon->GetActiveWeapon()->GetEmpowerAttack() << "\n";
+			}
 		}
 
 		dmg = armour->OnHit(damage, damageDealer, GetPosition());

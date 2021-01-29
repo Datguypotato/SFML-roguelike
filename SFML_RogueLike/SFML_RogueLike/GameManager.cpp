@@ -10,7 +10,7 @@ GameManager::GameManager()
 	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this), temp);
 	em = new EnemiesManager(temp); 
 	player = temp;
-	healthbar = new Healthbar(sf::Vector2f(500, 300), player->GetHealth());
+	healthbar = new Healthbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
 	armourbar = new Armourbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
 
 	sf::Texture* btext = new sf::Texture();
@@ -32,14 +32,24 @@ void GameManager::ResizeView()
 void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player, em, lm);
+
+	for (int i = 0; i < 3; i++)
+	{
+		//lm->GetWeaponb()->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, -600));
+		//lm->GetWeaponb()->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, -400));
+		//lm->GetWeaponb()->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -200));
+
+		//lm->GetArmourb()->BuildKevlarVest(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -200));
+		//lm->GetArmourb()->BuildRedShirt(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -400));
+		//lm->GetArmourb()->BuildThiefRobe(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -600));
+	}
 }
 
 void GameManager::Update(float deltaTime)
 {
 	totalTime += deltaTime;
 	player->Update(deltaTime);
-	healthbar->Update(*player->GetBody(), (float)player->GetHealth());
-
+	healthbar->Update(*player->GetBody(), player->GetHealth());
 	if (player->GetArmour()->GetActiveArmour() != nullptr)
 		armourbar->Update(*player->GetBody(), player->GetArmour()->GetActiveArmour()->GetShield());
 	else
@@ -64,7 +74,23 @@ void GameManager::CheckCollision()
 {
 	std::vector<Entity*> enemies = em->GetAliveEnemies();
 
-	player->UpdateAttack(enemies);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && player->GetWeapon()->CanAttack())
+	{
+		for (Entity* enemy : enemies)
+		{
+			if (enemy->GetAliveStatus())
+			{
+				// normal hit
+				Collider eColl = enemy->GetCollider();
+				if (player->GetWeapon()->GetAttackBox().CheckTrigger(eColl))
+				{
+					player->GetWeapon()->GetInRange()->push_back(enemy);
+				}
+
+			}
+		}
+
+	}
 
 	player->CheckCollision(enemies);
 
@@ -88,6 +114,7 @@ void GameManager::Draw()
 	healthbar->Draw(*window);
 	levelmanager->GetCurrentLevel()->LateDraw(*window);
 
+	//if(player->GetArmour()->GetActiveArmour() != nullptr && player->GetArmour()->GetActiveArmour()->GetName() == "Plated Armour" || player->GetArmour()->GetActiveArmour()->GetName() == "KevlarVest")
 	armourbar->Draw(*window);
 	bagIcon->Draw(*window);
 

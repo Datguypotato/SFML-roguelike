@@ -43,8 +43,6 @@ public:
 	void SetAliveStatus(bool b) { isAlive = b; }
 
 protected:
-	Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Animation*> animations, std::string n, int health, float speed, int attackDamage);
-
 	void GetEffects();
 	TimeEvent* GetEvent(std::string n);
 

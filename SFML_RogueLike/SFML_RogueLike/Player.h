@@ -17,7 +17,6 @@ public:
 	Player* Clone() const;
 
 	void Update(float deltaTime) override;
-	void UpdateAttack(std::vector<Entity*> enemies);
 	void Draw(sf::RenderWindow& window);
 	void CollectItem(Collectable* c);
 

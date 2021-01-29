@@ -7,6 +7,7 @@ PlatedArmour::PlatedArmour(sf::Texture* itemText, std::string name)
 	explosionBox.setOrigin(range / 2, range / 2);
 }
 
+//TODO: Make it spawn RectangleShape
 void PlatedArmour::OnExplodeShield(sf::Vector2f playerPos)
 {
 	explosionBox.setPosition(playerPos);

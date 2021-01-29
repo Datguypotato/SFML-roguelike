@@ -5,19 +5,15 @@
 class Healthbar : public UIComponent
 {
 public:
-	Healthbar(sf::Vector2f pos, int entityHealth);
-	Healthbar(sf::Vector2f pos, int entityHealth, bool show);
-	void LoadTextures();
+	Healthbar(sf::Vector2f size, sf::Vector2f pos, int playerHealth);
 
 	void Update(sf::RectangleShape player, float value);
-	void Draw(sf::RenderWindow& window);
 
-	void SetBar(bool b) { showBar = b; }
+	void Draw(sf::RenderWindow& window);
 
 protected:
 	sf::RectangleShape fill;
 
 	float maxHealth;
-	bool showBar;
 };
 

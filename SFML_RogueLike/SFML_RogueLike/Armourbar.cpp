@@ -1,7 +1,7 @@
 #include "Armourbar.h"
 
 Armourbar::Armourbar(sf::Vector2f size, sf::Vector2f pos, int playerHealth)
-	: Healthbar(pos, playerHealth)
+	: Healthbar(size, pos, playerHealth)
 {
 	sf::Texture* healthbarFillTex = new sf::Texture();
 	healthbarFillTex->loadFromFile("Art/UI/ArmourBarFill.png");

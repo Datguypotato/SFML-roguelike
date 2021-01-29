@@ -1,16 +1,16 @@
 #include "Entity.h"
 
-Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Animation*> animations, std::string n, int health, float speed, int attackDamage)
-	: faceRight(true),
-	isAlive(true),
-	AC(animations),
-	damageCooldown(1.0f),
-	damageCooldownMax(damageCooldown),
-	playName("Default"),
-	attackDamage(attackDamage),
-	effecthandler(new EffectHandler()),
-	events(std::vector<TimeEvent*>()),
-	name(n)
+Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n)
+	:	faceRight(true),
+		isAlive(true),
+		AC(animations),
+		damageCooldown(1.0f),
+		damageCooldownMax(damageCooldown),
+		playName("Default"),
+		attackDamage(attackDamage),
+		effecthandler(new EffectHandler()),
+		events(std::vector<TimeEvent*>()),
+		name(n)
 {
 	TextureBody.setSize(textureSize);
 	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
@@ -28,14 +28,30 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vector<Anim
 	events.push_back(new TimeEvent(std::bind(&Entity::GetEffects, this), 1.0f, false, "Effect"));
 }
 
-Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n)
-	:	Entity(textureSize, bodySize, animations, n, health, speed, attackDamage)
-{
-}
-
 Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animations, float speed, int attackDamage, std::string n)
-	:	Entity(bodySize, bodySize, animations, n, health, speed, attackDamage)
+	:	faceRight(true),
+		isAlive(true),
+		damageCooldown(1.0f),
+		damageCooldownMax(damageCooldown),
+		playName("Default"),
+		attackDamage(attackDamage),
+		AC(animations),
+		effecthandler(new EffectHandler()),
+		events(std::vector<TimeEvent*>()),
+		name(n)
 {
+	TextureBody.setSize(bodySize);
+	TextureBody.setOrigin(TextureBody.getSize() / 2.0f);
+
+	body.setSize(bodySize);
+	body.setOrigin(body.getSize() / 2.0f);
+
+	this->health = health;
+	this->speed = speed;
+	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
+
+	sound = sf::Sound();
+	sound.setVolume(05.0f);
 }
 
 Entity::~Entity()

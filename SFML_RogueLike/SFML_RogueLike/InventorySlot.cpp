@@ -72,6 +72,7 @@ void InventorySlot::Draw(sf::RenderWindow& window)
 
 void InventorySlot::DrawDescp(sf::RenderWindow& window)
 {
+	//TODO Cannot draw yet
 	if (cursorInBox)
 		window.draw(*itemDescriptionText);
 

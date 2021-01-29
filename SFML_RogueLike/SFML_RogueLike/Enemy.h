@@ -1,7 +1,6 @@
 #pragma once
 #include <functional>
 
-#include "Healthbar.h"
 #include "TimeEvent.h"
 #include "Entity.h"
 #include "Player.h"
@@ -23,7 +22,6 @@ protected:
 	void AttackPlayer();
 
 	Player* player;
-	Healthbar* healthbar;
 	sf::RectangleShape* playerBody;
 	sf::RectangleShape attackBox;
 };
