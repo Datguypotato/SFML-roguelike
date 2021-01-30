@@ -19,7 +19,7 @@ void EnemiesManager::Update(float deltaTime)
 		timeEvent->Tick(deltaTime);
 
 
-	for (int i = 0; i < enemiesData.size(); i++)
+	for (unsigned int i = 0; i < enemiesData.size(); i++)
 	{
 
 		if (enemiesData[i] != nullptr)
@@ -134,8 +134,8 @@ void EnemiesManager::Draw(sf::RenderWindow& window)
 
 sf::Vector2f EnemiesManager::RandomPos()
 {
-	float randomX = 100 + (rand() % 1000);
-	float randomY = 100 + (rand() % 1000);
+	float randomX = 100.0f + (rand() % 1000);
+	float randomY = 100.0f + (rand() % 1000);
 
 
 	int randomId = rand() % 3;

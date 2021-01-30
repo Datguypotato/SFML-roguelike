@@ -10,7 +10,7 @@ GameManager::GameManager()
 	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this), temp);
 	em = new EnemiesManager(temp); 
 	player = temp;
-	healthbar = new Healthbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
+	healthbar = new Healthbar(sf::Vector2f(500, 300), player->GetHealth());
 	armourbar = new Armourbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
 
 	sf::Texture* btext = new sf::Texture();

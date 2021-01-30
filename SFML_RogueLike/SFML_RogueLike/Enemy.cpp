@@ -5,6 +5,7 @@ Enemy::Enemy(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::v
 {
 	this->playerBody = player->GetBody();
 	this->player = player;
+	healthbar = new Healthbar(sf::Vector2f(0, 10), health, true);
 }
 
 Enemy::Enemy(const Enemy& rhs)
@@ -12,12 +13,25 @@ Enemy::Enemy(const Enemy& rhs)
 {
 	playerBody = rhs.playerBody;
 	player = rhs.player;
+	healthbar = rhs.healthbar;
 }
 
 Enemy::~Enemy()
 {
 	playerBody = nullptr;
 	player = nullptr;
+}
+
+void Enemy::Update(float deltaTime)
+{
+	Entity::Update(deltaTime);
+	healthbar->Update(body, health);
+}
+
+void Enemy::Draw(sf::RenderWindow& window)
+{
+	Entity::Draw(window);
+	healthbar->Draw(window);
 }
 
 void Enemy::LookAtPlayer()

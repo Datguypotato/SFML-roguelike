@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 
+#include "Healthbar.h"
 #include "TimeEvent.h"
 #include "Entity.h"
 #include "Player.h"
@@ -12,6 +13,8 @@ public:
 	Enemy(const Enemy& rhs);
 	~Enemy();
 
+	void Update(float deltaTime) override;
+	void Draw(sf::RenderWindow& window) override;
 	void LookAtPlayer();
 
 	sf::Vector2f GetPlayerDir();
@@ -24,5 +27,6 @@ protected:
 	Player* player;
 	sf::RectangleShape* playerBody;
 	sf::RectangleShape attackBox;
+	Healthbar* healthbar;
 };
 

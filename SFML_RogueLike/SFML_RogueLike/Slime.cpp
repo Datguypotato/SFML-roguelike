@@ -48,7 +48,7 @@ Slime::Slime(const Slime& rhs)
 
 void Slime::Update(float deltaTime)
 {
-	Entity::Update(deltaTime);
+	Enemy::Update(deltaTime);
 	SlimeBase::Update(deltaTime);
 
 	if (effecthandler->IsStunned())

@@ -9,7 +9,6 @@ public:
 	~Slime();
 	Slime(const Slime& rhs);
 
-
 	void Update(float deltaTime) override;
 	void OnCollision(sf::Vector2f direction);
 

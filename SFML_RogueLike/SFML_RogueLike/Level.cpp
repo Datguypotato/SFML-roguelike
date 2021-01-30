@@ -45,7 +45,7 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 					}
 
 					sf::Vector2f pos = sf::Vector2f(obj.getPosition(tileObject.first).x * multiplier, obj.getPosition(tileObject.first).y * multiplier);//offset since the sprite are too small
-					sf::Vector2f size = sf::Vector2f(32 * multiplier, 32 * multiplier);
+					sf::Vector2f size = sf::Vector2f(32.0f * multiplier, 32.0f * multiplier);
 					int blockType = obj.get<int>("BlockType");
 					std::string interactableText;
 
