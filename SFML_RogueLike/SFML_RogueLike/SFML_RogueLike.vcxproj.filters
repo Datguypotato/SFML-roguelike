@@ -268,7 +268,10 @@
       <Filter>Source Files\Inventory\Items\LegArmour</Filter>
     </ClCompile>
     <ClCompile Include="BluePants.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Inventory\Items\LegArmour</Filter>
+    </ClCompile>
+    <ClCompile Include="BluePantsUpgrade.cpp">
+      <Filter>Source Files\Inventory\Items\LegArmour</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -444,16 +447,19 @@
       <Filter>Header Files\Inventory\ItemBuilders</Filter>
     </ClInclude>
     <ClInclude Include="GreenLegArmour.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GreenPants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GreenPantsUpgrade.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
     </ClInclude>
     <ClInclude Include="BluePants.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenPants.h">
+      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenPantsUpgrade.h">
+      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
+    </ClInclude>
+    <ClInclude Include="BluePantsUpgrade.h">
+      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

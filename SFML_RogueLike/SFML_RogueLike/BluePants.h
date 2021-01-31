@@ -7,6 +7,8 @@ public:
     BluePants(sf::Texture* itemText, std::string name);
     BluePants(sf::Texture* itemText, std::string name, Item* upgrade);
 
+    BluePants* Clone() { return new BluePants(*this); }
+
     void OnLevelEnd(Entity* player) override;
 
 protected:

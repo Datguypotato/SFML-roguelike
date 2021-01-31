@@ -28,6 +28,7 @@
     <ClCompile Include="BleedEffect.cpp" />
     <ClCompile Include="BloodKnife.cpp" />
     <ClCompile Include="BluePants.cpp" />
+    <ClCompile Include="BluePantsUpgrade.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Collectable.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="BleedEffect.h" />
     <ClInclude Include="BloodKnife.h" />
     <ClInclude Include="BluePants.h" />
+    <ClInclude Include="BluePantsUpgrade.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Collectable.h" />
     <ClInclude Include="Collider.h" />

@@ -84,8 +84,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":158.667,
-                 "y":234.833
+                 "x":159.167,
+                 "y":237.333
                 }, 
                 {
                  "height":0,
@@ -102,8 +102,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":116.5,
-                 "y":236
+                 "x":118,
+                 "y":237.5
                 }, 
                 {
                  "height":0,
@@ -120,8 +120,116 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":77.5,
-                 "y":237
+                 "x":76,
+                 "y":236
+                }, 
+                {
+                 "height":0,
+                 "id":6,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":168.167,
+                 "y":284.833
+                }, 
+                {
+                 "height":0,
+                 "id":7,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":127,
+                 "y":285
+                }, 
+                {
+                 "height":0,
+                 "id":8,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":85,
+                 "y":283.5
+                }, 
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":176.167,
+                 "y":326.333
+                }, 
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":135,
+                 "y":326.5
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":93,
+                 "y":325
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -130,7 +238,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":6,
+ "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",
