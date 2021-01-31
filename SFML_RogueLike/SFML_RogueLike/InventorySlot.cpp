@@ -58,7 +58,6 @@ void InventorySlot::Update(sf::Vector2f mousePos)
 		item->SetPosition(box.getPosition());
 		itemDescriptionText->setPosition(mousePos);
 	}
-
 }
 
 void InventorySlot::Draw(sf::RenderWindow& window)

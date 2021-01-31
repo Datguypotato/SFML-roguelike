@@ -21,7 +21,6 @@ void EnemiesManager::Update(float deltaTime)
 
 	for (unsigned int i = 0; i < enemiesData.size(); i++)
 	{
-
 		if (enemiesData[i] != nullptr)
 		{
 			enemiesData[i]->time -= deltaTime;

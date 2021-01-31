@@ -1,4 +1,12 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"Dev.json"
+        }
+    },
  "height":16,
  "infinite":false,
  "layers":[
@@ -60,6 +68,60 @@
                  "width":0,
                  "x":396,
                  "y":235
+                }, 
+                {
+                 "height":0,
+                 "id":3,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":158.667,
+                 "y":234.833
+                }, 
+                {
+                 "height":0,
+                 "id":4,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":116.5,
+                 "y":236
+                }, 
+                {
+                 "height":0,
+                 "id":5,
+                 "name":"SpawnLegArmour",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":77.5,
+                 "y":237
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -68,7 +130,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":3,
+ "nextobjectid":6,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

@@ -66,8 +66,6 @@ void Weapon::SetWeapon(Item* item)
 	else
 		activeWeapon = nullptr;
 
-
-
 	//activeWeapon = (WeaponItem)items[0];
 }
 
@@ -78,6 +76,20 @@ void Weapon::Draw(sf::RenderWindow& window)
 
 	for (Entity* projectiles : weaponProjectiles)
 		projectiles->Draw(window);
+}
+
+void Weapon::OnHit(int dmg)
+{
+	if (activeWeapon != nullptr)
+	{
+		if (activeWeapon->GetBlock())
+		{
+			dmg /= 2;
+			activeWeapon->SetEmpowerAttack(true);
+			activeWeapon->SetBlock(false);
+			std::cout << "Empowered attack " << activeWeapon->GetEmpowerAttack() << "\n";
+		}
+	}
 }
 
 Collider Weapon::GetAttackBox()

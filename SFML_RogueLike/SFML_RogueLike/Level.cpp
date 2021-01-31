@@ -24,7 +24,6 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 	tson::Tileson t;
 	map = t.parse(levelPath);
 	doneLoading = false;
-	// TODO: Make sign working or just find a different solution
 	if (map->getStatus() == tson::ParseStatus::OK)
 	{
 		int multiplier = 4;
@@ -91,6 +90,14 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 						else if (it->getName() == "SpawnWeapon")
 						{
 							lm->GetWeaponb()->BuildWeapon(it->get<int>("id"), spawnPos);
+						}
+						else if (it->getName() == "SpawnArmour")
+						{
+							lm->GetArmourb()->BuildArmour(it->get<int>("id"), spawnPos);
+						}
+						else if (it->getName() == "SpawnLegArmour")
+						{
+							lm->GetLegArmourb()->BuildLegArmour(it->get<int>("id"), spawnPos);
 						}
 						else
 						{

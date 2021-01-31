@@ -14,7 +14,10 @@ Healthbar::Healthbar(sf::Vector2f pos, int playerHealth)
 Healthbar::Healthbar(sf::Vector2f pos, int entityHealth, bool show)
 	:	Healthbar(pos, entityHealth)
 {
-	sf::Vector2f size = sf::Vector2f(32, 7) * (float)entityHealth;
+	sf::Vector2f size = sf::Vector2f(16, 3.5) * (float)entityHealth;
+
+	if (entityHealth >= 30)
+		size /= 2.0f;
 
 	box.setSize(size);
 	box.setOrigin(size / 2.0f);
@@ -38,18 +41,26 @@ void Healthbar::LoadTexture()
 
 void Healthbar::Update(sf::RectangleShape player, float value)
 {
-	// TODO Set position of health bar
 	UIComponent::CanUpdate(player);
 	fill.setScale(value / maxHealth, 1);
-	sf::Vector2f offset = sf::Vector2f(0, box.getSize().y);
-	box.setPosition(player.getPosition() - position - offset);
 	fill.setPosition(box.getPosition());
 
 	//std::cout << player->GetHealth() << std::endl;
 }
 
+void Healthbar::EntityUpdate(sf::RectangleShape player, float value)
+{
+	fill.setScale(value / maxHealth, 1);
+	sf::Vector2f offset = sf::Vector2f(0, box.getSize().y);
+	box.setPosition(player.getPosition() - position - offset);
+	fill.setPosition(box.getPosition());
+}
+
 void Healthbar::Draw(sf::RenderWindow& window)
 {
-	UIComponent::Draw(window);
-	window.draw(fill);
+	if (showBar)
+	{
+		UIComponent::Draw(window);
+		window.draw(fill);
+	}
 }

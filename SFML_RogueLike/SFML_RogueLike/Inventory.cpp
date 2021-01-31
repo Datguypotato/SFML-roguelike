@@ -1,6 +1,6 @@
 #include "Inventory.h"
 
-Inventory::Inventory(sf::RectangleShape* p, Weapon* w, Armour* a)
+Inventory::Inventory(sf::RectangleShape* p, Weapon* w, Armour* a, LegArmour* l)
 :	isOpen(false),
 	isDrawing(false),
 	slotCount(3),
@@ -10,6 +10,7 @@ Inventory::Inventory(sf::RectangleShape* p, Weapon* w, Armour* a)
 	canInteract(true),
 	weapon(w),
 	armour(a),
+	legArmour(l),
 	itemPairs(std::vector<std::pair<Item*, int>*>())
 {
 	player = p;
@@ -104,8 +105,6 @@ void Inventory::Update(sf::Vector2f mousePos)
 		if (currItem != nullptr)
 			currItem->SetPosition(mousePos);
 
-		//weapon->SetWeapon(GetCurrEquipItem()[0]);
-		//armour->SetArmour(GetCurrEquipItem()[1]);
 		isDrawing = false;
 	}
 }
@@ -141,6 +140,10 @@ void Inventory::GetItem(Item* i)
 		AddNewItem(i);
 		CheckifCanCombine();
 	}
+
+	weapon->SetWeapon(GetCurrEquipItem()[0]);
+	armour->SetArmour(GetCurrEquipItem()[1]);
+	legArmour->SetLegArmour(GetCurrEquipItem()[2]);
 }
 
 bool Inventory::isFull()
@@ -225,6 +228,7 @@ void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
 
 		weapon->SetWeapon(GetCurrEquipItem()[0]);
 		armour->SetArmour(GetCurrEquipItem()[1]);
+		legArmour->SetLegArmour(GetCurrEquipItem()[2]);
 	}
 }
 

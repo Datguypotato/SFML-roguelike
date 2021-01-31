@@ -73,6 +73,18 @@
     <Filter Include="Header Files\Inventory\Items\Armour">
       <UniqueIdentifier>{1d7fb4eb-2ea9-474f-b274-b6b793d8be35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Inventory\Items\LegArmour">
+      <UniqueIdentifier>{8c4b8d91-27b8-4439-801a-da0f5ed829bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inventory\Items\LegArmour">
+      <UniqueIdentifier>{93199b12-8822-435b-9a72-23fdbc6fc7f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inventory\ItemBuilders">
+      <UniqueIdentifier>{38c54286-5bc3-4073-85d2-df86845e9227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inventory\ItemBuilder">
+      <UniqueIdentifier>{782ea264-d1b4-4247-85fd-e2d2eedbb17f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp">
@@ -207,12 +219,6 @@
     <ClCompile Include="RedShirt.cpp">
       <Filter>Source Files\Inventory\Items\Armour</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponBuilder.cpp">
-      <Filter>Source Files\Inventory\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="ArmourBuilder.cpp">
-      <Filter>Source Files\Inventory\Items</Filter>
-    </ClCompile>
     <ClCompile Include="RedSpikes.cpp">
       <Filter>Source Files\Inventory\Items\Armour</Filter>
     </ClCompile>
@@ -233,6 +239,36 @@
     </ClCompile>
     <ClCompile Include="Interactable.cpp">
       <Filter>Source Files\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="RedPants.cpp">
+      <Filter>Source Files\Inventory\Items\LegArmour</Filter>
+    </ClCompile>
+    <ClCompile Include="LegArmour.cpp">
+      <Filter>Source Files\Inventory\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="LegArmourItem.cpp">
+      <Filter>Source Files\Inventory\Items\LegArmour</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponBuilder.cpp">
+      <Filter>Source Files\Inventory\ItemBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="LegArmourBuilder.cpp">
+      <Filter>Source Files\Inventory\ItemBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmourBuilder.cpp">
+      <Filter>Source Files\Inventory\ItemBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="RedPantsSpikes.cpp">
+      <Filter>Source Files\Inventory\Items\LegArmour</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenPants.cpp">
+      <Filter>Source Files\Inventory\Items\LegArmour</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenPantsUpgrade.cpp">
+      <Filter>Source Files\Inventory\Items\LegArmour</Filter>
+    </ClCompile>
+    <ClCompile Include="BluePants.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,22 +389,10 @@
     <ClInclude Include="RedSpikes.h">
       <Filter>Header Files\Inventory\Items\Armour</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponBuilder.h">
-      <Filter>Header Files\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="ArmourBuilder.h">
-      <Filter>Header Files\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="ArmourItem.h">
-      <Filter>Header Files\Inventory\Items</Filter>
-    </ClInclude>
     <ClInclude Include="WeaponItem.h">
       <Filter>Header Files\Inventory\Items</Filter>
     </ClInclude>
     <ClInclude Include="ThiefRobe.h">
-      <Filter>Header Files\Inventory\Items\Armour</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
       <Filter>Header Files\Inventory\Items\Armour</Filter>
     </ClInclude>
     <ClInclude Include="Armourbar.h">
@@ -390,6 +414,45 @@
       <Filter>Header Files\Inventory\Items</Filter>
     </ClInclude>
     <ClInclude Include="Interactable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedPants.h">
+      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LegArmourItem.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="LegArmour.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RedPantsSpikes.h">
+      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
+    </ClInclude>
+    <ClInclude Include="LegArmourBuilder.h">
+      <Filter>Header Files\Inventory\ItemBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmourItem.h">
+      <Filter>Header Files\Inventory\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponBuilder.h">
+      <Filter>Header Files\Inventory\ItemBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmourBuilder.h">
+      <Filter>Header Files\Inventory\ItemBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenLegArmour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenPants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenPantsUpgrade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BluePants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

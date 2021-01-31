@@ -19,6 +19,7 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	body.setOrigin(body.getSize() / 2.0f);
 
 	this->health = health;
+	maxHealth = health;
 	this->speed = speed;
 	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
 
@@ -47,6 +48,7 @@ Entity::Entity(sf::Vector2f bodySize, int health, std::vector<Animation*> animat
 	body.setOrigin(body.getSize() / 2.0f);
 
 	this->health = health;
+	maxHealth = health;
 	this->speed = speed;
 	TextureBody.setTexture(AC.GetActiveAnimation()->GetTexture());
 
@@ -159,6 +161,14 @@ void Entity::OnHit(const int damage)
 			std::cout << "Lost " << damage << " hp " << name << " has " << health << " hp left\n";
 		}
 	}
+}
+
+void Entity::Heal(int healValue)
+{
+	if (health + healValue >= maxHealth)
+		health = maxHealth;
+	else
+		health += healValue;
 }
 
 void Entity::GetEffects()

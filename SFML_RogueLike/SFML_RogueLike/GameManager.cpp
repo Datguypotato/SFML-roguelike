@@ -32,17 +32,6 @@ void GameManager::ResizeView()
 void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player, em, lm);
-
-	for (int i = 0; i < 3; i++)
-	{
-		//lm->GetWeaponb()->BuildKnife(player->GetPosition() + sf::Vector2f(i * 100 + 100, -600));
-		//lm->GetWeaponb()->BuildFanSword(player->GetPosition() + sf::Vector2f(i * 100 + 100, -400));
-		//lm->GetWeaponb()->BuildShield(player->GetPosition() + sf::Vector2f(i * 100 + 100, -200));
-
-		//lm->GetArmourb()->BuildKevlarVest(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -200));
-		//lm->GetArmourb()->BuildRedShirt(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -400));
-		//lm->GetArmourb()->BuildThiefRobe(player->GetPosition() + sf::Vector2f(-i * 100 - 100, -600));
-	}
 }
 
 void GameManager::Update(float deltaTime)
@@ -109,12 +98,11 @@ void GameManager::Draw()
 
 	levelmanager->GetCurrentLevel()->Draw(*window);
 	lm->Draw(*window);
-	player->Draw(*window);
 	em->Draw(*window);
+	player->Draw(*window);
 	healthbar->Draw(*window);
 	levelmanager->GetCurrentLevel()->LateDraw(*window);
 
-	//if(player->GetArmour()->GetActiveArmour() != nullptr && player->GetArmour()->GetActiveArmour()->GetName() == "Plated Armour" || player->GetArmour()->GetActiveArmour()->GetName() == "KevlarVest")
 	armourbar->Draw(*window);
 	bagIcon->Draw(*window);
 

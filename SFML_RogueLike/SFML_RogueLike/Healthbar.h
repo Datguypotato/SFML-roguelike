@@ -10,6 +10,7 @@ public:
 
 	void LoadTexture();
 	void Update(sf::RectangleShape player, float value);
+	void EntityUpdate(sf::RectangleShape player, float value);
 	void Draw(sf::RenderWindow& window);
 
 	void SetShowBar(bool b) { showBar = b; }

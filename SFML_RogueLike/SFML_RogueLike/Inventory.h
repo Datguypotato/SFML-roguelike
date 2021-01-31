@@ -7,11 +7,12 @@
 #include "InventorySlot.h"
 #include "Weapon.h"
 #include "Armour.h"
+#include "LegArmour.h"
 
 class Inventory
 {
 public: 
-	Inventory(sf::RectangleShape* p, Weapon* w, Armour* a);
+	Inventory(sf::RectangleShape* p, Weapon* w, Armour* a, LegArmour* l);
 
 	void OpenClose();
 
@@ -35,6 +36,7 @@ private:
 	sf::RectangleShape* player;
 	Weapon* weapon;
 	Armour* armour;
+	LegArmour* legArmour;
 
 	bool canInteract;
 	bool isOpen;

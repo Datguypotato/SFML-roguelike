@@ -13,7 +13,6 @@ public:
 
     virtual ArmourItem* Clone() { return new ArmourItem(*this); }
 
-
     virtual int OnDamaged(int damage, Entity* e, sf::Vector2f playerPos) { return damage; }
     virtual void OnRoll(Entity* player, sf::Vector2f dir) {}
     virtual void SetRoll() {}

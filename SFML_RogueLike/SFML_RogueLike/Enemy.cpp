@@ -25,7 +25,12 @@ Enemy::~Enemy()
 void Enemy::Update(float deltaTime)
 {
 	Entity::Update(deltaTime);
-	healthbar->Update(body, health);
+	healthbar->EntityUpdate(body, health);
+
+	if (damageCooldown <= 0)
+		healthbar->SetShowBar(true);
+	else
+		healthbar->SetShowBar(false);
 }
 
 void Enemy::Draw(sf::RenderWindow& window)

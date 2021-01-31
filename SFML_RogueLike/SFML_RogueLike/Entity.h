@@ -38,6 +38,8 @@ public:
 	AnimatorController GetAC() { return AC; }
 	int GetAttackDamage() { return attackDamage; }
 	int GetHealth() { return health; }
+	void AddMaxHealth(int value) { maxHealth += value; }
+	void Heal(int healValue);
 
 	bool GetAliveStatus() { return isAlive; }
 	void SetAliveStatus(bool b) { isAlive = b; }
@@ -59,6 +61,7 @@ protected:
 	float speed;
 	bool isAlive;
 	int health;
+	int maxHealth;
 
 	EffectHandler* effecthandler;
 	float damageCooldown;

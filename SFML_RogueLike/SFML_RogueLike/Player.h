@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Weapon.h"
 #include "Armour.h"
+#include "LegArmour.h"
 #include "Inventory.h"
 #include "Collectable.h"
 
@@ -25,10 +26,12 @@ public:
 
 	Weapon* GetWeapon() { return weapon; }
 	Armour* GetArmour() { return armour; }
+	LegArmour* GetLegArmour() { return legArmour; }
 	Inventory* GetInventory() { return inventory; }
 private:
 	Weapon* weapon;
 	Armour* armour;
+	LegArmour* legArmour;
 	Inventory* inventory;
 
 	sf::Vector2f facingDirection;

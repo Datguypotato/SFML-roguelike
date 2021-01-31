@@ -19,6 +19,7 @@ public:
 	void SetWeapon(Item* item);
 	void Draw(sf::RenderWindow& window);
 
+	void OnHit(int dmg);
 	void SetAttackBoxPos(sf::Vector2f newPos) { attackbox.setPosition(newPos); }
 	Collider GetAttackBox();
 	WeaponItem* GetActiveWeapon() { return activeWeapon; }

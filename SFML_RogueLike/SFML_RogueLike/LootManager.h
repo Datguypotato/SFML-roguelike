@@ -3,6 +3,7 @@
 
 #include "WeaponBuilder.h"
 #include "ArmourBuilder.h"
+#include "LegArmourBuilder.h"
 
 class LootManager
 {
@@ -17,10 +18,12 @@ public:
 	Item* GetRandomLoot();
 	WeaponBuilder* GetWeaponb() { return weaponb; }
 	ArmourBuilder* GetArmourb() { return armourb; }
+	LegArmourBuilder* GetLegArmourb() { return legArmourb; }
 
 private:
 	std::vector<Collectable*> Getloots();
 
 	WeaponBuilder* weaponb;
 	ArmourBuilder* armourb;
+	LegArmourBuilder* legArmourb;
 };
