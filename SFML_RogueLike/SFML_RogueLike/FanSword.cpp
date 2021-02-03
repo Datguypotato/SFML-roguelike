@@ -5,6 +5,7 @@ FanSword::FanSword(sf::Texture* itemText, std::string name)
 {
 	attackDamage = 2;
 	minusAttackTimerMax = 0.5f;
+	synergy = new Synergy(Synergy::green);
 }
 
 FanSword::FanSword(sf::Texture* itemText, std::string name, Item* upgrade)
@@ -12,6 +13,7 @@ FanSword::FanSword(sf::Texture* itemText, std::string name, Item* upgrade)
 {
 	attackDamage = 2;
 	minusAttackTimerMax = 0.3f;
+	synergy = new Synergy(Synergy::green);
 }
 
 FanSword::~FanSword()

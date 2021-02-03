@@ -11,7 +11,7 @@ void Armour::Update(float deltaTime)
 	if (armourItem != nullptr)
 	{
 		armourItem->Update(deltaTime);
-		SetArmourValue();
+		SetArmourValue(weapon->GetRecentDead());
 	}
 
 }
@@ -72,8 +72,10 @@ bool Armour::IsRolling()
 	return false;
 }
 
-void Armour::SetArmourValue()
+void Armour::SetArmourValue(int value)
 {
 	if (armourItem != nullptr)
-		armourItem->GainShield(weapon->GetRecentDead());
+		armourItem->GainShield(value);
+	else
+		armourValue = value;
 }

@@ -3,11 +3,13 @@
 ThiefRobe::ThiefRobe(sf::Texture* itemText, std::string name, Item* upgrade)
 	:	ArmourItem(itemText, "ThiefRobe", upgrade)
 {
+	synergy = new Synergy(Synergy::green);
 }
 
 ThiefRobe::ThiefRobe(sf::Texture* itemText, std::string name)
 	:	ArmourItem(itemText, "ThiefRobe")
 {
+	synergy = new Synergy(Synergy::green);
 }
 
 void ThiefRobe::Update(float deltaTime)

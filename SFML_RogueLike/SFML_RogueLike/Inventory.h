@@ -8,11 +8,12 @@
 #include "Weapon.h"
 #include "Armour.h"
 #include "LegArmour.h"
+#include "SynergyManager.h"
 
 class Inventory
 {
 public: 
-	Inventory(sf::RectangleShape* p, Weapon* w, Armour* a, LegArmour* l);
+	Inventory(sf::RectangleShape* p, Weapon* w, Armour* a, LegArmour* l, SynergyManager* synergy);
 
 	void OpenClose();
 
@@ -30,6 +31,7 @@ private:
 	void OnClick(sf::Vector2f mousePos, InventorySlot* slot);
 	void OnClickEquipment(sf::Vector2f mousePos, InventorySlot* slot, int index);
 
+	void UpdatePlayer();
 	void AddNewItem(Item* i);
 	void CheckifCanCombine();
 
@@ -37,6 +39,7 @@ private:
 	Weapon* weapon;
 	Armour* armour;
 	LegArmour* legArmour;
+	SynergyManager* synergymanager;
 
 	bool canInteract;
 	bool isOpen;

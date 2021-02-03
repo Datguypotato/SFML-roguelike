@@ -28,11 +28,14 @@ public:
 	Armour* GetArmour() { return armour; }
 	LegArmour* GetLegArmour() { return legArmour; }
 	Inventory* GetInventory() { return inventory; }
+
+	SynergyManager* GetSynergyManager() { return synergyManager; }
 private:
 	Weapon* weapon;
 	Armour* armour;
 	LegArmour* legArmour;
 	Inventory* inventory;
+	SynergyManager* synergyManager;
 
 	sf::Vector2f facingDirection;
 	sf::Vector2f lastFacingDir;

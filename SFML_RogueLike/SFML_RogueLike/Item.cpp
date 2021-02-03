@@ -8,6 +8,7 @@ Item::Item(sf::Texture* itemText)
 {
 	itemBox.setTexture(itemText);
 	itemBox.setOrigin(itemBox.getSize() / 2.0f);
+	synergy = nullptr;
 }
 
 Item::Item(sf::Texture* itemText, std::string name)

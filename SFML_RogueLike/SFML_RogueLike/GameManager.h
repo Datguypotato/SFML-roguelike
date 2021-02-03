@@ -15,6 +15,7 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "Collectable.h"
+#include "SynergyManager.h"
 
 class GameManager
 {

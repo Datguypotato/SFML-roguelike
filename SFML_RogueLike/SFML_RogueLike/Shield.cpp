@@ -4,11 +4,13 @@ Shield::Shield(sf::Texture* itemText, std::string name)
 	:	WeaponItem(itemText, name)
 {
 	attackDamage = 5;
+	synergy = new Synergy(Synergy::blue);
 }
 
 Shield::Shield(sf::Texture* itemText, std::string name, Item* upgrade)
 	:	WeaponItem(itemText, name, upgrade)
 {
+	synergy = new Synergy(Synergy::blue);
 }
 
 void Shield::OnAttack(sf::Vector2f startingPos, sf::Vector2f direction)

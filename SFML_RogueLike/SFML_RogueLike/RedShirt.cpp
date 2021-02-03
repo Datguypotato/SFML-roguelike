@@ -5,6 +5,7 @@ RedShirt::RedShirt(sf::Texture* itemText, std::string name)
 		timer(3.0f),
 		maxTimer(timer)
 {
+	synergy = new Synergy(Synergy::red);
 }
 
 RedShirt::RedShirt(sf::Texture* itemText, std::string name, Item* upgrade)
@@ -12,6 +13,7 @@ RedShirt::RedShirt(sf::Texture* itemText, std::string name, Item* upgrade)
 		timer(3.0f),
 		maxTimer(timer)
 {
+	synergy = new Synergy(Synergy::red);
 }
 
 void RedShirt::Update(float deltaTime)

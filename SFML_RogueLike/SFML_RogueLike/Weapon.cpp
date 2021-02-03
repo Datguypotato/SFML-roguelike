@@ -3,12 +3,13 @@
 Weapon::Weapon(int ad, float at)
 	:	attackDamage(ad),
 		attackTimer(at),
-		baseAttackDamage(ad),
-		baseAttackTimerMax(at),
+		baseAttackDamage(ad), // = 1
+		baseAttackTimerMax(at), // = 2.5f
 		attackTimerMax(at),
 		timesAttacked(0),
 		activeWeapon(nullptr),
-		recentDead(0)
+		recentDead(0),
+		attackSpeedMultiplier(0)
 {
 	attackbox.setSize(sf::Vector2f(75, 75));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
@@ -19,7 +20,7 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 {
 	if (CanAttack())
 	{
-		attackTimer = attackTimerMax;
+		attackTimer = attackTimerMax - (attackTimerMax * attackSpeedMultiplier);
 		timesAttacked++;
 
 		if (activeWeapon != nullptr)
@@ -29,8 +30,10 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 		{
 			int extra = 0;
 			if (activeWeapon != nullptr)
+			{
 				extra += activeWeapon->OnHit(target);
-
+				targetsHit++;
+			}
 
 			target->OnHit(attackDamage + extra);
 
@@ -39,7 +42,6 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 		}
 
 		inRange.clear();
-		//std::cout << "Player has attacked " << timesAttacked << " times\n";
 	}
 }
 
@@ -107,6 +109,19 @@ void Weapon::CheckCollision(std::vector<Entity*> enemies)
 		
 }
 
+/// <summary>
+/// Add percentage attackspeedmultiplioer
+/// if percentage is higer then 100 or lower then 0 it will return
+/// </summary>
+/// <param name="percentage"></param>
+void Weapon::AddAttackSpeedMultiplier(int percentage)
+{
+	if (percentage < 0 || percentage > 100)
+		return;
+
+	attackSpeedMultiplier += static_cast<float>(percentage) / 100;
+}
+
 int Weapon::GetRecentDead()
 {
 	int temp = recentDead;
@@ -114,3 +129,9 @@ int Weapon::GetRecentDead()
 	return temp;
 }
 
+int Weapon::GetTargetHits()
+{
+	int temp = targetsHit;
+	targetsHit = 0;
+	return temp;
+}

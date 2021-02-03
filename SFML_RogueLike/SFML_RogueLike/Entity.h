@@ -37,7 +37,9 @@ public:
 	EffectHandler* GetEffectHandler() { return effecthandler; }
 	AnimatorController GetAC() { return AC; }
 	int GetAttackDamage() { return attackDamage; }
+	void AddAttackDamage(int a) { attackDamage += a; }
 	int GetHealth() { return health; }
+	int GetMaxHealth() { return maxHealth; }
 	void AddMaxHealth(int value) { maxHealth += value; }
 	void Heal(int healValue);
 

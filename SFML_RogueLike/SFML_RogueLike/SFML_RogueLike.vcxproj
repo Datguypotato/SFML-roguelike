@@ -73,6 +73,7 @@
     <ClCompile Include="SlimeBase.cpp" />
     <ClCompile Include="SlimeBoss.cpp" />
     <ClCompile Include="StunEffect.cpp" />
+    <ClCompile Include="SynergyManager.cpp" />
     <ClCompile Include="ThiefRobe.cpp" />
     <ClCompile Include="TimeEvent.cpp" />
     <ClCompile Include="UIComponent.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="SlimeBase.h" />
     <ClInclude Include="SlimeBoss.h" />
     <ClInclude Include="StunEffect.h" />
+    <ClInclude Include="SynergyManager.h" />
     <ClInclude Include="ThiefRobe.h" />
     <ClInclude Include="TimeEvent.h" />
     <ClInclude Include="UIComponent.h" />

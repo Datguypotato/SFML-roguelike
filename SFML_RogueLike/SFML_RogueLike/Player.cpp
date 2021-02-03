@@ -5,12 +5,12 @@ Player::Player(std::vector<Animation*> animations, float speed, int attackDamage
 		weapon(new Weapon(attackDamage, 2.0f)),
 		armour(new Armour(weapon)),
 		legArmour(new LegArmour()),
-		inventory(new Inventory(&body, weapon, armour, legArmour)),
+		synergyManager(new SynergyManager(weapon, armour)),		
 		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0)),
 		facingDirection(sf::Vector2f(0,0)),
 		lastFacingDir(sf::Vector2f(0,0))
 {
-	body.setPosition(sf::Vector2f(150, 150));
+	inventory = new Inventory(&body, weapon, armour, legArmour, synergyManager);
 }
 
 Player::~Player()
@@ -27,6 +27,7 @@ void Player::Update(float deltaTime)
 	Entity::Update(deltaTime);
 	weapon->Update(deltaTime);
 	armour->Update(deltaTime);
+	synergyManager->Update(deltaTime);
 
 	std::string playName;
 
@@ -38,6 +39,7 @@ void Player::Update(float deltaTime)
 		attackBoxOffset = sf::Vector2f(body.getSize().x, 0);
 		facingDirection += sf::Vector2f(-1, 0);
 	}
+
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
@@ -62,6 +64,9 @@ void Player::Update(float deltaTime)
 
 	if (facingDirection == sf::Vector2f(0, 0))
 		facingDirection = lastFacingDir;
+	else
+		lastFacingDir = facingDirection;
+
 
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
@@ -78,9 +83,7 @@ void Player::Update(float deltaTime)
 		AC.PlayNoInterupt("Attack", faceRight);
 		legArmour->OnHit(*weapon->GetInRange());
 		weapon->Attack(body.getPosition(), facingDirection);
-		armour->SetArmourValue();
-
-		lastFacingDir = facingDirection;
+		synergyManager->OnSuccesfullAttack();
 	}
 
 	if (velocity.x != 0.0f || velocity.y != 0.0f)
@@ -120,6 +123,7 @@ void Player::OnHit(const int damage, Entity* damageDealer)
 		int dmg = damage; // so i can edit the value 
 
 		weapon->OnHit(dmg);
+		synergyManager->PlayerHit();
 
 		dmg = armour->OnHit(damage, damageDealer, GetPosition());
 		Entity::OnHit(dmg, damageDealer);

@@ -35,10 +35,11 @@ void LevelManager::NextLevel(EnemiesManager* em, LootManager* lm)
 
 void LevelManager::SwitchLevel(int index, EnemiesManager* em, LootManager* lm)
 {
-	// TODO set transition screen back to normal
 	levels[activeLevelIndex]->Unload();
+	p->GetSynergyManager()->OnEndLevel();
 	activeLevelIndex++;
 	levels[index]->Load(p, em, lm);
+
 }
 
 void LevelManager::CenterRectangleShape(sf::Vector2f newPos)

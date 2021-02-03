@@ -6,12 +6,14 @@ Knife::Knife(sf::Texture* itemText, std::string name)
 {
 	attackDamage = 0;
 	minusAttackTimerMax = 0.5f;
+	synergy = new Synergy(Synergy::red);
 }
 
 Knife::Knife(sf::Texture* itemText, std::string name, Item* upgrade)
 	:	WeaponItem(itemText, name, upgrade),
 		attacks(0)
 {
+	synergy = new Synergy(Synergy::red);
 }
 
 int Knife::OnHit(Entity* entity)

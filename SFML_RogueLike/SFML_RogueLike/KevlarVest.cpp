@@ -3,11 +3,13 @@
 KevlarVest::KevlarVest(sf::Texture* itemText, std::string name)
 	:	ArmourItem(itemText, name)
 {
+	synergy = new Synergy(Synergy::blue);
 }
 
 KevlarVest::KevlarVest(sf::Texture* itemText, std::string name, Item* upgrade)
 	: ArmourItem(itemText, name, upgrade)
 {
+	synergy = new Synergy(Synergy::blue);
 }
 
 int KevlarVest::OnDamaged(int damage, Entity* e, sf::Vector2f playerPos)

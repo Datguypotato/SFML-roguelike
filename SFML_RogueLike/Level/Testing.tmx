@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="12">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="17">
  <editorsettings>
   <export target="../SFML_RogueLike/Art/World/Levels/Dev.json" format="json"/>
  </editorsettings>
@@ -509,6 +509,36 @@
   <object id="11" name="SpawnLegArmour" x="93" y="325">
    <properties>
     <property name="id" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="12" name="SpawnWeapon" x="244.5" y="152">
+   <properties>
+    <property name="id" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="13" name="SlimeSpawn" x="402.5" y="188">
+   <properties>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="14" name="SlimeSpawn" x="384.5" y="284.5">
+   <properties>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="15" name="SlimeSpawn" x="372.5" y="206">
+   <properties>
+    <property name="EnemyType" type="int" value="0"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="16" name="SlimeSpawn" x="428" y="201.5">
+   <properties>
+    <property name="EnemyType" type="int" value="0"/>
    </properties>
    <point/>
   </object>

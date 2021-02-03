@@ -230,6 +230,96 @@
                  "width":0,
                  "x":93,
                  "y":325
+                }, 
+                {
+                 "height":0,
+                 "id":12,
+                 "name":"SpawnWeapon",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":244.5,
+                 "y":152
+                }, 
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"SlimeSpawn",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"EnemyType",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":402.5,
+                 "y":188
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"SlimeSpawn",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"EnemyType",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":384.5,
+                 "y":284.5
+                }, 
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"SlimeSpawn",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"EnemyType",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":372.5,
+                 "y":206
+                }, 
+                {
+                 "height":0,
+                 "id":16,
+                 "name":"SlimeSpawn",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"EnemyType",
+                         "type":"int",
+                         "value":0
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":428,
+                 "y":201.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -238,7 +328,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":12,
+ "nextobjectid":17,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.2",

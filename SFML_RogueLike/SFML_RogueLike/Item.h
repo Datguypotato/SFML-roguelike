@@ -13,6 +13,13 @@ enum class SlotRegion
 	legs
 };
 
+enum class Synergy
+{
+	red,
+	blue,
+	green
+};
+
 class Item
 {
 public:
@@ -34,11 +41,13 @@ public:
 	SlotRegion GetSlotRegion() { return *slotRegion; }
 	Item* GetUpgrade() { return upgradeItem; }
 	virtual std::string GetItemStats();
+	Synergy* GetSynergy() { return synergy; }
 
 protected:
 	sf::RectangleShape itemBox;
 	std::string itemName;
 	SlotRegion* slotRegion;
+	Synergy* synergy;
 
 	Item* upgradeItem;
 };

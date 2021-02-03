@@ -29,19 +29,24 @@ public:
 	bool CanAttack() { return (attackTimer <= 0); }
 	void SetBlock(bool b) { activeWeapon->SetBlock(b); }
 	bool GetBlock() { return activeWeapon->GetBlock(); }
+	void AddAttackDamage(int a) { attackDamage += a; }
+	void AddAttackSpeedMultiplier(int percentage);
 	std::vector<Entity*>* GetInRange() { return &inRange; }
 	int GetRecentDead();
+	int GetTargetHits();
 
 private:
 	std::vector<Entity*> inRange;
 	int recentDead;
 	sf::RectangleShape attackbox;
 
+	int targetsHit;
 	int baseAttackDamage;
 	int attackDamage;
 	float attackTimer;
 	float baseAttackTimerMax;
 	float attackTimerMax;
+	float attackSpeedMultiplier; // percentage
 
 	WeaponItem* activeWeapon;
 	std::vector<Entity*> weaponProjectiles;

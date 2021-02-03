@@ -25,7 +25,7 @@ public:
 
 	bool CanRoll();
 	bool IsRolling();
-	void SetArmourValue();
+	void SetArmourValue(int value);
 
 protected:
 	ArmourItem* armourItem;

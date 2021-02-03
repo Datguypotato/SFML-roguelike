@@ -1,5 +1,12 @@
 #include "TimeEvent.h"
 
+/// <summary>
+/// if Oneshot = true. The TimeEvent will pause itself after every execution
+/// </summary>
+/// <param name="callback"></param>
+/// <param name="interval"></param>
+/// <param name="oneShot"></param>
+/// <param name="eventName"></param>
 TimeEvent::TimeEvent(std::function<void()> callback, float interval, bool oneShot, std::string eventName)
 {
 	this->callback = callback;
@@ -26,16 +33,27 @@ void TimeEvent::Tick(float deltaTime)
 	}
 }
 
+/// <summary>
+/// Set pause to false
+/// </summary>
 void TimeEvent::Play()
 {
 	isPaused = false;
 }
 
+/// <summary>
+/// set pause to true
+/// </summary>
 void TimeEvent::Pause()
 {
 	isPaused = true;
 }
 
+
+/// <summary>
+/// set pause to false
+/// and reset the timer
+/// </summary>
 void TimeEvent::Reset()
 {
 	isPaused = false;

@@ -21,6 +21,7 @@ Level::~Level()
 
 void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 {
+	p->GetSynergyManager()->OnStartLevel(p);
 	tson::Tileson t;
 	map = t.parse(levelPath);
 	doneLoading = false;
