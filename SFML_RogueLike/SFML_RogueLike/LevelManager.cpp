@@ -35,6 +35,7 @@ void LevelManager::NextLevel(EnemiesManager* em, LootManager* lm)
 
 void LevelManager::SwitchLevel(int index, EnemiesManager* em, LootManager* lm)
 {
+	EarnItem();
 	levels[activeLevelIndex]->Unload();
 	p->GetSynergyManager()->OnEndLevel();
 	activeLevelIndex++;
@@ -45,6 +46,11 @@ void LevelManager::SwitchLevel(int index, EnemiesManager* em, LootManager* lm)
 void LevelManager::CenterRectangleShape(sf::Vector2f newPos)
 {
 	//transitionScreen.setPosition(newPos);
+}
+
+void LevelManager::EarnItem()
+{
+	
 }
 
 Level* LevelManager::GetCurrentLevel()

@@ -101,12 +101,21 @@ Collider Weapon::GetAttackBox()
 
 void Weapon::CheckCollision(std::vector<Entity*> enemies)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && CanAttack())
+	{
+		for (Entity* enemy : enemies)
+		{
+			Collider eColl = enemy->GetCollider();
+			if (GetAttackBox().CheckTrigger(eColl))
+				inRange.push_back(enemy);
+		}
+	}
+
 	if (activeWeapon != nullptr)
 	{
 		for(Entity* e : enemies)
 			activeWeapon->CheckCollision(e);
 	}
-		
 }
 
 /// <summary>

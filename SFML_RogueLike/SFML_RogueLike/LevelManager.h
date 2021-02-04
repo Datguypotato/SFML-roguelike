@@ -6,6 +6,7 @@
 #include "Level.h"
 #include "EnemiesManager.h"
 #include "AnimatorController.h"
+#include "Button.h"
 
 class LevelManager
 {
@@ -17,12 +18,15 @@ public:
 	void SwitchLevel(int index, EnemiesManager* em, LootManager* lm);
 	void CenterRectangleShape(sf::Vector2f newPos);
 
+	void EarnItem();
+
 	Level* GetCurrentLevel();
 
 private:
 	std::vector<Level*> levels;
 	int activeLevelIndex;
 	Player* p;
+
 
 	std::vector<sf::Texture*> CreateTiles();
 

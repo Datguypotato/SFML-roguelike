@@ -10,7 +10,7 @@ public:
 	Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::RectangleShape box)> callBack, sf::Texture* buttonText);
 
 	void Update(sf::RectangleShape player) override;
-	void OnClick();
+	void OnClick(sf::Vector2f mousePos);
 
 	TimeEvent* GetEvent() { return e; }
 

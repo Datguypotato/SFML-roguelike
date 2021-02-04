@@ -39,6 +39,7 @@ void GameManager::Update(float deltaTime)
 	totalTime += deltaTime;
 	player->Update(deltaTime);
 	healthbar->Update(*player->GetBody(), player->GetHealth());
+
 	if (player->GetArmour()->GetActiveArmour() != nullptr)
 		armourbar->Update(*player->GetBody(), player->GetArmour()->GetActiveArmour()->GetShield());
 	else
@@ -46,8 +47,7 @@ void GameManager::Update(float deltaTime)
 	bagIcon->CanUpdate(*player->GetBody());
 
 	sf::Vector2f mousepos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-	if (bagIcon->CursorIsInBox(mousepos))
-		bagIcon->OnClick();
+	bagIcon->OnClick(mousepos);
 
 	player->GetInventory()->Update(mousepos);
 	em->Update(deltaTime);
@@ -62,24 +62,6 @@ void GameManager::Update(float deltaTime)
 void GameManager::CheckCollision()
 {
 	std::vector<Entity*> enemies = em->GetAliveEnemies();
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && player->GetWeapon()->CanAttack())
-	{
-		for (Entity* enemy : enemies)
-		{
-			if (enemy->GetAliveStatus())
-			{
-				// normal hit
-				Collider eColl = enemy->GetCollider();
-				if (player->GetWeapon()->GetAttackBox().CheckTrigger(eColl))
-				{
-					player->GetWeapon()->GetInRange()->push_back(enemy);
-				}
-
-			}
-		}
-
-	}
 
 	player->CheckCollision(enemies);
 
