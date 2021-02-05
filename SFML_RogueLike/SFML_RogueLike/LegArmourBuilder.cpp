@@ -4,6 +4,31 @@ LegArmourBuilder::LegArmourBuilder()
 {
 }
 
+Item* LegArmourBuilder::BuildRandom()
+{
+    int random = rand() % 3;
+    sf::Texture* text = new sf::Texture();
+
+    switch (random)
+    {
+    case 0:
+        text->loadFromFile("Art/Item/RedPants.png");
+        return new RedPants(text, "Red pants", BuildUpgradeRedPants());
+        break;
+    case 1:
+        text->loadFromFile("Art/Item/BluePants.png");
+        return new GreenPants(text, "Green pants", BuildUpgradeGreenPants());
+        break;
+    case 2:
+        text->loadFromFile("Art/Item/BluePants.png");
+        return new BluePants(text, "Blue pants", BuildUpgradeBluePants());
+    default:
+        std::cout << "Error unexpected random number\n";
+        return nullptr;
+        break;
+    }
+}
+
 Collectable* LegArmourBuilder::BuildLegArmour(int ID, sf::Vector2f position)
 {
     switch (ID)

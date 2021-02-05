@@ -25,12 +25,12 @@ void UIComponent::CanUpdate(sf::RectangleShape player)
 	if (isDrawing)
 	{
 		Update(player);
-		box.setPosition(player.getPosition() - position);
 	}
 }
 
 void UIComponent::Update(sf::RectangleShape player)
 {
+	box.setPosition(player.getPosition() - position);
 }
 
 

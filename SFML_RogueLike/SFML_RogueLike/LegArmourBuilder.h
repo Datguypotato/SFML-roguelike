@@ -12,6 +12,7 @@ class LegArmourBuilder
 public:
 	LegArmourBuilder();
 
+	Item* BuildRandom();
 	Collectable* BuildLegArmour(int ID, sf::Vector2f position);
 
 	Collectable* BuildRedPants(sf::Vector2f position);

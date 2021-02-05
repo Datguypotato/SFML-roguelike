@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Collectable.h"
+#include  "Item.h"
 
 #include "Knife.h"
 #include "BloodKnife.h"
@@ -16,6 +17,7 @@ class WeaponBuilder
 public:
 	WeaponBuilder();
 
+	Item* BuildRandom();
 	void BuildWeapon(int id, sf::Vector2f position);
 
 	Collectable* BuildKnife(sf::Vector2f pos);

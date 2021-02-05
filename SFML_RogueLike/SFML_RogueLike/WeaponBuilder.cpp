@@ -5,6 +5,27 @@ WeaponBuilder::WeaponBuilder()
 {
 }
 
+Item* WeaponBuilder::BuildRandom()
+{
+	int random = rand() % 3;
+
+	switch (random)
+	{
+	case 0:
+		return new Knife(LoadTexture("Knife"), "Lovely Knife", UpgradeKnife());;
+		break;
+	case 1:
+		return new FanSword(LoadTexture("WindKnife"), "WindKnife", UpgradeFanSword());
+		break;
+	case 2:
+		return new Shield(LoadTexture("Shield"), "Shield", UpgradeShield());
+	default:
+		std::cout << "Error unexpected random number\n";
+		return nullptr;
+		break;
+	}
+}
+
 /// <summary>
 /// 0 = Knife
 /// 1 = FanSword
@@ -15,8 +36,6 @@ WeaponBuilder::WeaponBuilder()
 /// <returns></returns>
 void WeaponBuilder::BuildWeapon(int id, sf::Vector2f position)
 {
-	Collectable* c;
-
 	switch (id)
 	{
 	case 0:

@@ -17,6 +17,8 @@
 #include "Collectable.h"
 #include "SynergyManager.h"
 
+#include "ItemButton.h"
+
 class GameManager
 {
 public:
@@ -53,6 +55,4 @@ private:
 	Healthbar* healthbar;
 	Armourbar* armourbar;
 	Button* bagIcon;
-
-	sf::Text* testing;
 };

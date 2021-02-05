@@ -54,7 +54,7 @@ void EnemiesManager::Update(float deltaTime)
 
 	for (Entity* enemy : enemies)
 	{
-		if (enemy->GetAliveStatus() && !enemy->GetEffectHandler()->IsStunned())
+		if (enemy->GetAliveStatus())
 		{
 			if (!enemy->GetEffectHandler()->IsStunned())
 			{
@@ -66,7 +66,7 @@ void EnemiesManager::Update(float deltaTime)
 		}
 
 		if(enemy)
-		enemy->GetEffectHandler()->CountDownStun(deltaTime);
+			enemy->GetEffectHandler()->CountDownStun(deltaTime);
 	}
 
 	if (boss != nullptr)

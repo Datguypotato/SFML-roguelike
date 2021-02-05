@@ -6,6 +6,27 @@ ArmourBuilder::ArmourBuilder()
 
 }
 
+Item* ArmourBuilder::BuildRandom()
+{
+	int random = rand() % 3;
+
+	switch (random)
+	{
+	case 0:
+		return new RedShirt(LoadTexture("RedShirt"), "RedShirt", BuildRedShirtUpgrade());
+		break;
+	case 1:
+		return new ThiefRobe(LoadTexture("ThiefRobe"), "ThiefRobe", BuildUpgradeThiefRobe());
+		break;
+	case 2:
+		return new KevlarVest(LoadTexture("KevlarVest"), "KevlarVest", BuildUpgradeKevelarVest());
+	default:
+		std::cout << "Error unexpected random number\n";
+		return nullptr;
+		break;
+	}
+}
+
 /// <summary>
 /// 0 = KevlarVest
 /// 1 = RedShirt

@@ -48,6 +48,8 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventorySlot.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemBuilder.cpp" />
+    <ClCompile Include="ItemButton.cpp" />
     <ClCompile Include="KevlarVest.cpp" />
     <ClCompile Include="Knife.cpp" />
     <ClCompile Include="LegArmour.cpp" />
@@ -115,6 +117,8 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventorySlot.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemBuilder.h" />
+    <ClInclude Include="ItemButton.h" />
     <ClInclude Include="KevlarVest.h" />
     <ClInclude Include="Knife.h" />
     <ClInclude Include="LegArmour.h" />

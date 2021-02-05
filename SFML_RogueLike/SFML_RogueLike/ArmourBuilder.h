@@ -16,6 +16,7 @@ class ArmourBuilder
 public:
 	ArmourBuilder();
 
+	Item* BuildRandom();
 	Collectable* BuildArmour(int ID, sf::Vector2f position);
 
 	Collectable* BuildRedShirt(sf::Vector2f pos);

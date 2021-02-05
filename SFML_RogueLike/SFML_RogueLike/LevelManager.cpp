@@ -1,10 +1,12 @@
 #include "LevelManager.h"
 
-LevelManager::LevelManager(std::function<void()> Changelevel, Player* p)
+LevelManager::LevelManager(std::function<void()> Changelevel, Player* p, EnemiesManager* e)
 	:	activeLevelIndex(0),
-		lerpTime(0)
+		lerpTime(0),
+		itemBuilder(new ItemBuilder())
 {
-	this->p = p;
+	this->player = p;
+	em = e;
 	levels = std::vector<Level*>();
 
 	std::vector<fs::path> paths = std::vector<fs::path>();
@@ -28,19 +30,19 @@ float LevelManager::Lerp(float a, float b, float t)
 	return a * (1 - t) + b * t;
 }
 
-void LevelManager::NextLevel(EnemiesManager* em, LootManager* lm)
+void LevelManager::NextLevel(LootManager* lm)
 {
 	LevelManager::SwitchLevel(activeLevelIndex + 1, em, lm);
 }
 
 void LevelManager::SwitchLevel(int index, EnemiesManager* em, LootManager* lm)
 {
-	EarnItem();
+	SetEndButtons();
 	levels[activeLevelIndex]->Unload();
-	p->GetSynergyManager()->OnEndLevel();
+	player->GetSynergyManager()->OnEndLevel();
 	activeLevelIndex++;
-	levels[index]->Load(p, em, lm);
-
+	levels[index]->Load(player, em, lm);
+	chooseItem = false;
 }
 
 void LevelManager::CenterRectangleShape(sf::Vector2f newPos)
@@ -48,14 +50,66 @@ void LevelManager::CenterRectangleShape(sf::Vector2f newPos)
 	//transitionScreen.setPosition(newPos);
 }
 
-void LevelManager::EarnItem()
+void LevelManager::UpdateButtons(sf::Vector2f mousePos)
 {
-	
+	if (em->IsFinished())
+	{
+		if (!buttonBuilt)
+		{
+			SetEndButtons();
+			buttonBuilt = true;
+		}
+	}
+
+	for (ItemButton* button : buttons)
+	{
+		button->CanUpdate(*player->GetBody());
+		button->OnClick(mousePos);
+
+		if (chooseItem)
+			break;
+	}
+}
+
+void LevelManager::DrawButtons(sf::RenderWindow& window)
+{
+	for (ItemButton* button : buttons)
+	{
+		button->Draw(window);
+	}
+}
+
+void LevelManager::SetEndButtons()
+{
+	// TODO: finsih set up
+	buttons.clear();
+	buttons.push_back(BuildItemButton(sf::Vector2f(400, 0)));
+	buttons.push_back(BuildItemButton(sf::Vector2f(0, 0)));
+	buttons.push_back(BuildItemButton(sf::Vector2f(-400, 0)));
+}
+
+void LevelManager::EndButtonOnClick()
+{
+	for (ItemButton* button : buttons)
+	{
+		delete button;
+		button = nullptr;
+	}
+	buttons.clear();
+	chooseItem = true;
 }
 
 Level* LevelManager::GetCurrentLevel()
 {
 	return levels[activeLevelIndex];
+}
+
+ItemButton* LevelManager::BuildItemButton(sf::Vector2f position)
+{
+	sf::Texture* text = new sf::Texture();
+	text->loadFromFile("Art/UI/ChooseItemBox.png");
+
+	return new ItemButton(itemBuilder->BuildRandom(), position, std::bind(&LevelManager::EndButtonOnClick, this), text, player);
 }
 
 std::vector<sf::Texture*> LevelManager::CreateTiles()

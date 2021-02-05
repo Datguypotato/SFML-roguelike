@@ -7,8 +7,8 @@ GameManager::GameManager()
 	window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Super awesome game", sf::Style::Close | sf::Style::Resize);
 	view = new sf::View(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1280.0f, 720.0f));;
 	Player* temp = BuildPlayer();
-	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this), temp);
 	em = new EnemiesManager(temp); 
+	levelmanager = new LevelManager(std::bind(&GameManager::NextLevel, this), temp, em);
 	player = temp;
 	healthbar = new Healthbar(sf::Vector2f(500, 300), player->GetHealth());
 	armourbar = new Armourbar(sf::Vector2f(256, 56), sf::Vector2f(500, 300), player->GetHealth());
@@ -52,6 +52,7 @@ void GameManager::Update(float deltaTime)
 	player->GetInventory()->Update(mousepos);
 	em->Update(deltaTime);
 	lm->Update(deltaTime);
+	levelmanager->UpdateButtons(mousepos);
 
 	for (TimeEvent* e : timedEvents)
 	{
@@ -83,11 +84,11 @@ void GameManager::Draw()
 	em->Draw(*window);
 	player->Draw(*window);
 	healthbar->Draw(*window);
+	levelmanager->DrawButtons(*window);
 	levelmanager->GetCurrentLevel()->LateDraw(*window);
 
 	armourbar->Draw(*window);
 	bagIcon->Draw(*window);
-
 
 	view->setCenter(player->GetPosition());
 	window->setView(*view);
@@ -118,7 +119,7 @@ Player* GameManager::BuildPlayer()
 
 void GameManager::NextLevel()
 {
-	levelmanager->NextLevel(em, lm);
+	levelmanager->NextLevel(lm);
 	std::cout << "Player in door\n";
 }
 

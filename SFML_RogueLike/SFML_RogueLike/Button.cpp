@@ -12,21 +12,23 @@ Button::Button(sf::Vector2f size, sf::Vector2f pos, std::function<void(sf::Recta
 	
 }
 
-void Button::Update(sf::RectangleShape player)
-{
-}
-
 void Button::OnClick(sf::Vector2f mousePos)
 {
 	if (CursorIsInBox(mousePos))
 	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isClickable && isDrawing)
 		{
-			callbacks(box);
-			isClickable = false;
-			e->Play();
+			ClickAction();
 		}
 	}
+}
+
+void Button::ClickAction()
+{
+	//callbacks(box);
+	isClickable = false;
+	e->Play();
+	callbacks(box);
 }
 
 void Button::SetClickable()
