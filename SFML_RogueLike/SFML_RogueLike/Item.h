@@ -40,10 +40,11 @@ public:
 	std::string GetName() { return itemName; }
 	SlotRegion GetSlotRegion() { return *slotRegion; }
 	Item* GetUpgrade() { return upgradeItem; }
-	virtual std::string GetItemStats();
 	Synergy* GetSynergy() { return synergy; }
 
-protected:
+	virtual std::string GetItemStats();
+
+
 	sf::RectangleShape itemBox;
 	std::string itemName;
 	SlotRegion* slotRegion;

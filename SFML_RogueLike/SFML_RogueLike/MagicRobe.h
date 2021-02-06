@@ -11,5 +11,9 @@ public:
 
     void OnRoll(Entity* player, sf::Vector2f dir) override;
     void SetRoll() override;
+
+    int OnDamaged(int damage, Entity* e, sf::Vector2f playerPos) override;
+
+    std::string GetItemStats() override;
 };
 

@@ -17,6 +17,8 @@ public:
 
 	int GetShieldMultiplier() { return shieldGainPerKill; }
 
+	std::string GetItemStats() override;
+
 protected:
 	int shieldGainPerKill = 10;
 

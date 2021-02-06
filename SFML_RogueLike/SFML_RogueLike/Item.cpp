@@ -39,6 +39,7 @@ void Item::Draw(sf::RenderWindow& window)
 	window.draw(itemBox);
 }
 
+//TODO: Make all the item have abstract string function
 std::string Item::GetItemStats()
 {	
 	std::string stats = std::string();

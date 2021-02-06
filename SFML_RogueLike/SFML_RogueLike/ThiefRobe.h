@@ -13,6 +13,8 @@ public:
     void OnRoll(Entity* player, sf::Vector2f dir) override;
     void SetRoll() override;
 
+    std::string GetItemStats() override;
+
 protected:
     float rollPower = 0.5f;
     float rollTimer = 3;

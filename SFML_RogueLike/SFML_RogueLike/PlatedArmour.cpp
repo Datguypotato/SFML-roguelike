@@ -29,6 +29,13 @@ void PlatedArmour::CheckCollision(std::vector<Entity*> entities)
 	}
 }
 
+std::string PlatedArmour::GetItemStats()
+{
+	return KevlarVest::GetItemStats() + "Once armour is completly destory deal " + std::to_string(explosionDamage) + " damage\n";
+}
+
+
+
 /// <summary>
 /// Used to maybe make a circle collision
 /// might revisit in the future

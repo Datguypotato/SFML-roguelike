@@ -17,3 +17,8 @@ void RedPants::OnHit(Entity* enemy)
 	if (rand() % 100 < stunPercentage)
 		enemy->GetEffectHandler()->SetStunned(stunTime);
 }
+
+std::string RedPants::GetItemStats()
+{
+	return Item::GetItemStats() + "On attack have " + std::to_string(stunPercentage) + " % chance to stun\nFor " + std::to_string(stunTime) + " seconds\n";
+}

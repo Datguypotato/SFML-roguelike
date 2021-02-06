@@ -11,6 +11,8 @@ public:
 
 	int OnCollect(int coins) { return coins * multiplier; }
 
+	std::string GetItemStats() override;
+
 protected:
 	int multiplier = 2;
 };

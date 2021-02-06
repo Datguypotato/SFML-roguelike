@@ -35,3 +35,10 @@ void KevlarVest::GainShield(int amount)
 {
 	shieldAmount += amount * shieldGainPerKill;
 }
+
+std::string KevlarVest::GetItemStats()
+{
+	std::string stats = Item::GetItemStats();
+	stats += "Gain " + std::to_string(shieldGainPerKill) + " shield per kill\n";
+	return stats;
+}

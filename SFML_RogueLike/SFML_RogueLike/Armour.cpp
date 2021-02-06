@@ -16,6 +16,13 @@ void Armour::Update(float deltaTime)
 
 }
 
+/// <summary>
+/// When Entity damage the player
+/// </summary>
+/// <param name="damage"></param>
+/// <param name="e"></param>
+/// <param name="playerPos"></param>
+/// <returns></returns>
 int Armour::OnHit(int damage, Entity* e, sf::Vector2f playerPos)
 {
 	if (armourItem != nullptr)

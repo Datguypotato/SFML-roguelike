@@ -8,5 +8,7 @@ public:
     RedSpikes(sf::Texture* itemText, std::string name);
 
     int OnDamaged(int damage, Entity* e, sf::Vector2f playerPos) override;
+
+    std::string GetItemStats() override;
 };
 

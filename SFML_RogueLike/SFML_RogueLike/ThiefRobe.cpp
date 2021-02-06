@@ -48,3 +48,8 @@ void ThiefRobe::SetRoll()
 		std::cout << "Set Roll\n";
 	}
 }
+
+std::string ThiefRobe::GetItemStats()
+{
+	return Item::GetItemStats() + "Press X to roll towards a direction\nYou can roll every " + std::to_string(rollingTimerMax) + " seconds\n";
+}

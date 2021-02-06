@@ -43,6 +43,7 @@ void LevelManager::SwitchLevel(int index, EnemiesManager* em, LootManager* lm)
 	activeLevelIndex++;
 	levels[index]->Load(player, em, lm);
 	chooseItem = false;
+	buttonBuilt = false;
 }
 
 void LevelManager::CenterRectangleShape(sf::Vector2f newPos)

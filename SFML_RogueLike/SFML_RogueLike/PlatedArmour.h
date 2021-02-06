@@ -10,6 +10,7 @@ public:
     void OnExplodeShield(sf::Vector2f playerPos) override;
     void CheckCollision(std::vector<Entity*> entities) override;
 
+    std::string GetItemStats() override;
 private:
     float Distance(sf::Vector2f a, sf::Vector2f b);
 

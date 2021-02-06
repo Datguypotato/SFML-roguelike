@@ -11,6 +11,8 @@ public:
 
 	void OnHit(Entity* enemy) override;
 
+	std::string GetItemStats() override;
+
 protected:
 	int stunPercentage = 25;
 	int stunTime = 1;

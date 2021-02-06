@@ -10,6 +10,7 @@ public:
     BluePants* Clone() { return new BluePants(*this); }
 
     void OnLevelEnd(Entity* player) override;
+    std::string GetItemStats() override;
 
 protected:
     int addMaxHealthValue = 10;

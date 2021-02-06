@@ -11,6 +11,8 @@ public:
     void Update(float deltaTime);
 
     int OnDamaged(int damage, Entity* e, sf::Vector2f playerPos) override;
+    
+    std::string GetItemStats() override;
 
 protected:
     float timer;

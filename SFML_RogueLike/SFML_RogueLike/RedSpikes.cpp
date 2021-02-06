@@ -12,3 +12,8 @@ int RedSpikes::OnDamaged(int damage, Entity* e, sf::Vector2f playerPos)
 
 	return RedShirt::OnDamaged(damage, e, playerPos);
 }
+
+std::string RedSpikes::GetItemStats()
+{
+	return RedShirt::GetItemStats() +  "When shielded return the damage you received\n";
+}

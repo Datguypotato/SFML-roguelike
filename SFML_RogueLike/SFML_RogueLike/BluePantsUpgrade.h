@@ -5,5 +5,7 @@ class BluePantsUpgrade :
 {
 public:
     BluePantsUpgrade(sf::Texture* itemText, std::string name);
+
+    std::string GetItemStats() override;
 };
 
