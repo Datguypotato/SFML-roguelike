@@ -10,8 +10,9 @@ LevelManager::LevelManager(std::function<void()> Changelevel, Player* p, Enemies
 	levels = std::vector<Level*>();
 
 	std::vector<fs::path> paths = std::vector<fs::path>();
-	paths.push_back("../SFML_RogueLike/Art/World/Levels/Dev.json");
+	paths.push_back("../SFML_RogueLike/Art/World/Levels/ShopkeeperTest.json");
 	paths.push_back("../SFML_RogueLike/Art/World/Levels/Tutorial.json");
+	paths.push_back("../SFML_RogueLike/Art/World/Levels/Dev.json");
 	paths.push_back("../SFML_RogueLike/Art/World/Test2.json");
 
 	levels = std::vector<Level*>();

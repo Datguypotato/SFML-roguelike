@@ -282,6 +282,12 @@
     <ClCompile Include="LegArmour.cpp">
       <Filter>Source Files\Inventory\Items</Filter>
     </ClCompile>
+    <ClCompile Include="LevelSign.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopKeeper.cpp">
+      <Filter>Source Files\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorController.h">
@@ -422,9 +428,6 @@
     <ClInclude Include="Weapon.h">
       <Filter>Header Files\Inventory\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Interactable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RedPants.h">
       <Filter>Header Files\Inventory\Items\LegArmour</Filter>
     </ClInclude>
@@ -478,6 +481,15 @@
     </ClInclude>
     <ClInclude Include="ItemButton.h">
       <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Interactable.h">
+      <Filter>Header Files\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopKeeper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSign.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

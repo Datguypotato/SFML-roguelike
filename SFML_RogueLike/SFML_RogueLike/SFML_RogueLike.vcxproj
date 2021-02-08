@@ -57,6 +57,7 @@
     <ClCompile Include="LegArmourItem.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="LevelSign.cpp" />
     <ClCompile Include="LevelSwitcher.cpp" />
     <ClCompile Include="LootManager.cpp" />
     <ClCompile Include="MagicRobe.cpp" />
@@ -70,6 +71,7 @@
     <ClCompile Include="RedSpikes.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="ShieldSword.cpp" />
+    <ClCompile Include="ShopKeeper.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="SlimeBall.cpp" />
     <ClCompile Include="SlimeBase.cpp" />
@@ -126,6 +128,7 @@
     <ClInclude Include="LegArmourItem.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="LevelSign.h" />
     <ClInclude Include="LevelSwitcher.h" />
     <ClInclude Include="LootManager.h" />
     <ClInclude Include="MagicRobe.h" />
@@ -137,6 +140,7 @@
     <ClInclude Include="RedSpikes.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="ShieldSword.h" />
+    <ClInclude Include="ShopKeeper.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="SlimeBall.h" />
     <ClInclude Include="SlimeBase.h" />

@@ -5,10 +5,11 @@
 #include "Ground.h"
 #include "Wall.h"
 #include "LevelSwitcher.h"
-#include "Interactable.h"
+#include "LevelSign.h"
 #include "Player.h"
 #include "EnemiesManager.h"
 #include "LootManager.h"
+#include "ShopKeeper.h"
 
 class Level
 {
@@ -41,8 +42,9 @@ private:
 	std::vector<Wall> walls;
 	std::vector<Wall> invisibleWalls;
 	std::vector<LevelSwitcher> doors;
-	std::vector<Interactable*> interactables;
+	std::vector<LevelSign*> interactables;
 	std::vector<std::string> textSigns;
+	ShopKeeper* shopkeeper;
 
 	std::function<void()> Changelevel;
 };

@@ -5,6 +5,7 @@
 #include "Collider.h"
 #include "Item.h"
 #include "WeaponItem.h"
+#include "AnimatorController.h"
 
 /// <summary>
 /// Handels all weapon item functions
@@ -12,7 +13,7 @@
 class Weapon
 {
 public:
-	Weapon(int ad, float at);
+	Weapon(int ad, float at, AnimatorController a);
 
 	void Attack(sf::Vector2f startingPos, sf::Vector2f facingDir);
 	void Update(float deltaTime);
@@ -39,6 +40,7 @@ private:
 	std::vector<Entity*> inRange;
 	int recentDead;
 	sf::RectangleShape attackbox;
+	AnimatorController AC;
 
 	int targetsHit;
 	int baseAttackDamage;
@@ -47,6 +49,8 @@ private:
 	float baseAttackTimerMax;
 	float attackTimerMax;
 	float attackSpeedMultiplier; // percentage
+
+	float animationCooldown;
 
 	WeaponItem* activeWeapon;
 	std::vector<Entity*> weaponProjectiles;

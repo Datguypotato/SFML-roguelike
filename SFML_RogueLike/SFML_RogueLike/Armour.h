@@ -20,12 +20,12 @@ public:
 
 	virtual void Draw(sf::RenderWindow& window) {}
 
-	void SetArmour(Item* aItem) { armourItem = static_cast<ArmourItem*>(aItem); }
+	void SetArmour(Item* aItem);
 	ArmourItem* GetActiveArmour() { return armourItem; }
 
 	bool CanRoll();
 	bool IsRolling();
-	void SetArmourValue(int value);
+	void SetArmourValue(int valKue);
 
 protected:
 	ArmourItem* armourItem;

@@ -40,5 +40,5 @@ int RedShirt::OnDamaged(int damage, Entity* e, sf::Vector2f playerPos)
 
 std::string RedShirt::GetItemStats()
 {
-	return Item::GetItemStats() + "When you have shield block the first attack\nShield recharge every " + std::to_string(maxTimer) + " seconds\n";
+	return Item::GetItemStats() + "When you have shield block\n the first attack\nShield recharge every " + std::to_string(maxTimer) + " seconds\n";
 }

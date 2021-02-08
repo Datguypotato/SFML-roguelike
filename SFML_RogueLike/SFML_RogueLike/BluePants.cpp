@@ -20,5 +20,5 @@ void BluePants::OnLevelEnd(Entity* player)
 
 std::string BluePants::GetItemStats()
 {
-	return Item::GetItemStats() + "At the end of every level receive " + std::to_string(addMaxHealthValue) = " health\n";
+	return Item::GetItemStats() + "At the end of every level receive " + std::to_string(addMaxHealthValue) + " health\n";
 }

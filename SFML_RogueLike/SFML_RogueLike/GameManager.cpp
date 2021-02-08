@@ -55,8 +55,14 @@ void GameManager::Update(float deltaTime)
 	levelmanager->UpdateButtons(mousepos);
 
 	for (TimeEvent* e : timedEvents)
-	{
 		e->Tick(deltaTime);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+	{		
+		for (Entity* enemy : em->GetAliveEnemies())
+		{
+			enemy->SetAliveStatus(false);
+		}
 	}
 }
 

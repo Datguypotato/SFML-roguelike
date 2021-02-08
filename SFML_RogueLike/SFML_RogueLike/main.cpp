@@ -19,6 +19,7 @@ void ButtonClicked(sf::RectangleShape box)
 
 int main()
 {
+	srand(NULL);
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 

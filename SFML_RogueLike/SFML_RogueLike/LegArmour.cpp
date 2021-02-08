@@ -14,10 +14,15 @@ void LegArmour::OnHit(std::vector<Entity*> enemies)
 	}
 }
 
-void LegArmour::SetLegArmour(Item* i)
+void LegArmour::SetLegArmour(Item* item)
 {
-	if (activeArmour = dynamic_cast<LegArmourItem*>(i))
+	if (item == nullptr)
+		return;
+
+	if (LegArmourItem* l = dynamic_cast<LegArmourItem*>(item))
 	{
-		activeArmour = dynamic_cast<LegArmourItem*>(i);
+		activeArmour = static_cast<LegArmourItem*>(item);
 	}
+	else
+		activeArmour = nullptr;
 }

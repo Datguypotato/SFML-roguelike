@@ -30,7 +30,6 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 		int multiplier = 4;
 		for (auto& layer : map->getLayers())
 		{
-
 			if (layer.getType() == tson::LayerType::TileLayer)
 			{
 				// [id, obj]
@@ -38,11 +37,6 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 				{
 					tson::Tile obj = *tileObject.second;
 					int blockID = obj.getId() - 1;
-
-					if (blockID == 2)
-					{
-						std::cout << "ä";
-					}
 
 					sf::Vector2f pos = sf::Vector2f(obj.getPosition(tileObject.first).x * multiplier, obj.getPosition(tileObject.first).y * multiplier);//offset since the sprite are too small
 					sf::Vector2f size = sf::Vector2f(32.0f * multiplier, 32.0f * multiplier);
@@ -63,7 +57,7 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 					case 3:
 						interactableText = textSigns[0];
 						textSigns.erase(textSigns.begin());
-						interactables.push_back(new Interactable(tileSet[blockID], size, pos, interactableText));
+						interactables.push_back(new LevelSign(tileSet[blockID], size, pos, interactableText));
 						break;
 					case 4:
 						invisibleWalls.push_back(Wall(nullptr, size, pos));
@@ -99,6 +93,13 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 						else if (it->getName() == "SpawnLegArmour")
 						{
 							lm->GetLegArmourb()->BuildLegArmour(it->get<int>("id"), spawnPos);
+						}
+						else if (it->getName() == "SpawnShopkeeper")
+						{
+							sf::Texture* texture = new sf::Texture();
+							texture->loadFromFile("Art/Evilmerchant.png");
+
+							shopkeeper = new ShopKeeper(texture, sf::Vector2f(80, 80), spawnPos);
 						}
 						else
 						{
@@ -165,6 +166,8 @@ void Level::CheckTrigger(Collider playerCollider, EnemiesManager em)
 	{
 		interact->CheckTrigger(playerCollider);
 	}
+
+	shopkeeper->CheckTrigger(playerCollider);
 }
 
 std::vector<std::string> Level::CreateTextSigns()
@@ -173,7 +176,7 @@ std::vector<std::string> Level::CreateTextSigns()
 
 	texts.push_back("Items can be picked by walking over it\nItems give special bonuses");
 	texts.push_back("Press z to attack \n(remember that you have a\n small cooldown when attacking)");
-	texts.push_back("You can Move around\n with you arrows keys");
+	texts.push_back("You can move around\n With you arrows keys");
 
 	return texts;
 }
@@ -189,6 +192,8 @@ void Level::Draw(sf::RenderWindow& window)
 
 	for (auto door : doors)
 		door.Draw(window);
+
+	shopkeeper->Draw(window);
 }
 
 void Level::LateDraw(sf::RenderWindow& window)

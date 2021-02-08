@@ -59,6 +59,19 @@ void Armour::CheckCollision(std::vector<Entity*> entities)
 		armourItem->CheckCollision(entities);
 }
 
+void Armour::SetArmour(Item* item)
+{
+	if (item == nullptr)
+		return;
+
+	if (WeaponItem* w = dynamic_cast<WeaponItem*>(item))
+	{
+		armourItem = static_cast<ArmourItem*>(item);
+	}
+	else
+		armourItem = nullptr;
+}
+
 bool Armour::CanRoll()
 {
 	if (armourItem != nullptr)

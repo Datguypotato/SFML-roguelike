@@ -231,9 +231,11 @@ void Inventory::OnClick(sf::Vector2f mousePos, InventorySlot* slot)
 
 void Inventory::UpdatePlayer()
 {
-	weapon->SetWeapon(GetCurrEquipItem()[0]);
-	armour->SetArmour(GetCurrEquipItem()[1]);
-	legArmour->SetLegArmour(GetCurrEquipItem()[2]);
+	std::vector<Item*> items = GetCurrEquipItem();
+
+	weapon->SetWeapon(items[0]);
+	armour->SetArmour(items[1]);
+	legArmour->SetLegArmour(items[2]);
 
 	synergymanager->CheckSynergies(GetCurrEquipItem());
 }

@@ -7,5 +7,7 @@ public:
 	RedPantsSpikes(sf::Texture* itemText, std::string name);
 
 	RedPantsSpikes* Clone() { return new RedPantsSpikes(*this); }
+
+	std::string GetItemStats() override;
 };
 

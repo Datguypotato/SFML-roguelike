@@ -1,6 +1,6 @@
 #include "Weapon.h"
 
-Weapon::Weapon(int ad, float at)
+Weapon::Weapon(int ad, float at, AnimatorController a)
 	:	attackDamage(ad),
 		attackTimer(at),
 		baseAttackDamage(ad), // = 1
@@ -9,17 +9,24 @@ Weapon::Weapon(int ad, float at)
 		timesAttacked(0),
 		activeWeapon(nullptr),
 		recentDead(0),
-		attackSpeedMultiplier(0)
+		attackSpeedMultiplier(0),
+		targetsHit(0),
+		AC(a)
 {
 	attackbox.setSize(sf::Vector2f(75, 75));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
 	attackbox.setTexture(nullptr);
+
+	attackbox.setTexture(AC.GetActiveAnimation()->GetTexture());
 }
 
 void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 {
 	if (CanAttack())
 	{
+		AC.Play("Attack", true);
+		animationCooldown = AC.GetActiveAnimation()->GetAnimationTime();
+
 		attackTimer = attackTimerMax - (attackTimerMax * attackSpeedMultiplier);
 		timesAttacked++;
 
@@ -40,25 +47,34 @@ void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 			if (!target->GetAliveStatus())
 				recentDead++;
 		}
-
-		inRange.clear();
 	}
 }
 
 void Weapon::Update(float deltaTime)
 {
 	attackTimer -= deltaTime;
+	AC.UpdateAnimation(deltaTime, false);
 
 	if (activeWeapon != nullptr)
 	{
 		activeWeapon->Update(deltaTime);
 		weaponProjectiles = activeWeapon->GetProjectiles();
 	}
-		
+
+	animationCooldown -= deltaTime;
+	if (animationCooldown <= 0)
+		AC.Play("Default", true);
+
+	attackbox.setTexture(AC.GetActiveAnimation()->GetTexture());
+	attackbox.setTextureRect(AC.GetActiveAnimation()->uvRect);
+
 }
 
 void Weapon::SetWeapon(Item* item)
 {
+	if (item == nullptr)
+		return;
+
 	if (WeaponItem* w = dynamic_cast<WeaponItem*>(item))
 	{
 		activeWeapon = static_cast<WeaponItem*>(item);
@@ -73,8 +89,8 @@ void Weapon::SetWeapon(Item* item)
 
 void Weapon::Draw(sf::RenderWindow& window)
 {
-	if (CanAttack())
-		window.draw(attackbox);
+	window.draw(attackbox);
+
 
 	for (Entity* projectiles : weaponProjectiles)
 		projectiles->Draw(window);
@@ -125,10 +141,13 @@ void Weapon::CheckCollision(std::vector<Entity*> enemies)
 /// <param name="percentage"></param>
 void Weapon::AddAttackSpeedMultiplier(int percentage)
 {
-	if (percentage < 0 || percentage > 100)
-		return;
+	if (this != NULL)
+	{
+		if (percentage < 0 || percentage > 100)
+			return;
 
-	attackSpeedMultiplier += static_cast<float>(percentage) / 100;
+		attackSpeedMultiplier += static_cast<float>(percentage) / 100;
+	}
 }
 
 int Weapon::GetRecentDead()

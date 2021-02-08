@@ -20,5 +20,5 @@ void RedPants::OnHit(Entity* enemy)
 
 std::string RedPants::GetItemStats()
 {
-	return Item::GetItemStats() + "On attack have " + std::to_string(stunPercentage) + " % chance to stun\nFor " + std::to_string(stunTime) + " seconds\n";
+	return Item::GetItemStats() + "On attack have " + std::to_string(stunPercentage) + " % chance to stun for " + std::to_string(stunTime) + " seconds\n";
 }

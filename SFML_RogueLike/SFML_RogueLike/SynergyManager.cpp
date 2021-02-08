@@ -10,6 +10,7 @@ SynergyManager::SynergyManager(Weapon* w, Armour* a)
 		extraAS(0)
 {
 	timedEvents.push_back(new TimeEvent(std::bind(&SynergyManager::AddAttackSpeedBuff, this), 10, false, "Attack speed buff"));
+	timedEvents[0]->Pause();
 }
 
 void SynergyManager::Update(float deltaTime)
@@ -42,6 +43,8 @@ void SynergyManager::CheckSynergies(std::vector<Item*> currentlyEquiped)
 				break;
 			case Synergy::red:
 				reds++;
+				if (reds == 2)
+					timedEvents[0]->Play();
 				if(reds == 3)
 					timedEvents[0]->SetInterval(5);
 				break;
@@ -54,7 +57,8 @@ void SynergyManager::CheckSynergies(std::vector<Item*> currentlyEquiped)
 
 void SynergyManager::OnStartLevel(Entity* player)
 {
-	timedEvents[0]->Reset();
+	if(reds >= 2)
+		timedEvents[0]->Reset();
 
 	float armourPercentage = 0;
 	switch (blues)
@@ -95,7 +99,7 @@ void SynergyManager::OnSuccesfullAttack()
 	}
 }
 
-// This too
+
 void SynergyManager::PlayerHit()
 {
 	playerWeapon->AddAttackDamage(-extraAD);

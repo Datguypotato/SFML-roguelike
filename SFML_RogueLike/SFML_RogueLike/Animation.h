@@ -20,6 +20,7 @@ public:
 	sf::Texture* GetTexture() { return texture; }
 
 	float GetSwitchTime() { return switchTime; }
+	float GetAnimationTime() { return imageCount * switchTime; }
 	bool GetLoopedOnce();
 
 	void UpdateFaceingDirection(bool faceRight);

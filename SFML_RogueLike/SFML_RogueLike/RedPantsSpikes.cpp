@@ -6,3 +6,8 @@ RedPantsSpikes::RedPantsSpikes(sf::Texture* itemText, std::string name)
 	stunPercentage = 40;
 	stunTime = 2;
 }
+
+std::string RedPantsSpikes::GetItemStats()
+{
+	return RedPants::GetItemStats();
+}

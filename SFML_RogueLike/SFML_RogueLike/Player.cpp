@@ -2,14 +2,22 @@
 
 Player::Player(std::vector<Animation*> animations, float speed, int attackDamage)
 	:	Entity(sf::Vector2f(50, 80), sf::Vector2f(50, 70), 100, animations, speed, attackDamage, "Player"),
-		weapon(new Weapon(attackDamage, 2.0f)),
-		armour(new Armour(weapon)),
-		legArmour(new LegArmour()),
-		synergyManager(new SynergyManager(weapon, armour)),		
+		legArmour(new LegArmour()),	
 		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0)),
 		facingDirection(sf::Vector2f(0,0)),
 		lastFacingDir(sf::Vector2f(0,0))
 {
+	sf::Texture* texture = new sf::Texture();
+	sf::Texture* texture2 = new sf::Texture();
+	texture->loadFromFile("Art/AttackBox.png");
+	texture2->loadFromFile("Art/WeaponSlash.png");
+	std::vector<Animation*> weaponAnimations = std::vector<Animation*>();
+	weaponAnimations.push_back(new Animation(texture, 2, 1.0f, "Default"));
+	weaponAnimations.push_back(new Animation(texture2, 9, 0.02f, "Attack"));
+
+	weapon = new Weapon(attackDamage, 2.0f, AnimatorController(weaponAnimations));
+	armour = new Armour(weapon);
+	synergyManager = new SynergyManager(weapon, armour);
 	inventory = new Inventory(&body, weapon, armour, legArmour, synergyManager);
 }
 
