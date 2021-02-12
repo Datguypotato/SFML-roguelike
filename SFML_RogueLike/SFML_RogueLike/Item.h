@@ -43,7 +43,9 @@ public:
 	Synergy* GetSynergy() { return synergy; }
 
 	virtual std::string GetItemStats();
+	std::string GetItemStatsFormatted();
 
+protected:
 
 	sf::RectangleShape itemBox;
 	std::string itemName;

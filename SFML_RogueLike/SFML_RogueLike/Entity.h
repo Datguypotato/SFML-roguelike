@@ -72,4 +72,5 @@ protected:
 	sf::Vector2f velocity;
 
 	sf::Sound sound;
+	sf::SoundBuffer hitSound;
 };

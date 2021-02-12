@@ -25,5 +25,7 @@ private:
 
     bool isDashing;
     sf::Vector2f dashDir;
+
+    sf::SoundBuffer chargefx;
 };
 

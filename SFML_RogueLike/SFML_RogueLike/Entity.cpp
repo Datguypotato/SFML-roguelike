@@ -26,6 +26,8 @@ Entity::Entity(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std:
 	sound = sf::Sound();
 	sound.setVolume(05.0f);
 
+	hitSound.loadFromFile("PlayerHit.wav");
+
 	events.push_back(new TimeEvent(std::bind(&Entity::GetEffects, this), 1.0f, false, "Effect"));
 }
 
@@ -145,6 +147,8 @@ void Entity::OnHit(const int damage)
 	if (damageCooldown <= 0)
 	{
 		damageCooldown = damageCooldownMax;
+		sound.setBuffer(hitSound);
+		sound.play();
 
 		std::cout << name << ": ";
 

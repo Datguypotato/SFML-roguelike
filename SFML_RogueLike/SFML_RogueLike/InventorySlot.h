@@ -25,7 +25,6 @@ public:
 
 	bool isSlotEmpty() { return (isEmpty); }
 
-	std::string GetItemDescription();
 	SlotRegion GetSlotRegion() { return *slotRegion; }
 private:
 	bool isEmpty;

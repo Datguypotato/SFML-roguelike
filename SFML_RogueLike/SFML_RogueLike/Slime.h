@@ -22,5 +22,5 @@ protected:
 
 	bool isJumping;
 
-	sf::SoundBuffer jumpSound;
+
 };

@@ -7,7 +7,7 @@ ItemButton::ItemButton(Item* i, sf::Vector2f pos, std::function<void(sf::Rectang
 {
 	sf::Font* font = new sf::Font();
 	font->loadFromFile("Fonts/04B_30.TTF");
-	text = new sf::Text(item->GetItemStats(), *font, 13);
+	text = new sf::Text(item->GetItemStatsFormatted(), *font, 13);
 	sf::FloatRect rect = text->getLocalBounds();
 	text->setOrigin(rect.left + rect.width / 2.0f,
 					rect.top + rect.height / 2.0f);

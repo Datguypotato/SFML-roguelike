@@ -99,7 +99,7 @@ void Level::Load(Player* p, EnemiesManager* em, LootManager* lm)
 							sf::Texture* texture = new sf::Texture();
 							texture->loadFromFile("Art/Evilmerchant.png");
 
-							shopkeeper = new ShopKeeper(texture, sf::Vector2f(80, 80), spawnPos);
+							shopkeeper = new ShopKeeper(texture, sf::Vector2f(80, 80), spawnPos, p);
 						}
 						else
 						{
@@ -182,6 +182,14 @@ std::vector<std::string> Level::CreateTextSigns()
 }
 
 
+void Level::UpdateShopkeeper(float deltaTime, sf::Vector2f mousePos, sf::Vector2f playerPos)
+{
+	if (shopkeeper != nullptr)
+	{
+		shopkeeper->Update(deltaTime, mousePos, playerPos);
+	}
+}
+
 void Level::Draw(sf::RenderWindow& window)
 {
 	for (auto Floor : floors)
@@ -192,12 +200,12 @@ void Level::Draw(sf::RenderWindow& window)
 
 	for (auto door : doors)
 		door.Draw(window);
-
-	shopkeeper->Draw(window);
 }
 
 void Level::LateDraw(sf::RenderWindow& window)
 {
 	for (auto interact : interactables)
 		interact->Draw(window);
+
+	shopkeeper->Draw(window);
 }

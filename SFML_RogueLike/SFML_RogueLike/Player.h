@@ -20,6 +20,7 @@ public:
 	void Update(float deltaTime) override;
 	void Draw(sf::RenderWindow& window);
 	void CollectItem(Collectable* c);
+	void CollectItem(Item* i);
 
 	void CheckCollision(std::vector<Entity*> enemies);
 	void OnHit(const int damage, Entity* damageDealer) override;
@@ -30,6 +31,7 @@ public:
 	Inventory* GetInventory() { return inventory; }
 
 	SynergyManager* GetSynergyManager() { return synergyManager; }
+	sf::Vector2i GetGridPosition() { return static_cast<sf::Vector2i>(body.getPosition()); }
 private:
 	Weapon* weapon;
 	Armour* armour;
@@ -40,4 +42,9 @@ private:
 	sf::Vector2f facingDirection;
 	sf::Vector2f lastFacingDir;
 	sf::Vector2f attackBoxOffset;
+
+	sf::SoundBuffer playerAttackSFX;
+	sf::SoundBuffer playerMissSFX;
+
+	sf::Vector2i lastGridPosition;
 };

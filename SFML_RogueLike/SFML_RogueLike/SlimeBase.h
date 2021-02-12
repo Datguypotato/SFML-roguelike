@@ -15,5 +15,7 @@ protected:
 	float jumpCooldown;
 	bool isJumping;
 	sf::Vector2f jumpDir;
+
+	sf::SoundBuffer jumpSound;
 };
 

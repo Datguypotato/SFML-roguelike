@@ -47,3 +47,27 @@ std::string Item::GetItemStats()
 
 	return stats;
 }
+
+std::string Item::GetItemStatsFormatted()
+{
+	std::string stat(GetItemStats());
+	std::string formated = "";
+	int space = 0;
+
+	for (auto it = stat.begin(); it != stat.end(); it++)
+	{
+		formated += *it;
+
+		if (*it == ' ')
+			space++;
+
+		if (space >= 3)
+		{
+			formated += "\n";
+			space = 0;
+		}
+	}
+
+	return formated;
+}
+

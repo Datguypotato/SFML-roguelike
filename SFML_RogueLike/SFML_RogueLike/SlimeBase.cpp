@@ -6,6 +6,7 @@ SlimeBase::SlimeBase(sf::Vector2f textureSize, sf::Vector2f bodySize, std::vecto
 		isJumping(false),
 		jumpDir()
 {
+	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
 }
 
 void SlimeBase::Update(float deltaTime)
@@ -28,6 +29,7 @@ void SlimeBase::JumpToPlayer()
 	if (isJumping)
 	{
 		jumpDir = GetPlayerDir();
+		sound.setBuffer(jumpSound);
 		sound.play();
 	}
 	AC.PlayNoInterupt("Jump", faceRight);

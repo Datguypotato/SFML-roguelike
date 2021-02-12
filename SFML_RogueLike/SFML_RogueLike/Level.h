@@ -20,6 +20,8 @@ public:
 
 	void Load(Player* p, EnemiesManager* em, LootManager* lm);
 	void Unload();
+
+	void UpdateShopkeeper(float deltaTime, sf::Vector2f mousePos, sf::Vector2f playerPos);
 	void Draw(sf::RenderWindow& window);
 	void LateDraw(sf::RenderWindow& window);
 

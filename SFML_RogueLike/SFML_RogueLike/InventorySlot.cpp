@@ -19,40 +19,29 @@ InventorySlot::InventorySlot()
 }
 
 InventorySlot::InventorySlot(SlotRegion* sr)
-	:	UIComponent(sf::Vector2f(75, 75), sf::Vector2f()),
-		item(nullptr),
-		slotRegion(new SlotRegion(*sr)),
-		itemDescriptionText(new sf::Text()),
-		cursorInBox(false)
+	:	InventorySlot()
 {	
-	emptySlotTexture = new sf::Texture();
-	emptySlotTexture->loadFromFile("Art/UI/EmptySlot.png");
-	box.setTexture(emptySlotTexture);
-
-	isEmpty = true;
+	slotRegion = new SlotRegion(*sr);
 }
 
 InventorySlot::InventorySlot(Item* i)
-	:	UIComponent(sf::Vector2f(75, 75), sf::Vector2f()),
-		item(i),
-		slotRegion(new SlotRegion(SlotRegion::none)),
-		itemDescriptionText(new sf::Text()),
-		cursorInBox(false)
+	:	InventorySlot()
 {
-	emptySlotTexture = new sf::Texture();
-	emptySlotTexture->loadFromFile("Art/UI/EmptySlot.png");
-
-	box.setTexture(emptySlotTexture);
-
+	item = i;
 	if (item == nullptr)
 		isEmpty = true;
 	else
+	{
 		isEmpty = false;
+		itemDescriptionText->setString(item->GetItemStatsFormatted());
+	}
+		
 }
 
 void InventorySlot::Update(sf::Vector2f mousePos)
 {
 	cursorInBox = box.getGlobalBounds().contains(mousePos);
+
 	if (!isEmpty)
 	{
 		item->SetPosition(box.getPosition());
@@ -71,10 +60,8 @@ void InventorySlot::Draw(sf::RenderWindow& window)
 
 void InventorySlot::DrawDescp(sf::RenderWindow& window)
 {
-	//TODO Cannot draw yet
 	if (cursorInBox)
 		window.draw(*itemDescriptionText);
-
 }
 
 void InventorySlot::Deleteitem()
@@ -91,7 +78,7 @@ void InventorySlot::SetItem(Item* i)
 	{
 		item = i;
 		isEmpty = false;
-		itemDescriptionText->setString(item->GetItemStats());
+		itemDescriptionText->setString(item->GetItemStatsFormatted());
 	}
 }
 
@@ -114,12 +101,4 @@ Item* InventorySlot::GrabItem(Item* i)
 	itemDescriptionText->setString(item->GetItemStats());
 
 	return temp;
-}
-
-std::string InventorySlot::GetItemDescription()
-{
-	if (!isEmpty)
-		return item->GetItemStats();
-
-	return "";
 }

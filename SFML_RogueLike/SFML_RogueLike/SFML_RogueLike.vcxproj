@@ -43,6 +43,8 @@
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="GreenPants.cpp" />
     <ClCompile Include="GreenPantsUpgrade.cpp" />
+    <ClCompile Include="GridManager.cpp" />
+    <ClCompile Include="GridNode.cpp" />
     <ClCompile Include="Healthbar.cpp" />
     <ClCompile Include="Interactable.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -110,9 +112,10 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Goblin.h" />
-    <ClInclude Include="GreenLegArmour.h" />
     <ClInclude Include="GreenPants.h" />
     <ClInclude Include="GreenPantsUpgrade.h" />
+    <ClInclude Include="GridManager.h" />
+    <ClInclude Include="GridNode.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Healthbar.h" />
     <ClInclude Include="Interactable.h" />

@@ -5,7 +5,8 @@ Player::Player(std::vector<Animation*> animations, float speed, int attackDamage
 		legArmour(new LegArmour()),	
 		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0)),
 		facingDirection(sf::Vector2f(0,0)),
-		lastFacingDir(sf::Vector2f(0,0))
+		lastFacingDir(sf::Vector2f(0,0)),
+		lastGridPosition(sf::Vector2i())
 {
 	sf::Texture* texture = new sf::Texture();
 	sf::Texture* texture2 = new sf::Texture();
@@ -13,12 +14,15 @@ Player::Player(std::vector<Animation*> animations, float speed, int attackDamage
 	texture2->loadFromFile("Art/WeaponSlash.png");
 	std::vector<Animation*> weaponAnimations = std::vector<Animation*>();
 	weaponAnimations.push_back(new Animation(texture, 2, 1.0f, "Default"));
-	weaponAnimations.push_back(new Animation(texture2, 9, 0.02f, "Attack"));
+	weaponAnimations.push_back(new Animation(texture2, 9, 0.012f, "Attack"));
 
 	weapon = new Weapon(attackDamage, 2.0f, AnimatorController(weaponAnimations));
 	armour = new Armour(weapon);
 	synergyManager = new SynergyManager(weapon, armour);
 	inventory = new Inventory(&body, weapon, armour, legArmour, synergyManager);
+
+	playerAttackSFX.loadFromFile("Audio/PlayerAttack.wav");
+	playerMissSFX.loadFromFile("Audio/PlayerAttackMiss.wav");
 }
 
 Player::~Player()
@@ -75,8 +79,6 @@ void Player::Update(float deltaTime)
 	else
 		lastFacingDir = facingDirection;
 
-
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
 		armour->SetRoll();
@@ -86,12 +88,24 @@ void Player::Update(float deltaTime)
 	weapon->SetAttackBoxPos(body.getPosition() - attackBoxOffset);
 
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z) && weapon->CanAttack())
 	{
+		if (weapon->GetInRange()->size() > 0)
+			sound.setBuffer(playerAttackSFX);
+		else
+			sound.setBuffer(playerMissSFX);
+
+
+		sound.play();
 		AC.PlayNoInterupt("Attack", faceRight);
 		legArmour->OnHit(*weapon->GetInRange());
 		weapon->Attack(body.getPosition(), facingDirection);
 		synergyManager->OnSuccesfullAttack();
+	}
+
+	if (GetGridPosition() != lastGridPosition)
+	{
+		std::cout << "Player position: X" << std::to_string(GetGridPosition().x) << " Y: " << std::to_string(GetGridPosition().y) << std::endl;
 	}
 
 	if (velocity.x != 0.0f || velocity.y != 0.0f)
@@ -114,8 +128,14 @@ void Player::Draw(sf::RenderWindow& window)
 
 void Player::CollectItem(Collectable* c)
 {
-	if(!inventory->isFull())
-		inventory->GetItem(c->GetItem());
+	if (!inventory->isFull())
+		CollectItem(c->GetItem());
+}
+
+void Player::CollectItem(Item* i)
+{
+	if (!inventory->isFull())
+		inventory->GetItem(i);
 }
 
 void Player::CheckCollision(std::vector<Entity*> enemies)

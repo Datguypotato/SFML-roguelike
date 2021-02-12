@@ -85,6 +85,12 @@
     <Filter Include="Source Files\Inventory\ItemBuilder">
       <UniqueIdentifier>{782ea264-d1b4-4247-85fd-e2d2eedbb17f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\AI">
+      <UniqueIdentifier>{d5659be4-2890-4c49-937e-cb0400987ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AI">
+      <UniqueIdentifier>{205dad69-f644-45b6-a690-710b05a1736e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorController.cpp">
@@ -282,11 +288,17 @@
     <ClCompile Include="LegArmour.cpp">
       <Filter>Source Files\Inventory\Items</Filter>
     </ClCompile>
-    <ClCompile Include="LevelSign.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ShopKeeper.cpp">
       <Filter>Source Files\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSign.cpp">
+      <Filter>Source Files\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="GridManager.cpp">
+      <Filter>Source Files\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GridNode.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -455,9 +467,6 @@
     <ClInclude Include="ArmourBuilder.h">
       <Filter>Header Files\Inventory\ItemBuilders</Filter>
     </ClInclude>
-    <ClInclude Include="GreenLegArmour.h">
-      <Filter>Header Files\Inventory\Items\LegArmour</Filter>
-    </ClInclude>
     <ClInclude Include="BluePants.h">
       <Filter>Header Files\Inventory\Items\LegArmour</Filter>
     </ClInclude>
@@ -469,9 +478,6 @@
     </ClInclude>
     <ClInclude Include="BluePantsUpgrade.h">
       <Filter>Header Files\Inventory\Items\LegArmour</Filter>
-    </ClInclude>
-    <ClInclude Include="SynergyManager.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Header Files\Inventory\Items</Filter>
@@ -485,10 +491,19 @@
     <ClInclude Include="Interactable.h">
       <Filter>Header Files\Level</Filter>
     </ClInclude>
-    <ClInclude Include="ShopKeeper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LevelSign.h">
+      <Filter>Header Files\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopKeeper.h">
+      <Filter>Header Files\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="SynergyManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GridManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GridNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

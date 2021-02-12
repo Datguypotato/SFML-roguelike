@@ -13,6 +13,7 @@ Ghost::Ghost(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Pla
 	events.push_back(new TimeEvent(std::bind(&Ghost::StopDash, this), dashTime, true, "StopDash"));
 
 	body.setPosition(spawnPosition);
+	chargefx.loadFromFile("GhostCharge.wav");
 }
 
 Ghost::~Ghost()
@@ -47,6 +48,9 @@ void Ghost::Action()
 		// if in attack range
 		if (GetVectorDistance(playerBody->getPosition()) <= attackRange)
 		{
+			sound.setBuffer(chargefx);
+			sound.play();
+
 			playName = "Charge";
 			TextureBody.setFillColor(sf::Color::White);
 			isDashing = true;

@@ -11,7 +11,8 @@ Weapon::Weapon(int ad, float at, AnimatorController a)
 		recentDead(0),
 		attackSpeedMultiplier(0),
 		targetsHit(0),
-		AC(a)
+		AC(a),
+		animationCooldown(0)
 {
 	attackbox.setSize(sf::Vector2f(75, 75));
 	attackbox.setOrigin(attackbox.getSize() / 2.0f);
@@ -22,31 +23,28 @@ Weapon::Weapon(int ad, float at, AnimatorController a)
 
 void Weapon::Attack(sf::Vector2f startingPos, sf::Vector2f facingDir)
 {
-	if (CanAttack())
+	AC.Play("Attack", true);
+	animationCooldown = AC.GetActiveAnimation()->GetAnimationTime();
+
+	attackTimer = attackTimerMax - (attackTimerMax * attackSpeedMultiplier);
+	timesAttacked++;
+
+	if (activeWeapon != nullptr)
+		activeWeapon->OnAttack(startingPos, facingDir);
+
+	for (Entity* target : inRange)
 	{
-		AC.Play("Attack", true);
-		animationCooldown = AC.GetActiveAnimation()->GetAnimationTime();
-
-		attackTimer = attackTimerMax - (attackTimerMax * attackSpeedMultiplier);
-		timesAttacked++;
-
+		int extra = 0;
 		if (activeWeapon != nullptr)
-			activeWeapon->OnAttack(startingPos, facingDir);
-
-		for (Entity* target : inRange)
 		{
-			int extra = 0;
-			if (activeWeapon != nullptr)
-			{
-				extra += activeWeapon->OnHit(target);
-				targetsHit++;
-			}
-
-			target->OnHit(attackDamage + extra);
-
-			if (!target->GetAliveStatus())
-				recentDead++;
+			extra += activeWeapon->OnHit(target);
+			targetsHit++;
 		}
+
+		target->OnHit(attackDamage + extra);
+
+		if (!target->GetAliveStatus())
+			recentDead++;
 	}
 }
 

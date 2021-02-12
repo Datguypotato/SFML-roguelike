@@ -53,6 +53,7 @@ void GameManager::Update(float deltaTime)
 	em->Update(deltaTime);
 	lm->Update(deltaTime);
 	levelmanager->UpdateButtons(mousepos);
+	levelmanager->GetCurrentLevel()->UpdateShopkeeper(deltaTime, mousepos, player->GetPosition());
 
 	for (TimeEvent* e : timedEvents)
 		e->Tick(deltaTime);

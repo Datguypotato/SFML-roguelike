@@ -13,8 +13,6 @@ Slime::Slime(std::vector<Animation*> animations, sf::Vector2f spawnPosition, Pla
 
 	events.push_back(new TimeEvent(std::bind(&SlimeBase::JumpToPlayer, this), jumpCooldown, false, "Jump"));
 
-	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
-	sound.setBuffer(jumpSound);
 }
 
 // for the Slime boss
@@ -29,8 +27,6 @@ Slime::Slime(sf::Vector2f textureSize, sf::Vector2f bodySize, int health, std::v
 	isJumping = false;
 	jumpDir = sf::Vector2f();
 
-	jumpSound.loadFromFile("Audio/sfx_sound_neutral6.wav");
-	sound.setBuffer(jumpSound);
 }
 
 Slime::~Slime()
