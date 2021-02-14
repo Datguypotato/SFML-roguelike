@@ -5,8 +5,7 @@ Player::Player(std::vector<Animation*> animations, float speed, int attackDamage
 		legArmour(new LegArmour()),	
 		attackBoxOffset(sf::Vector2f(-body.getSize().x, 0)),
 		facingDirection(sf::Vector2f(0,0)),
-		lastFacingDir(sf::Vector2f(0,0)),
-		lastGridPosition(sf::Vector2i())
+		lastFacingDir(sf::Vector2f(0,0))
 {
 	sf::Texture* texture = new sf::Texture();
 	sf::Texture* texture2 = new sf::Texture();
@@ -101,11 +100,6 @@ void Player::Update(float deltaTime)
 		legArmour->OnHit(*weapon->GetInRange());
 		weapon->Attack(body.getPosition(), facingDirection);
 		synergyManager->OnSuccesfullAttack();
-	}
-
-	if (GetGridPosition() != lastGridPosition)
-	{
-		std::cout << "Player position: X" << std::to_string(GetGridPosition().x) << " Y: " << std::to_string(GetGridPosition().y) << std::endl;
 	}
 
 	if (velocity.x != 0.0f || velocity.y != 0.0f)

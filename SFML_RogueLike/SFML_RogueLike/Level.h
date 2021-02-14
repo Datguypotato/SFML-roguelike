@@ -31,6 +31,8 @@ public:
 	bool isDoneLoading() { return doneLoading; }
 	bool isStartLoading() { return startLoading; }
 
+	std::vector<Collider*> GetWalls();
+
 private:
 	std::vector<std::string> CreateTextSigns();
 

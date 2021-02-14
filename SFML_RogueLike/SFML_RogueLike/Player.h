@@ -31,7 +31,7 @@ public:
 	Inventory* GetInventory() { return inventory; }
 
 	SynergyManager* GetSynergyManager() { return synergyManager; }
-	sf::Vector2i GetGridPosition() { return static_cast<sf::Vector2i>(body.getPosition()); }
+
 private:
 	Weapon* weapon;
 	Armour* armour;
@@ -45,6 +45,4 @@ private:
 
 	sf::SoundBuffer playerAttackSFX;
 	sf::SoundBuffer playerMissSFX;
-
-	sf::Vector2i lastGridPosition;
 };

@@ -46,6 +46,8 @@ public:
 	bool GetAliveStatus() { return isAlive; }
 	void SetAliveStatus(bool b) { isAlive = b; }
 
+	sf::Vector2i GetGridPosition() { return static_cast<sf::Vector2i>(body.getPosition()); }
+
 protected:
 	void GetEffects();
 	TimeEvent* GetEvent(std::string n);

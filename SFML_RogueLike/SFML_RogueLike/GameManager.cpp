@@ -17,6 +17,7 @@ GameManager::GameManager()
 	btext->loadFromFile("Art/UI/BagIcon.png");
 	bagIcon = new Button(sf::Vector2f(100, 100), sf::Vector2f(500, -300), std::bind(&Inventory::OpenClose, player->GetInventory()), btext);
 	lm = new LootManager();
+	gridmanager = new GridManager(player);
 
 	timedEvents.push_back(bagIcon->GetEvent());
 	timedEvents.push_back(player->GetInventory()->GetEvent());
@@ -32,6 +33,9 @@ void GameManager::ResizeView()
 void GameManager::Start()
 {
 	levelmanager->GetCurrentLevel()->Load(player, em, lm);
+	gridmanager->GenerateMap(levelmanager->GetCurrentLevel()->GetWalls(), sf::Vector2i(0,0));
+
+
 }
 
 void GameManager::Update(float deltaTime)

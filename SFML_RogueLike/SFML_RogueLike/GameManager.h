@@ -16,6 +16,7 @@
 #include "Item.h"
 #include "Collectable.h"
 #include "SynergyManager.h"
+#include "GridManager.h"
 
 #include "ItemButton.h"
 
@@ -55,4 +56,5 @@ private:
 	Healthbar* healthbar;
 	Armourbar* armourbar;
 	Button* bagIcon;
+	GridManager* gridmanager;
 };

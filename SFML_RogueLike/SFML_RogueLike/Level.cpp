@@ -170,6 +170,14 @@ void Level::CheckTrigger(Collider playerCollider, EnemiesManager em)
 	shopkeeper->CheckTrigger(playerCollider);
 }
 
+std::vector<Collider*> Level::GetWalls()
+{
+	std::vector<Collider*> temp = std::vector<Collider*>();
+	for (Wall wall : walls)
+		temp.push_back(new Collider(wall.GetCollider()));
+	return temp;
+}
+
 std::vector<std::string> Level::CreateTextSigns()
 {
 	std::vector<std::string> texts = std::vector<std::string>();

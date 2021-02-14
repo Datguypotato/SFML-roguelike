@@ -8,9 +8,12 @@ public:
 	~GridNode();
 
 	GridNode* GetCameFrom() { return cameFrom; }
+	sf::Vector2i GetPosition() { return position; }
+
+	std::vector<sf::Vector2i> GetConnections();
 
 protected:
 	GridNode* cameFrom;
-	sf::Vector2f position;
+	sf::Vector2i position;	
 };
 

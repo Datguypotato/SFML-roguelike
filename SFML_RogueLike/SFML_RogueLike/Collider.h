@@ -12,6 +12,7 @@ public:
 
 	bool CheckCollision(Collider& other, float push);
 	bool CheckTrigger(Collider& other);
+	bool CheckTrigger(sf::Vector2f other);
 	sf::RectangleShape& GetBody() { return body; }
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	sf::Vector2f GetHalfSize() { return body.getSize() / 2.0f; }
